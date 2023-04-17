@@ -40,7 +40,7 @@ function HomePage() {
   const [products, setProduct] = useState([]);
   useEffect(() => {
     axios
-      .get("http://lav2.cf/api/tour")
+      .get("https://lav2.cf/api/tour")
       .then((res) => {
         console.log(res.data.data);
         setProduct(res.data.data);
