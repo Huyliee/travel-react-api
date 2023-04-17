@@ -32,7 +32,7 @@ function Tour() {
           console.log(err);
         });
       
-    },[shouldSearch])
+    },[shouldSearch,nameTour])
     console.log(tours);
   return (
     <div className={cx("tour-container")}>
