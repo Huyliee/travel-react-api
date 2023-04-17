@@ -18,7 +18,7 @@ function Login() {
     e.preventDefault();
     setTimeout(async ()=>{
       try {
-        const res = await axios.post("http://lav2.cf/api/login", {
+        const res = await axios.post("https://lav2.cf/api/login", {
           email,
           password,
         })

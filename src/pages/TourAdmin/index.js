@@ -37,7 +37,7 @@ function TourAdmin() {
   const handleInputUpdate = () => setInputUpdate(true);
   const handleInputAdd = () => setInputUpdate(false);
   useEffect(() => {
-    axios.get("http://lav2.cf/api/tour").then((res) => {
+    axios.get("https://lav2.cf/api/tour").then((res) => {
       setTour(res.data.data);
     });
   }, []);
@@ -132,7 +132,7 @@ function TourAdmin() {
   const handleAdd = () => {
     // e.preventDefault();
     axios
-      .post("http://lav2.cf/api/tour/store", {
+      .post("https://lav2.cf/api/tour/store", {
         id_tour,
         name_tour,
         date_back,
@@ -159,7 +159,7 @@ function TourAdmin() {
   };
   const handleDelete = (id) => {
     axios
-      .delete(`http://lav2.cf/api/tour/delete/${id}`)
+      .delete(`https://lav2.cf/api/tour/delete/${id}`)
       .then(() => {
         // xóa thành công, cập nhật lại danh sách tour
         const updatedTour = tour.filter((t) => t.id_tour !== id);
@@ -173,7 +173,7 @@ function TourAdmin() {
   };
   const handleUpdate = (id) => {
     axios
-      .get(`http://lav2.cf/api/tour/show/${id}`)
+      .get(`https://lav2.cf/api/tour/show/${id}`)
       .then((response) => {
         setShowTour(response.data);
         setIdTour(response.data.id_tour);
@@ -195,7 +195,7 @@ function TourAdmin() {
   const handleUpdateSubmit = (id) => {
     // // e.preventDefault();
     axios
-      .put(`http://lav2.cf/api/tour/update/${id}`, {
+      .put(`https://lav2.cf/api/tour/update/${id}`, {
         name_tour,
         date_back,
         content_tour,
