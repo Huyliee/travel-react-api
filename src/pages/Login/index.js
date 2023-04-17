@@ -5,6 +5,7 @@ import { TextField, Button } from "@mui/material";
 import {  useState } from "react";
 import axios from "axios";
 import { BeatLoader } from "react-spinners";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
@@ -13,6 +14,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
@@ -23,9 +25,9 @@ function Login() {
           password,
         })
         if(res.data.permission === "user"){
-          window.location.href = "/";
+          navigate('/');
         }else{
-          window.location.href = "/admin";
+          navigate('/admin');
         }
         localStorage.setItem("access_token", res.data.access_token);
       } catch (error) {

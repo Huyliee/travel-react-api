@@ -17,14 +17,16 @@ import MessageIcon from '@mui/icons-material/Message';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
 function Header() {
   const token = localStorage.getItem("access_token");
+  const navigate = useNavigate();
   const handleLogout = ()=>{
     localStorage.removeItem('access_token');
-    window.location.href = "/login";
+    navigate('/login');
   }
   return (
     <div className={cx("Main-nav")}>

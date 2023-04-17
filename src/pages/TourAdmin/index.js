@@ -15,6 +15,7 @@ import { ToastContainer } from "react-toastify";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -36,6 +37,7 @@ function TourAdmin() {
   const [inputUpdate, setInputUpdate] = useState(false);
   const handleInputUpdate = () => setInputUpdate(true);
   const handleInputAdd = () => setInputUpdate(false);
+  const navigate = useNavigate();
   useEffect(() => {
     axios.get("https://lav2.cf/api/tour").then((res) => {
       setTour(res.data.data);
@@ -149,7 +151,7 @@ function TourAdmin() {
         resetFrom();
         toast.success("Tour đã được lưu thành công.");
         setTimeout(() => {
-          window.location.href = "/admin/tour";
+          navigate('/admin/tour')
         }, 3000); // chuyển hướng sau 2 giây
       })
       .catch((error) => {
@@ -210,7 +212,7 @@ function TourAdmin() {
         console.log(response.data);
         toast.success("Tour đã được cập nhật thành công.");
         setTimeout(() => {
-          window.location.href = "/admin/tour";
+          navigate('/admin/tour')
         }, 3000); // chuyển hướng sau 2 giây
       })
       .catch((error) => {

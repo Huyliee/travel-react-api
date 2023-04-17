@@ -15,6 +15,7 @@ import { ToastContainer } from "react-toastify";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles)
 const style = {
@@ -47,6 +48,7 @@ function UserAdmin() {
   const handleInputUpdate = () => setInputUpdate(true);
   const handleInputAdd = () => setInputUpdate(false);
   const fileInputRef = useRef(null);
+  const navigate = useNavigate();
 
   const resetFrom = () =>{
     setCustomerName("");
@@ -84,7 +86,7 @@ function UserAdmin() {
       resetFrom();
       toast.success("Khách hàng đã được lưu thành công.");
       setTimeout(() => {
-        window.location.href = "/admin/user";
+        navigate('/admin/user');
       }, 3000); // chuyển hướng sau 2 giây
     })
     .catch((error) => {
@@ -143,7 +145,7 @@ function UserAdmin() {
       console.log(response.data);
       toast.success("Khách hàng đã được cập nhật thành công.");
       setTimeout(() => {
-        window.location.href = "/admin/user";
+        navigate('/admin/user');
       }, 3000); // chuyển hướng sau 2 giây
     })
     .catch((error) => {
