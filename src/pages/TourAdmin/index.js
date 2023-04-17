@@ -237,13 +237,13 @@ function TourAdmin() {
       }}
     >
       <ToastContainer position="top-right" autoClose={3000} />
-      <h1 style={{ margin: "40px auto" }}>Quản lý tour du lịch</h1>
+        <h1 style={{ margin: "40px auto" }}>Quản lý tour du lịch</h1>
       <div>
-        <Button
-          variant="contained"
-          sx={{ marginBottom: "10px" }}
-          onClick={handleOpen}
-        >
+          <Button
+            variant="contained"
+            sx={{ marginBottom: "10px" }}
+            onClick={handleOpen}
+          >
           Thêm tour
         </Button>
         <Modal
@@ -387,10 +387,9 @@ function TourAdmin() {
                 </div>
                 <div className={cx("input-container")}>
                   <Switch
-                    defaultChecked
-                    onChange={(e) =>
-                      setBestSeller(e.target.checked ? "1" : "0")
-                    }
+                    checked={best_seller === 1}
+                    defaultChecked={best_seller === 1 ? true : undefined}
+                    onChange={(e) => setBestSeller(e.target.checked ? 1 : 0)}
                   />
                 </div>
               </div>
@@ -400,8 +399,9 @@ function TourAdmin() {
                 </div>
                 <div className={cx("input-container")}>
                   <Switch
-                    defaultChecked
-                    onChange={(e) => setHotTour(e.target.checked ? "1" : "0")}
+                    checked={hot_tour === 1}
+                    defaultChecked={hot_tour === 1 ? true : undefined}
+                    onChange={(e) => setHotTour(e.target.checked ? 1 : 0)}
                   />
                 </div>
               </div>

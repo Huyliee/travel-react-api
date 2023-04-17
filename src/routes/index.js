@@ -4,6 +4,7 @@ import Tour from "~/pages/Tour";
 import AdminLayout from "~/component/Layout/AdminLayout";
 import HomeAdmin from "~/pages/HomeAdmin";
 import TourAdmin from "~/pages/TourAdmin";
+import UserAdmin from "~/pages/UserAdmin";
 
 const publicRoutes = [
     {path: '/' , component:HomePage},
@@ -11,6 +12,7 @@ const publicRoutes = [
     {path: '/tour' , component:Tour},
     {path: '/admin' , component:HomeAdmin , layout:AdminLayout},
     {path: '/admin/tour' , component:TourAdmin , layout:AdminLayout},
+    {path: '/admin/user' , component:UserAdmin , layout:AdminLayout},
 ]
 
 const privateRoutes =[

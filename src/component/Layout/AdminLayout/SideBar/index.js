@@ -46,7 +46,7 @@ function SideBar() {
               className={cx("Sidebar-dashboard-icon")}
             />
           </ListItemIcon>
-          <span>Báo cáo thống kê</span>
+          <span>Thống kê</span>
           {open ? (
             <ExpandLess sx={{ marginLeft: 1 }} />
           ) : (
@@ -56,10 +56,10 @@ function SideBar() {
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItemButton sx={{ pl: 4, fontSize: "16px" }}>
-              <ListItemText primary="Thống kê doanh thu" />
+              <ListItemText primary="Thống kê doanh thu" sx={{ ".MuiListItemText-primary":{fontSize:"14px"} }}  />
             </ListItemButton>
             <ListItemButton sx={{ pl: 4 }}>
-              <ListItemText primary="Thống kê khách hàng" />
+              <ListItemText primary="Thống kê khách hàng" sx={{ ".MuiListItemText-primary":{fontSize:"14px"} }} />
             </ListItemButton>
           </List>
         </Collapse>
@@ -83,14 +83,16 @@ function SideBar() {
         </ListItemButton>
         <Collapse in={openManage} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <Link to="/admin/tour">
+            <Link to="/admin/tour" className={cx('router-manage')}>
             <ListItemButton sx={{ pl: 4, fontSize: "16px" }}>
-              <ListItemText primary="Quản lý tour du lịch" />
+              <ListItemText primary="Quản lý tour du lịch"  sx={{ ".MuiListItemText-primary":{fontSize:"14px"} }}/>
             </ListItemButton>
             </Link>
+            <Link to="/admin/user" className={cx('router-manage')}>
             <ListItemButton sx={{ pl: 4 }}>
-              <ListItemText primary="Quản lý khách hàng" />
+              <ListItemText primary="Quản lý khách hàng" sx={{ ".MuiListItemText-primary":{fontSize:"14px"} }} />
             </ListItemButton>
+            </Link>
           </List>
         </Collapse>
       </div>
