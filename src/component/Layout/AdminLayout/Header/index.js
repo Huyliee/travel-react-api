@@ -63,7 +63,7 @@ function Header() {
   return (
     <div className={cx("Main-nav")}>
       <div className={cx("logo-header")}>
-        <a className={cx("logo")}>
+        <a className={cx("logo")} href="logo">
           <img src={images.logo} alt="Logo" />
           <span>Tour</span>
         </a>
