@@ -12,11 +12,20 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faMoon } from "@fortawesome/free-solid-svg-icons";
 import { Avatar } from "@mui/material";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import MessageIcon from '@mui/icons-material/Message';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import HomeIcon from '@mui/icons-material/Home';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const cx = classNames.bind(styles);
 
 function Header() {
   const token = localStorage.getItem("access_token");
+  const handleLogout = ()=>{
+    localStorage.removeItem('access_token');
+    window.location.href = "/login";
+  }
   return (
     <div className={cx("Main-nav")}>
       <div className={cx("nav-container")}>
@@ -47,13 +56,13 @@ function Header() {
               trigger="mouseenter focus"
             >
               <li className={cx("tour-down")}>
-                <a href="/">
+                <Link to="/tour">
                   Tour du lịch
                   <FontAwesomeIcon
                     icon={faChevronDown}
                     style={{ marginLeft: 2 }}
                   />
-                </a>
+                </Link>
                 {/* <Wrapper/> */}
               </li>
             </Tippy>
@@ -90,7 +99,39 @@ function Header() {
           </Tippy>
           <div className={cx("login-sub-container")}>
             {token ? (
-              <Avatar sx={{bgcolor:"#4f46e5"}}>H</Avatar>
+              <Tippy 
+              interactive
+              trigger="click"
+              render={(attrs) => (
+                <div {...attrs}>
+                  <div className={cx('user-list-container')}>
+                    <div className={cx('user-list-option')}>
+                      <div className={cx('user-list-box')}>
+                        <AccountCircleIcon className={cx('user-list-icon')} />
+                        <span>Account</span>
+                      </div>
+                      <div className={cx('user-list-box')}>
+                        <MessageIcon className={cx('user-list-icon')} />
+                        <span>Message</span>
+                      </div>
+                      <div className={cx('user-list-box')}>
+                        <FavoriteBorderIcon className={cx('user-list-icon')} />
+                        <span>Wishlists</span>
+                      </div>
+                      <div className={cx('user-list-box')}>
+                        <HomeIcon className={cx('user-list-icon')} />
+                        <span>Booking</span>
+                      </div>
+                    </div>
+                    <div className={cx('user-list-logout')} onClick={handleLogout}>
+                      <LogoutIcon className={cx('user-list-icon')} />
+                      <span>Logout</span>
+                    </div>
+                  </div>
+                </div>
+              )}>
+                <Avatar sx={{bgcolor:"#4f46e5"}}>H</Avatar>
+              </Tippy>
             ) : (
               <Link to="/login" className={cx("login-btn-link")}>
                 <button className={cx("login-btn")}>Đăng nhập</button>

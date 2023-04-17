@@ -2,13 +2,42 @@ import styles from "./Login.module.scss";
 import classNames from "classnames/bind";
 import SocialLogin from "./social-login";
 import { TextField, Button } from "@mui/material";
+import {  useState } from "react";
+import axios from "axios";
+import { BeatLoader } from "react-spinners";
 
 const cx = classNames.bind(styles);
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const handleSubmit = async (e) => {
+    setLoading(true);
+    e.preventDefault();
+    setTimeout(async ()=>{
+      try {
+        const res = await axios.post("http://127.0.0.1:8000/api/login", {
+          email,
+          password,
+        })
+        if(res.data.permission === "user"){
+          window.location.href = "/";
+        }else{
+          window.location.href = "/admin";
+        }
+        localStorage.setItem("access_token", res.data.access_token);
+      } catch (error) {
+        setError(error.res.data.message);
+      }
+    },1500)
+   
+  };
   return (
     <div className={cx("Login-main")}>
       <div className={cx("Login-container")}>
+      {error && <p>{error}</p>}
         <h2 className={cx("Login-text")}>Login</h2>
         <div className={cx("Login-container-body")}>
           <div className={cx("Login-social-container")}>
@@ -29,7 +58,7 @@ function Login() {
             <span>OR</span>
             <div className={cx("line")}></div>
           </div>
-          <form>
+          <form onSubmit={handleSubmit}>
             <label className={cx("label")}>
               <span className={cx("label-input")}>Email Address</span>
               <TextField
@@ -44,6 +73,8 @@ function Login() {
                   },
                 }}
                 placeholder="example@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </label>
             <label className={cx("label")}>
@@ -59,29 +90,37 @@ function Login() {
                     borderRadius: "16px",
                   },
                 }}
+                type="password"
+                onChange={(e) => setPassword(e.target.value)}
               />
             </label>
+            {loading ? (
+              <div className={cx("sweet-loading")}>
+              <BeatLoader  size={15} color={'#4f46e5'} /> </div>
+             ) : (
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: "#4f46e5",
+                  height: "48px",
+                  width: "448px",
+                  borderRadius: "9999px",
+                  "&:hover": {
+                    backgroundColor: "#4338ca",
+                  },
+                  "& .MuiButton-label": {
+                    borderRadius: "9999px",
+                  },
+                  marginTop: "25px",
+                  fontWeight: 700,
+                  fontSize: 16,
+                }}
+                type="submit"
+              >
+                Đăng nhập
+              </Button>
+            )}
           </form>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#4f46e5",
-              height: "48px",
-              width: "448px",
-              borderRadius: "9999px",
-              "&:hover":{
-                backgroundColor:'#4338ca',
-              },
-              "& .MuiButton-label": {
-                borderRadius: "9999px",
-              },
-              marginTop:'25px',
-              fontWeight:700,
-              fontSize:16
-            }}
-          >
-            Đăng nhập
-          </Button>
           <span className={cx('link-register')}>New user? <a href="/">Create an account</a></span>
         </div>
       </div>

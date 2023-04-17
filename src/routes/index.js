@@ -10,13 +10,13 @@ const publicRoutes = [
     {path: '/' , component:HomePage},
     {path: '/login' , component:Login},
     {path: '/tour' , component:Tour},
-    {path: '/admin' , component:HomeAdmin , layout:AdminLayout},
-    {path: '/admin/tour' , component:TourAdmin , layout:AdminLayout},
-    {path: '/admin/user' , component:UserAdmin , layout:AdminLayout},
+
 ]
 
 const privateRoutes =[
-
+    {path: '/admin' , component:HomeAdmin , layout:AdminLayout},
+    {path: '/admin/tour' , component:TourAdmin , layout:AdminLayout},
+    {path: '/admin/user' , component:UserAdmin , layout:AdminLayout},
 ]
 
 export {publicRoutes,privateRoutes}

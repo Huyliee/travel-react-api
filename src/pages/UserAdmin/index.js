@@ -42,6 +42,7 @@ function UserAdmin() {
   const [img, setImg] = useState("");
   const [gender, setGender] = useState("");
   const [date_of_birth, setDateOfBirth] = useState("");
+  const [permission, setPermisson] = useState("");
   const [inputUpdate, setInputUpdate] = useState(false);
   const handleInputUpdate = () => setInputUpdate(true);
   const handleInputAdd = () => setInputUpdate(false);
@@ -56,6 +57,7 @@ function UserAdmin() {
     setImg("");
     setGender("");
     setDateOfBirth("");
+    setPermisson("");
   }
 
   useEffect(() => {
@@ -74,7 +76,8 @@ function UserAdmin() {
         phone,
         img,
         gender,
-        date_of_birth
+        date_of_birth,
+        permission
     })
     .then((response) => {
       console.log(response.data);
@@ -117,6 +120,7 @@ function UserAdmin() {
         setImg(response.data.img);
         setGender(response.data.gender);
         setDateOfBirth(response.data.date_of_birth);
+        setPermisson(response.data.permission)
     })
     .catch((error) => {
       console.log(error);
@@ -132,7 +136,8 @@ function UserAdmin() {
         phone,
         img,
         gender,
-        date_of_birth
+        date_of_birth,
+        permission
     })
     .then((response) => {
       console.log(response.data);
@@ -198,6 +203,7 @@ function UserAdmin() {
     { field: "phone", headerName: "SĐT khách hàng", width: 150 },
     { field: "gender", headerName: "Giới tính", width: 150 },
     { field: "date_of_birth", headerName: "Ngày sinh", width: 150 },
+    { field: "permission", headerName: "Quyền", width: 150 },
     {
       field: "img",
       headerName: "Ảnh",
@@ -371,6 +377,19 @@ function UserAdmin() {
                       )} 
                     />
                   </LocalizationProvider>
+                </div>
+              </div>
+              <div className={cx("store-input")}>
+                <div className={cx("label-container")}>
+                  <label>Quyền: </label>
+                </div>
+                <div className={cx("input-container")}>
+                  <TextField
+                    label="Quyền"
+                    id="outlined-size-normal"
+                    value={permission}
+                    onChange={(e) => setPermisson(e.target.value)}
+                  />
                 </div>
               </div>
               <Button
