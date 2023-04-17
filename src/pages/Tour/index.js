@@ -24,7 +24,7 @@ function Tour() {
   const [tours,setTours] = useState([]);
     const handleSearch = useEffect(()=>{
       axios
-        .get(`http://127.0.0.1:8000/api/search?name=${nameTour}`)
+        .get(`http://lav2.cf/api/search?name=${nameTour}`)
         .then((res) => {
           setTours(res.data.tours);
         })

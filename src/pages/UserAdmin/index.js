@@ -61,14 +61,14 @@ function UserAdmin() {
   }
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/user").then((res) => {
+    axios.get("http://lav2.cf/api/user").then((res) => {
       setUser(res.data.data);
     });
   }, []);
 
   const handleAdd = () =>{
     axios
-    .post("http://127.0.0.1:8000/api/user/store", {
+    .post("http://lav2.cf/api/user/store", {
         customer_name,
         email,
         password,
@@ -94,7 +94,7 @@ function UserAdmin() {
   }
   const handleDelete = (id)=>{
     axios
-      .delete(`http://127.0.0.1:8000/api/user/delete/${id}`)
+      .delete(`http://lav2.cf/api/user/delete/${id}`)
       .then(() => {
         // xóa thành công, cập nhật lại danh sách tour
         const updatedUser = user.filter((t) => t.id !== id);
@@ -109,7 +109,7 @@ function UserAdmin() {
   };
   const handleUpdate = (id)=>{
     axios
-    .get(`http://127.0.0.1:8000/api/user/show/${id}`)
+    .get(`http://lav2.cf/api/user/show/${id}`)
     .then((response) => {
         setId(response.data.id)
         setCustomerName(response.data.customer_name);
@@ -128,7 +128,7 @@ function UserAdmin() {
   };
   const handleUpdateSubmit = (id)=>{
     axios
-    .put(`http://127.0.0.1:8000/api/user/update/${id}`, {
+    .put(`http://lav2.cf/api/user/update/${id}`, {
         customer_name,
         email,
         password,
