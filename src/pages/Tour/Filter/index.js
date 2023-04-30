@@ -28,7 +28,7 @@ function Filter({handleInput,nameTour,handleKeyPress}) {
         <span className={cx("title-filter")}>Lọc kết quả</span>
       </div>
       <div className={cx("filter-main")}>
-        <div className={cx("name-tour-filter")}>
+        <div className={cx("tour-filter")}>
           <span>Tìm theo tên</span>
           <TextField
             id="outlined-basic"
@@ -40,9 +40,9 @@ function Filter({handleInput,nameTour,handleKeyPress}) {
             onChange={handleInput}
           />
         </div>
-        <div className={cx("type-tour-filter")}>
+        <div className={cx("tour-filter")}>
           <span>Loại hình du lịch</span>
-          <FormControl sx={{ m: 1, minWidth: 290 }}>
+          <FormControl sx={{ minWidth: 290 }}>
             <InputLabel id="demo-simple-select-helper-label">
               Loại hình
             </InputLabel>
@@ -54,9 +54,9 @@ function Filter({handleInput,nameTour,handleKeyPress}) {
           </FormControl>
         </div>
 
-        <div className={cx("location-tour-filter")}>
+        <div className={cx("tour-filter")}>
           <span>Địa điểm du lịch</span>
-          <FormControl sx={{ m: 1, minWidth: 290 }}>
+          <FormControl sx={{  minWidth: 290 }}>
             <InputLabel id="demo-simple-select-helper-label">
               Địa điểm
             </InputLabel>
@@ -70,7 +70,7 @@ function Filter({handleInput,nameTour,handleKeyPress}) {
             </Select>
           </FormControl>
         </div>
-        <div className={cx("date-tour-filter")}>
+        <div className={cx("tour-filter")}>
           <span>Ngày đi</span>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
@@ -82,9 +82,9 @@ function Filter({handleInput,nameTour,handleKeyPress}) {
             />
           </LocalizationProvider>
         </div>
-        <div className={cx("number_seat-tour-filter")}>
+        <div className={cx("tour-filter")}>
           <span>Số người</span>
-          <FormControl sx={{ m: 1, minWidth: 290 }}>
+          <FormControl sx={{  minWidth: 290 }}>
             <InputLabel id="demo-simple-select-helper-label">
               Số người
             </InputLabel>
@@ -96,7 +96,7 @@ function Filter({handleInput,nameTour,handleKeyPress}) {
             </Select>
           </FormControl>
         </div>
-        <div className={cx("price-tour-filter")}>
+        <div className={cx("tour-filter")}>
           <span>Ngân sách của quý khách</span>
           <Box sx={{ width: 290 }}>
             <Slider
@@ -108,7 +108,7 @@ function Filter({handleInput,nameTour,handleKeyPress}) {
             />
           </Box>
         </div>
-        <div className={cx("price-tour-filter")}>
+        <div className={cx("tour-filter")}>
           <span>Hiển thị những chuyến đi có</span>
           <FormControl sx={{ width: 290 }}>
             <FormControlLabel

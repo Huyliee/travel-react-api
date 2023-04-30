@@ -4,6 +4,8 @@ import Filter from "./Filter";
 import ProductList from "./Product";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Pagination } from "@mui/material";
+import ProductLoading from "./Product/ProductLoading";
 
 const cx = classNames.bind(styles);
 
@@ -11,6 +13,10 @@ function Tour() {
   // const [products, setProduct] = useState([]);
   const [nameTour, setNameTour] = useState("");
   const [shouldSearch, setShouldSearch] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading,setLoading] = useState(false);
+
   const handleInput = (e)=>{
     setNameTour(e.target.value)
   }
@@ -22,9 +28,18 @@ function Tour() {
     }
   };
   const [tours,setTours] = useState([]);
-    const handleSearch = useEffect(()=>{
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios('http://lav2.cf/api/pagnination/tour?page=' + currentPage);
+      setTours(result.data.data.data);
+      setTotalPages(result.data.data.last_page);
+    };
+    fetchData();
+  }, [currentPage]);
+  console.log(totalPages);
+  const handleSearch = useEffect(()=>{
       axios
-        .get(`https://lav2.cf/api/search?name=${nameTour}`)
+        .get(`http://lav2.cf/api/search?name=${nameTour}`)
         .then((res) => {
           setTours(res.data.tours);
         })
@@ -33,7 +48,11 @@ function Tour() {
         });
       
     },[shouldSearch,nameTour])
-    console.log(tours);
+  useEffect(()=>{
+    setTimeout(()=>{
+        setLoading(true);
+    },3000)
+  },[])
   return (
     <div className={cx("tour-container")}>
       <form className={cx("tour-main")}>
@@ -45,7 +64,7 @@ function Tour() {
             <h1>Các tour du lịch</h1>
           </span>
           <div className={cx("list-tour-container")}>
-            {tours.map((product, index) => (
+            {loading && tours.map((product, index) => (
               <ProductList
                 key={index}
                 img={product.img_tour}
@@ -55,6 +74,21 @@ function Tour() {
                 des={product.content_tour}
               />
             ))}
+            {!loading && tours.map(() => (
+              <ProductLoading
+              />
+            ))}
+            <Pagination 
+              count={totalPages}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              color="primary"
+              onChange={(e,page)=>{
+                setCurrentPage(page);
+                window.scrollTo(0, 0);
+              }}
+              sx={{width:'100%',display:'flex',justifyContent:'center',marginTop:'20px'}}
+            />
           </div>
         </div>
       </form>
