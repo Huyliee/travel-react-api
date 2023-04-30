@@ -30,7 +30,7 @@ function Tour() {
   const [tours,setTours] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios('http://lav2.cf/api/pagnination/tour?page=' + currentPage);
+      const result = await axios('https://lav2.cf/api/pagnination/tour?page=' + currentPage);
       setTours(result.data.data.data);
       setTotalPages(result.data.data.last_page);
     };
@@ -39,7 +39,7 @@ function Tour() {
   console.log(totalPages);
   const handleSearch = useEffect(()=>{
       axios
-        .get(`http://lav2.cf/api/search?name=${nameTour}`)
+        .get(`https://lav2.cf/api/search?name=${nameTour}`)
         .then((res) => {
           setTours(res.data.tours);
         })
