@@ -24,7 +24,7 @@ import CartLocation from "./CartLocation";
 import WhyChooseBox from "./WhyChoose";
 import Product from "./Product";
 import ProductDisCount from "./ProductDiscount";
-import axios from "axios";
+// import axios from "axios";
 import { getTour } from "~/GlobalFunction/Api";
 
 const cx = classNames.bind(styles);
