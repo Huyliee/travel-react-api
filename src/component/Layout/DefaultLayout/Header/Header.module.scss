@@ -239,3 +239,105 @@
     width: 24px;
     height: 24px;
 }
+.icon-menu-container{
+    display: none!important;
+}
+.search-respon-container{
+    background-color: #ffffff;
+    width: 350px;
+    border-radius: 10px;
+    height: 3.475rem;
+    padding: 0 15px;
+    box-shadow: 0px 0px 8px #ddd;
+    display: none;
+    position: relative;
+    margin: auto 0px;
+    input{
+        background-color: transparent;
+        border: none;
+        height: 100%;
+        width: 90%;
+        margin-left: 5px;
+        font-size: 1rem;
+        float: left;
+    }
+    input:focus{
+        outline: none;
+    }
+    .icon-search-respon{
+        left: 120px;
+        float: left;
+        margin-top: 10px;
+    }
+}
+.logo-container-res{
+    font-size: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    img{
+        width: 40px;
+        height: 40px;
+    }
+    p{
+        font-weight: 700;
+    }
+}
+.text-container-res{
+    font-size: 16px;
+    text-align: left;
+    font-weight: 500;
+    margin-top: 10px;
+}
+.social-container-res{
+    display: flex;
+    width: 70%;
+    justify-content: space-between;
+}
+.social-respon{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ddd;    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    cursor: pointer;
+    img{
+        width: 20px;
+        height: 20px;
+    }
+}
+
+//Reponsive 
+//Mobile: width < 740px
+@media only screen and (max-width: 739px)
+{
+    .search-icon,
+    .sub-nav-container{
+        display: none!important;
+    }
+    .search-respon-container,
+    .icon-menu-container{
+        display: block!important;
+    }
+}
+//Tablet: width >= 740px and width < 1024px
+@media only screen and (min-width:740px) and (max-width: 1130px)
+{
+    
+    .search-icon,
+    .sub-nav-container{
+        display: none!important;
+    }
+    .search-respon-container,
+    .icon-menu-container{
+        display: block!important;
+    }
+}
+//Tablet: width >= 1024px
+@media only screen and (min-width: 1024px)
+{
+
+}

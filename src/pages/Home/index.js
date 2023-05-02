@@ -25,6 +25,7 @@ import WhyChooseBox from "./WhyChoose";
 import Product from "./Product";
 import ProductDisCount from "./ProductDiscount";
 import axios from "axios";
+import { getTour } from "~/GlobalFunction/Api";
 
 const cx = classNames.bind(styles);
 function HomePage() {
@@ -39,12 +40,17 @@ function HomePage() {
   //API Product
   const [products, setProduct] = useState([]);
   useEffect(() => {
-    axios
-      .get("https://lav2.cf/api/tour")
-      .then((res) => {
-        console.log(res.data.data);
-        setProduct(res.data.data);
-      });
+    // axios
+    //   .get("https://lav2.cf/api/tour")
+    //   .then((res) => {
+    //     setProduct(res.data.data);
+    //   });
+    async function loadTour(){
+      const data = await getTour();
+      setProduct(data)
+      console.log(data);
+    }
+    loadTour();
   },[]);
   return (
     <div className={cx("Home-main")}>
