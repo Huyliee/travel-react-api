@@ -11,3 +11,23 @@
     font-size: 35px;
     margin-bottom: 10px;
 }
+//Reponsive 
+//Mobile: width < 740px
+@media only screen and (max-width: 739px)
+{
+    .why-choose-content{
+        margin-bottom: 35px;
+    }
+}
+//Tablet: width >= 740px and width < 1024px
+@media only screen and (min-width:740px) and (max-width: 1130px)
+{
+    .why-choose-content{
+        margin-bottom: 35px;
+    }
+}
+//Tablet: width >= 1024px
+@media only screen and (min-width: 1024px)
+{
+
+}

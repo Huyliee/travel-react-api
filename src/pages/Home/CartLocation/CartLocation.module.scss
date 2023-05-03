@@ -29,3 +29,24 @@
     font-size: 14px;
     font-weight: 500;
 }
+
+//Reponsive 
+//Mobile: width < 740px
+@media only screen and (max-width: 739px)
+{
+    .cart-location-container{
+        margin: 0 5px;
+    }
+}
+//Tablet: width >= 740px and width < 1024px
+@media only screen and (min-width:740px) and (max-width: 1130px)
+{
+    .cart-location-container{
+        margin: 0 5px;
+    }
+}
+//Tablet: width >= 1024px
+@media only screen and (min-width: 1024px)
+{
+
+}
