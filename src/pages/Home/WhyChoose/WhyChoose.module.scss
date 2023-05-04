@@ -17,6 +17,12 @@
 {
     .why-choose-content{
         margin-bottom: 35px;
+        h2{
+            font-size: 20px;
+        }
+    }
+    .why-choose-content-des{
+        display: none;
     }
 }
 //Tablet: width >= 740px and width < 1024px

@@ -38,6 +38,7 @@ import { useState } from "react";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import Social from "./social";
 import { faFacebook, faInstagram, faTwitter, faYoutube } from "@fortawesome/free-brands-svg-icons";
+import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -172,6 +173,54 @@ function Header() {
             ) : (
               <Link to="/login" className={cx("login-btn-link")}>
                 <button className={cx("login-btn")}>Đăng nhập</button>
+              </Link>
+            )}
+          </div>
+          {/* Login responsive moblie */}
+          <div className={cx("login-respon-container")}>
+            {token ? (
+              <Tippy
+                interactive
+                trigger="click"
+                render={(attrs) => (
+                  <div {...attrs}>
+                    <div className={cx("user-list-container")}>
+                      <div className={cx("user-list-option")}>
+                        <div className={cx("user-list-box")}>
+                          <AccountCircleIcon className={cx("user-list-icon")} />
+                          <span>Account</span>
+                        </div>
+                        <div className={cx("user-list-box")}>
+                          <MessageIcon className={cx("user-list-icon")} />
+                          <span>Message</span>
+                        </div>
+                        <div className={cx("user-list-box")}>
+                          <FavoriteBorderIcon
+                            className={cx("user-list-icon")}
+                          />
+                          <span>Wishlists</span>
+                        </div>
+                        <div className={cx("user-list-box")}>
+                          <HomeIcon className={cx("user-list-icon")} />
+                          <span>Booking</span>
+                        </div>
+                      </div>
+                      <div
+                        className={cx("user-list-logout")}
+                        onClick={handleLogout}
+                      >
+                        <LogoutIcon className={cx("user-list-icon")} />
+                        <span>Logout</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              >
+                <Avatar sx={{ bgcolor: "#4f46e5" }}>H</Avatar>
+              </Tippy>
+            ) : (
+              <Link to="/login" className={cx("login-btn-link")}>
+                <FontAwesomeIcon icon={faUser} style={{fontSize:'22px'}} />
               </Link>
             )}
           </div>

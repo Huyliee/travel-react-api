@@ -9,7 +9,7 @@ function WhyChooseBox({icon,heading,des}) {
     <div className={cx("why-choose-content")}>
       <FontAwesomeIcon icon={icon} className={cx("why-choose-content-icon")} />
       <h2>{heading}</h2>
-      <span>{des}</span>
+      <span className={cx("why-choose-content-des")}>{des}</span>
     </div>
   );
 }

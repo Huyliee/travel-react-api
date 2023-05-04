@@ -121,3 +121,37 @@
     background-color: #111827;
     margin-bottom: 20px;
 }
+//Reponsive 
+//Mobile: width < 740px
+@media only screen and (max-width: 739px)
+{
+    .product-box{
+        width: 39.4rem;
+        height: 60.5rem;
+        flex-direction: column;
+    }
+    .product-img{
+        img{
+            width: 370px;
+            height: 370px;
+            margin-left: 0px!important;
+            padding: 10px;
+        }
+    }
+}
+//Tablet: width >= 740px and width < 1024px
+@media only screen and (min-width:740px) and (max-width: 1130px)
+{
+    .product-box{
+        width: 73.4rem;
+    }
+    .container-name-tour{
+        overflow: visible;
+        width: 100%;
+    }
+}
+//Tablet: width >= 1024px
+@media only screen and (min-width: 1024px)
+{
+
+}

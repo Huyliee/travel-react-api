@@ -273,7 +273,7 @@ function HomePage() {
         </div>
         {/* Product List v1*/}
         <div
-          className={cx("location-container")}
+          className={cx("location-container","product-response")}
           style={{
             backgroundColor: "#f3f4f6",
             padding: "64px 48px",
@@ -298,7 +298,7 @@ function HomePage() {
                     )}
                     onClick={() => handleActive(0)}
                   >
-                    Phú Quốc
+                    Hà Nội
                   </button>
                 </li>
                 <li className={cx("li-location-product")}>
@@ -309,7 +309,7 @@ function HomePage() {
                     )}
                     onClick={() => handleActive(1)}
                   >
-                    Phú Quốc
+                    Huế
                   </button>
                 </li>
                 <li className={cx("li-location-product")}>
@@ -320,7 +320,7 @@ function HomePage() {
                     )}
                     onClick={() => handleActive(2)}
                   >
-                    Phú Quốc
+                    HCM
                   </button>
                 </li>
                 <li className={cx("li-location-product")}>
@@ -331,7 +331,7 @@ function HomePage() {
                     )}
                     onClick={() => handleActive(3)}
                   >
-                    Phú Quốc
+                    Hà Nội
                   </button>
                 </li>
               </ul>
@@ -356,7 +356,7 @@ function HomePage() {
         </div>
         {/* Product List v2 */}
         <div
-          className={cx("location-container")}
+          className={cx("location-container","product-response")}
           style={{
             backgroundColor: "#f3f4f6",
             padding: "64px 48px",
@@ -381,7 +381,7 @@ function HomePage() {
                     )}
                     onClick={() => handleActive(0)}
                   >
-                    Phú Quốc
+                    Hà Nội
                   </button>
                 </li>
                 <li className={cx("li-location-product")}>
@@ -392,7 +392,7 @@ function HomePage() {
                     )}
                     onClick={() => handleActive(1)}
                   >
-                    Phú Quốc
+                    Huế
                   </button>
                 </li>
                 <li className={cx("li-location-product")}>
@@ -403,7 +403,7 @@ function HomePage() {
                     )}
                     onClick={() => handleActive(2)}
                   >
-                    Phú Quốc
+                    HCM
                   </button>
                 </li>
                 <li className={cx("li-location-product")}>

@@ -97,3 +97,32 @@
     background-color: #111827;
     margin-bottom: 20px;
 }
+//Reponsive 
+//Mobile: width < 740px
+@media only screen and (max-width: 739px)
+{
+    .product-box{
+        width: 36.6rem;
+        height: 47.2rem;
+    }
+    .product-img{
+        height: 29.5rem;
+    }
+    .container-name-tour{
+        width: 100%;
+    }
+}
+//Tablet: width >= 740px and width < 1024px
+@media only screen and (min-width:740px) and (max-width: 1130px)
+{
+    .product-box{
+        margin: 20px -5px;
+        width: 35.2rem;
+        height: 40rem;
+    }
+}
+//Tablet: width >= 1024px
+@media only screen and (min-width: 1024px)
+{
+
+}

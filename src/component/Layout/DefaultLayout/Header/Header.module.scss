@@ -309,19 +309,36 @@
         height: 20px;
     }
 }
+.login-respon-container{
+    display: none;
+}
 
 //Reponsive 
 //Mobile: width < 740px
 @media only screen and (max-width: 739px)
 {
-    .search-icon,
+    .login-sub-container,
+    .icon-container,
     .sub-nav-container{
         display: none!important;
     }
-    .search-respon-container,
+    .search-icon,
+    .login-respon-container,
     .icon-menu-container{
         display: block!important;
     }
+    .nav-container{
+        padding: 20px 16px!important;
+    }
+    .login-container{
+        justify-content: normal!important;
+        margin-left: 10px;
+        width: 140px!important;
+    }
+    .search-icon{
+        margin-top: 20px;
+    }
+
 }
 //Tablet: width >= 740px and width < 1024px
 @media only screen and (min-width:740px) and (max-width: 1130px)
