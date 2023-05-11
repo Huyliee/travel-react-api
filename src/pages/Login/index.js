@@ -6,6 +6,8 @@ import {  useState } from "react";
 import axios from "axios";
 import { BeatLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import swal from "sweetalert";
 
 const cx = classNames.bind(styles);
 
@@ -20,22 +22,26 @@ function Login() {
     e.preventDefault();
     setTimeout(async ()=>{
       try {
-        const res = await axios.post("http://lav2.cf/api/login", {
+        const res = await axios.post("http://127.0.0.1:8000/api/login", {
           email,
           password,
-        })
-        if(res.data.permission === "user"){
-          navigate('/');
-        }else{
-          navigate('/admin');
-        }
+        });
         localStorage.setItem("access_token", res.data.access_token);
+        setLoading(false)
+        swal({
+          title: "Thành công!",
+          text: "Đăng nhập thành công!",
+          icon: "success",
+          timer: 1500,
+          buttons:false,
+        }).then(() => {
+          navigate('/');
+        });
       } catch (error) {
         setError(error.res.data.message);
       }
     },1500)
-   
-  };
+  };  
   return (
     <div className={cx("Login-main")}>
       <div className={cx("Login-container")}>
@@ -58,7 +64,6 @@ function Login() {
           </div>
           <div className={cx("text-line")}>
             <span>OR</span>
-            <div className={cx("line")}></div>
           </div>
           <form onSubmit={handleSubmit}>
             <label className={cx("label")}>
@@ -123,7 +128,7 @@ function Login() {
               </Button>
             )}
           </form>
-          <span className={cx('link-register')}>New user? <a href="/">Create an account</a></span>
+          <span className={cx('link-register')}>New user? <Link to="/signup">Create an account</Link></span>
         </div>
       </div>
     </div>

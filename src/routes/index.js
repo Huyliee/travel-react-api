@@ -5,12 +5,13 @@ import AdminLayout from "~/component/Layout/AdminLayout";
 import HomeAdmin from "~/pages/HomeAdmin";
 import TourAdmin from "~/pages/TourAdmin";
 import UserAdmin from "~/pages/UserAdmin";
+import Register from "~/pages/Home/Register";
 
 const publicRoutes = [
     {path: '/' , component:HomePage},
     {path: '/login' , component:Login},
+    {path: '/signup' , component:Register},
     {path: '/tour' , component:Tour},
-
 ]
 
 const privateRoutes =[

@@ -23,12 +23,14 @@
     "date-fns": "^2.29.3",
     "dayjs": "^1.11.7",
     "normalize.css": "^8.0.1",
+    "plyr-react": "^5.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.9.0",
     "react-scripts": "5.0.1",
     "react-spinners": "^0.13.8",
     "react-toastify": "^9.1.2",
+    "sweetalert": "^2.1.2",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {

@@ -26,6 +26,7 @@ import Product from "./Product";
 import ProductDisCount from "./ProductDiscount";
 // import axios from "axios";
 import { getTour } from "~/GlobalFunction/Api";
+import PlyrComponent from "./VideoPlyr";
 
 const cx = classNames.bind(styles);
 function HomePage() {
@@ -45,13 +46,16 @@ function HomePage() {
     //   .then((res) => {
     //     setProduct(res.data.data);
     //   });
-    async function loadTour(){
+    async function loadTour() {
       const data = await getTour();
-      setProduct(data)
+      setProduct(data);
       console.log(data);
     }
     loadTour();
-  },[]);
+  }, []);
+
+
+
   return (
     <div className={cx("Home-main")}>
       <div className={cx("Home-container")}>
@@ -273,7 +277,7 @@ function HomePage() {
         </div>
         {/* Product List v1*/}
         <div
-          className={cx("location-container","product-response")}
+          className={cx("location-container", "product-response")}
           style={{
             backgroundColor: "#f3f4f6",
             padding: "64px 48px",
@@ -343,20 +347,21 @@ function HomePage() {
             </div>
           </div>
           <div className={cx("product-container")}>
-            {products.map((product,index)=>(
-            <Product
-              key={index}
-              img={product.img_tour}
-              name={product.name_tour}
-              location="Phú quốc"
-              price={product.adult_price}
-            />
-            ))};
+            {products.map((product, index) => (
+              <Product
+                key={index}
+                img={product.img_tour}
+                name={product.name_tour}
+                location="Phú quốc"
+                price={product.adult_price}
+              />
+            ))}
+            ;
           </div>
         </div>
         {/* Product List v2 */}
         <div
-          className={cx("location-container","product-response")}
+          className={cx("location-container", "product-response")}
           style={{
             backgroundColor: "#f3f4f6",
             padding: "64px 48px",
@@ -426,7 +431,7 @@ function HomePage() {
             </div>
           </div>
           <div className={cx("product-container")}>
-            {products.map((product,index)=>(
+            {products.map((product, index) => (
               <ProductDisCount
                 key={index}
                 img={product.img_tour}
@@ -435,6 +440,18 @@ function HomePage() {
                 price={product.adult_price}
               />
             ))}
+          </div>
+        </div>
+        <div className={cx("location-container")}>
+          <div className={cx("location-heading-container")}>
+            <h2>The Video</h2>
+            <span>Các tour du lịch tại nhiều địa điểm nổi bật</span>
+          </div>
+          <div className={cx("video-full-container")}>
+              <PlyrComponent />
+          </div>
+          <div className={cx("list-video-container")}>
+              
           </div>
         </div>
       </div>
