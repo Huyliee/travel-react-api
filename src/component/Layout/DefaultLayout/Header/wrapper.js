@@ -1,66 +1,77 @@
 import classNames from "classnames/bind";
 import styles from "./Header.module.scss";
 import images from "~/component/assets/images";
+import axios from "axios";
+import { useState , useEffect } from "react";
 
 const cx = classNames.bind(styles);
 
 function Wrapper() {
+  const [bac, setBac] = useState([]);
+  const [trung, setTrung] = useState([]);
+  const [tayNam, setTayNam] = useState([]);
+  const [dongNam, setDongNam] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://127.0.0.1:8000/api/location/mb').then(response => {
+      setBac(response.data.data);
+    });
+    axios.get('http://127.0.0.1:8000/api/location/mt').then(response => {
+      setTrung(response.data.data);
+    });
+    axios.get('http://127.0.0.1:8000/api/location/tnb').then(response => {
+      setTayNam(response.data.data);
+    });
+    axios.get('http://127.0.0.1:8000/api/location/dnb').then(response => {
+      setDongNam(response.data.data);
+    });
+  }, []);
+
   return (
     <div className={cx("tour-down-container")}>
       <div className={cx("tour-down-container-main")}>
         <div className={cx("list-tour-container")}>
           <img src={images.nav1} alt="nav1" className={cx("nav-down-img")} />
           <ul className={cx("list-nav")}>
-            <li className={cx("header-list-nav")}>Tour miền nam</li>
-            <li>Hồ Chí Minh</li>
-            <li>Hồ Chí Minh</li>
-            <li>Hồ Chí Minh</li>
-            <li>Hồ Chí Minh</li>
-            <li>Hồ Chí Minh</li>
+            <li className={cx("header-list-nav")}>Miền bắc</li>
+            {
+              bac.map(tinh => (
+                <li>{tinh.name_location}</li>
+              ))
+            }
           </ul>
         </div>
         <div className={cx("list-tour-container")}>
           <img src={images.nav2} alt="nav1" className={cx("nav-down-img")} />
           <ul className={cx("list-nav")}>
-            <li className={cx("header-list-nav")}>Tour miền nam</li>
-            <li>Hồ Chí Minh</li>
-            <li>Hồ Chí Minh</li>
-            <li>Hồ Chí Minh</li>
-            <li>Hồ Chí Minh</li>
-            <li>Hồ Chí Minh</li>
+            <li className={cx("header-list-nav")}>Miền trung</li>
+            {
+              trung.map(tinh => (
+                <li>{tinh.name_location}</li>
+              ))
+            }
           </ul>
         </div>
         <div className={cx("list-tour-container")}>
           <img src={images.nav3} alt="nav1" className={cx("nav-down-img")} />
           <ul className={cx("list-nav")}>
-            <li className={cx("header-list-nav")}>Tour miền nam</li>
-            <li>Hồ Chí Minh</li>
-            <li>Hồ Chí Minh</li>
-            <li>Hồ Chí Minh</li>
-            <li>Hồ Chí Minh</li>
-            <li>Hồ Chí Minh</li>
+            <li className={cx("header-list-nav")}>Miền tây nam bộ</li>
+            {
+              tayNam.map(tinh => (
+                <li>{tinh.name_location}</li>
+              ))
+            }
           </ul>
         </div>
         <div className={cx("list-tour-container")}>
           <img src={images.nav4} alt="nav1" className={cx("nav-down-img")} />
           <ul className={cx("list-nav")}>
-            <li className={cx("header-list-nav")}>Tour miền nam</li>
-            <li>Hồ Chí Minh</li>
-            <li>Hồ Chí Minh</li>
-            <li>Hồ Chí Minh</li>
-            <li>Hồ Chí Minh</li>
-            <li>Hồ Chí Minh</li>
-          </ul>
-        </div>
-        <div className={cx("list-tour-container")}>
-          <img src={images.nav5} alt="nav1" className={cx("nav-down-img")} />
-          <ul className={cx("list-nav")}>
-            <li className={cx("header-list-nav")}>Tour miền nam</li>
-            <li>Hồ Chí Minh</li>
-            <li>Hồ Chí Minh</li>
-            <li>Hồ Chí Minh</li>
-            <li>Hồ Chí Minh</li>
-            <li>Hồ Chí Minh</li>
+            <li className={cx("header-list-nav")}>Miền đông nam bộ</li>
+            {
+              dongNam.map(tinh => (
+                <li>{tinh.name_location}</li>
+              ))
+            }
           </ul>
         </div>
       </div>

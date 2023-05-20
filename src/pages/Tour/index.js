@@ -30,7 +30,7 @@ function Tour() {
   const [tours,setTours] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios('http://lav2.cf/api/pagnination/tour?page=' + currentPage);
+      const result = await axios('http://127.0.0.1:8000/api/pagnination/tour?page=' + currentPage);
       setTours(result.data.data.data);
       setTotalPages(result.data.data.last_page);
     };
@@ -39,7 +39,7 @@ function Tour() {
   console.log(totalPages);
   const handleSearch = useEffect(()=>{
       axios
-        .get(`http://lav2.cf/api/search?name=${nameTour}`)
+        .get(`http://127.0.0.1:8000/api/search?name=${nameTour}`)
         .then((res) => {
           setTours(res.data.tours);
         })
@@ -60,9 +60,11 @@ function Tour() {
           <Filter handleInput={handleInput} nameTour={nameTour} handleSearch={handleSearch} handleKeyPress={handleKeyPress} />
         </div>
         <div className={cx("product-container")}>
+          <div className={cx("title-container")}>
           <span>
             <h1>Các tour du lịch</h1>
           </span>
+          </div>
           <div className={cx("list-tour-container")}>
             {loading && tours.map((product, index) => (
               <ProductList

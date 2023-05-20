@@ -21,6 +21,7 @@
 .slide-content{
     width: 624px;
     margin: auto 0px;
+    color: var(--text-color);
     h1{
         font-size: 72px;
         font-weight: 600;
@@ -129,6 +130,7 @@
     h2{
         font-size: 38px;
         font-weight: 700;
+        color: var(--text-color);
     }
     span{
         font-size: 18px;
@@ -214,6 +216,24 @@
     flex-wrap: wrap;
     height: 100%;
     gap: 10px;
+}
+.news-container{
+    display: flex;
+}
+.news-left-container{
+    margin-right: 10px;
+}
+.news-right-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.news-right-bottom{
+    display: flex;
+    justify-content: space-between;
+}
+.slick-prev:before, .slick-next:before{
+    color: #000000!important;
 }
 
 
@@ -313,6 +333,15 @@
     }
     .product-response{
         padding: 62px 15px!important;
+    }
+    .news-container{
+        flex-direction: column;
+    }
+    .news-left-container{
+        margin: 0px 0px 10px 0px;
+    }
+    .news-right-bottom{
+        margin: 10px 0px 0px;
     }
     
 }

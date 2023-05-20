@@ -28,6 +28,11 @@ function Register() {
         })
         .then((response) => {
           console.log(response.data);
+          setLoading(false)
+          if(response.data.toast === "true")
+          {
+            swal("Thất bại!", response.data.error, "error");
+          }else{
           swal("Thành công!", "Bạn đã đăng ký thành công!", "success", {
             buttons: {
               confirm: {
@@ -42,6 +47,7 @@ function Register() {
             // Chuyển hướng về trang login
             navigate('/login');
           });
+        }
         })
         .catch((error) => {
           console.log(error);
@@ -64,7 +70,7 @@ function Register() {
                   width: 448,
                   marginTop: "10px",
                   "& .MuiInputBase-root": {
-                    borderRadius: "16px",
+                    borderRadius: "8px",
                   },
                 }}
                 placeholder="example@example.com"
@@ -82,7 +88,7 @@ function Register() {
                   width: 448,
                   marginTop: "10px",
                   "& .MuiInputBase-root": {
-                    borderRadius: "16px",
+                    borderRadius: "8px",
                   },
                 }}
                 placeholder="example@example.com"
@@ -100,7 +106,7 @@ function Register() {
                   width: 448,
                   marginTop: "10px",
                   "& .MuiInputBase-root": {
-                    borderRadius: "16px",
+                    borderRadius: "8px",
                   },
                 }}
                 type="password"
@@ -117,7 +123,7 @@ function Register() {
                   width: 448,
                   marginTop: "10px",
                   "& .MuiInputBase-root": {
-                    borderRadius: "16px",
+                    borderRadius: "8px",
                   },
                 }}
                 type="password"

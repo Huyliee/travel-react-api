@@ -22,6 +22,7 @@
             p{
                 font-size: 30px;
                 font-weight: 700;
+                color: var(--text-color);
             }
             img{
                 display: inline-block;
@@ -35,7 +36,7 @@
         width: 728px;
         ul{
             list-style-type: none;
-            margin: 0 35px;
+            margin-left: 35px;
             cursor: pointer;
             // :hover{
             //     .tour-down-container{
@@ -49,9 +50,9 @@
             padding: 8px 20px;
             a{
                 font-size: 16px;
-                font-weight: 600;
+                font-weight: 700;
                 text-decoration: none;
-                color: #111827;
+                color: var(--text-color);
             }
         }
     }
@@ -134,7 +135,7 @@
 }
 .wrapper-container {
     background-color: #ffffff;
-    width: 840px;
+    width: 800px;
     box-shadow: rgb(0 0 0 / 10%) 0px 13px 13px 13px;
     animation: infinite;
     animation: nav-down-ani ease 0.67s;
@@ -156,7 +157,7 @@
     // display: none;
     .tour-down-container-main{
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
     }
     .list-tour-container{
         width: 144px;
@@ -168,13 +169,14 @@
         }
         .list-nav{
             margin:0!important;
-            width: 144px;
+            width: 174px;
             margin-right: 20px;
             text-align: left;
             list-style-type: none;
             .header-list-nav{
                 font-weight: 700;
                 margin-top: 8px;
+                width: 100%;
             }
             li{
                 width: 144px;

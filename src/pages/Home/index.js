@@ -24,9 +24,12 @@ import CartLocation from "./CartLocation";
 import WhyChooseBox from "./WhyChoose";
 import Product from "./Product";
 import ProductDisCount from "./ProductDiscount";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 // import axios from "axios";
 import { getTour } from "~/GlobalFunction/Api";
-import PlyrComponent from "./VideoPlyr";
+import News from "./News";
 
 const cx = classNames.bind(styles);
 function HomePage() {
@@ -41,11 +44,6 @@ function HomePage() {
   //API Product
   const [products, setProduct] = useState([]);
   useEffect(() => {
-    // axios
-    //   .get("https://lav2.cf/api/tour")
-    //   .then((res) => {
-    //     setProduct(res.data.data);
-    //   });
     async function loadTour() {
       const data = await getTour();
       setProduct(data);
@@ -54,7 +52,45 @@ function HomePage() {
     loadTour();
   }, []);
 
-
+  //Slick Slider
+  const settingsSlider = {
+    dots: true,
+    infinite: true,
+    arrows:true,
+    speed: 300,
+    slidesToShow: 5,
+    slidesToScroll: 5,
+    responsive: [
+      {
+        breakpoint: 1210,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4
+        }
+      },
+      {
+        breakpoint: 960,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3
+        }
+      },
+      {
+        breakpoint: 740,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2
+        }
+      },
+      {
+        breakpoint: 540,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]    
+  };
 
   return (
     <div className={cx("Home-main")}>
@@ -62,10 +98,10 @@ function HomePage() {
         {/* slide */}
         <div className={cx("silde-container")}>
           <div className={cx("slide-content")}>
-            <h1>Hotel, car & experiences</h1>
+            <h1>Khám phá Mùa Hè độc đáo</h1>
             <p>
-              Accompanying us, you have a trip full of experiences. With
-              Chisfis, booking accommodation, resort villas, hotels
+              Mùa hè đang đến, và trên khắp thế giới, những festival mùa hè đang
+              chờ đón du khách bằng những trải nghiệm tuyệt vời
             </p>
             <Button
               variant="contained"
@@ -91,19 +127,19 @@ function HomePage() {
           <div className={cx("slide-img")}>
             <div className={cx("slide-img-left")}>
               <img
-                src={images.slide}
+                src="https://i.imgur.com/5BWOQwM.jpg"
                 alt="img-left"
                 className={cx("img-left")}
               />
               <img
-                src={images.slide2}
+                src="https://i.imgur.com/1336ESA.jpg"
                 alt="img-left"
                 className={cx("img-left")}
               />
             </div>
             <div className={cx("slide-img-right")}>
               <img
-                src={images.slide3}
+                src="https://i.imgur.com/igEP5Gj.jpg"
                 alt="img-left"
                 className={cx("img-right")}
               />
@@ -203,7 +239,8 @@ function HomePage() {
             <h2>Địa điểm du lịch nổi bật</h2>
             <span>Các tour du lịch tại nhiều địa điểm nổi bật</span>
           </div>
-          <div className={cx("location-list-container")}>
+
+            <Slider {...settingsSlider}>
             <CartLocation
               img={images.cartLocation1}
               heading="Phú Quốc"
@@ -229,7 +266,22 @@ function HomePage() {
               heading="Đà Lạt"
               decription="112 properties"
             />
-          </div>
+                        <CartLocation
+              img={images.cartLocation2}
+              heading="Đà Lạt"
+              decription="112 properties"
+            />
+                        <CartLocation
+              img={images.cartLocation2}
+              heading="Đà Lạt"
+              decription="112 properties"
+            />
+                        <CartLocation
+              img={images.cartLocation2}
+              heading="Đà Lạt"
+              decription="112 properties"
+            />
+            </Slider>
         </div>
         {/* Why Choose */}
         <div className={cx("location-container")}>
@@ -239,7 +291,7 @@ function HomePage() {
           </div>
           <div className={cx("why-choose-container")}>
             <div className={cx("why-choose-img")}>
-              <img src={images.slide3} alt="why choose" />
+              <img src="https://i.imgur.com/igEP5Gj.jpg" alt="why choose" />
             </div>
             <div className={cx("why-choose-content-container")}>
               <WhyChooseBox
@@ -442,16 +494,52 @@ function HomePage() {
             ))}
           </div>
         </div>
-        <div className={cx("location-container")}>
+        <div className={cx("location-container")} style={{marginBottom:"20px"}}>
           <div className={cx("location-heading-container")}>
-            <h2>The Video</h2>
+            <h2>Tin tức du lịch</h2>
             <span>Các tour du lịch tại nhiều địa điểm nổi bật</span>
           </div>
-          <div className={cx("video-full-container")}>
+          {/* <div className={cx("video-full-container")}>
               <PlyrComponent />
           </div>
           <div className={cx("list-video-container")}>
               
+          </div> */}
+          <div className={cx("news-container")}>
+            <div className={cx("news-left-container")}>
+              <News
+                width="650px"
+                height="500px"
+                font="30px"
+                title="VinWonders tưng bừng khởi động lễ hội hè Wonder Summer 2023"
+                background="https://cdn.24h.com.vn/upload/2-2023/images/2023-05-09/vw_wonder-summer_tcbc_a3--1683595932-589-width1000height666.jpg"
+              />
+            </div>
+            <div className={cx("news-right-container")}>
+              <News
+                width="650px"
+                height="245px"
+                font="22px"
+                title="Nghỉ lễ siêu sang săn ngàn ưu đãi khủng từ Vinpearl"
+                background="https://cdn.24h.com.vn/upload/2-2023/images/2023-04-24/vp_flash-sale_pr1_a4-1682303275-205-width1000height665.jpg"
+              />
+              <div className={cx("news-right-bottom")}>
+                <News
+                  width="280px"
+                  height="245px"
+                  font="22px"
+                  title="Những công trình đẹp siêu thực tại Sun World Ba Na Hills"
+                  background="https://cdn.24h.com.vn/upload/2-2023/images/2023-05-19/3-1684478989-763-width1000height613.jpg"
+                />
+                <News
+                width="280px"
+                height="245px"
+                font="22px"
+                title="Du khách thích thú ngắm thung lũng hoa hồng dịp lễ 30/4 tại Fansipan"
+                background="https://cdn.24h.com.vn/upload/2-2023/images/2023-04-30/3-1682842149-488-width1000height666.jpg"
+              />
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -28,15 +28,15 @@ function Login() {
         });
         localStorage.setItem("access_token", res.data.access_token);
         setLoading(false)
-        swal({
-          title: "Thành công!",
-          text: "Đăng nhập thành công!",
-          icon: "success",
-          timer: 1500,
-          buttons:false,
-        }).then(() => {
-          navigate('/');
-        });
+          swal({
+            title: "Thành công!",
+            text: "Đăng nhập thành công!",
+            icon: "success",
+            timer: 1500,
+            buttons:false,
+          }).then(() => {
+            navigate('/');
+          });
       } catch (error) {
         setError(error.res.data.message);
       }
@@ -67,7 +67,7 @@ function Login() {
           </div>
           <form onSubmit={handleSubmit}>
             <label className={cx("label")}>
-              <span className={cx("label-input")}>Email Address</span>
+              <span className={cx("label-input")}>Email</span>
               <TextField
                 fullWidth
                 label="Email"
@@ -76,7 +76,7 @@ function Login() {
                   width: 448,
                   marginTop: "10px",
                   "& .MuiInputBase-root": {
-                    borderRadius: "16px",
+                    borderRadius: "8px",
                   },
                 }}
                 placeholder="example@example.com"
@@ -85,7 +85,7 @@ function Login() {
               />
             </label>
             <label className={cx("label")}>
-              <span className={cx("label-input")}>Password</span>
+              <span className={cx("label-input")}>Mật khẩu</span>
               <TextField
                 fullWidth
                 label="Password"
@@ -94,7 +94,7 @@ function Login() {
                   width: 448,
                   marginTop: "10px",
                   "& .MuiInputBase-root": {
-                    borderRadius: "16px",
+                    borderRadius: "8px",
                   },
                 }}
                 type="password"

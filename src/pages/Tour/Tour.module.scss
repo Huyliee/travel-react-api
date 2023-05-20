@@ -19,3 +19,12 @@
     align-items: center;
     flex-direction: column;
 }
+.title-container{
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    padding: 24px 0px;
+    h1{
+        color: var(--text-color);
+    }
+}

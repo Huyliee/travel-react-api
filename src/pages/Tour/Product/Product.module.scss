@@ -53,6 +53,7 @@
     padding: 10px 20px;
     position: relative;
     margin-left: 10px;
+    color: var(--text-color)!important;
 }
 .number-seat{
     font-size: 14px;
@@ -71,13 +72,13 @@
 }
 .des-tour{
     font-size: 14px;
-    color: #111827;
+    color: var(--text-color);
     text-transform: capitalize;
     margin-bottom: 10px;
 }
 .name-tour{
     font-size: 18px;
-    color: #111827;
+    color: var(--text-color);
     font-weight: 700;
     text-transform: capitalize;
     margin-bottom: 10px;
@@ -98,8 +99,8 @@
     justify-content: space-between;
 }
 .price-tour-text{
-    color: #111827;
-    font-weight: 500;
+    color: var(--red-color);
+    font-weight: 700;
 }
 .discount-container{
     width: 89px;
@@ -120,7 +121,7 @@
     color: #f97316;
 }
 .rating-text{
-    color: #111827;
+    color: var(--text-color);
     font-weight: 500;
 }
 .rating-number-voted{
@@ -129,6 +130,6 @@
 .line-product{
     width: 140px;
     height: 1px;
-    background-color: #111827;
+    background-color: var(--text-color);
     margin-bottom: 20px;
 }
