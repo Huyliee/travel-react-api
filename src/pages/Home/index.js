@@ -30,6 +30,7 @@ import Slider from "react-slick";
 // import axios from "axios";
 import { getTour } from "~/GlobalFunction/Api";
 import News from "./News";
+import Banner from "./Banner";
 
 const cx = classNames.bind(styles);
 function HomePage() {
@@ -60,6 +61,46 @@ function HomePage() {
     speed: 300,
     slidesToShow: 5,
     slidesToScroll: 5,
+    responsive: [
+      {
+        breakpoint: 1210,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4
+        }
+      },
+      {
+        breakpoint: 960,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3
+        }
+      },
+      {
+        breakpoint: 740,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2
+        }
+      },
+      {
+        breakpoint: 540,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]    
+  };
+  //Setting Slider Banner
+  const settingsBanner = {
+    dots: true,
+    infinite: true,
+    speed: 300,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 1500,
     responsive: [
       {
         breakpoint: 1210,
@@ -232,6 +273,19 @@ function HomePage() {
               </button>
             </div>
           </form>
+        </div>
+        {/* Ưu đãi */}
+        <div className={cx("location-container")}>
+          <div className={cx("location-heading-container")}>
+            <h2>Ưu đãi</h2>
+            <span>Những ưu đãi hấp dẫn đang chờ đón bạn</span>
+          </div>
+          <Slider {...settingsBanner}>
+            <Banner img="https://media.travel.com.vn/Advertisings/bn__230510_.jpg"/>
+            <Banner img="https://media.travel.com.vn/Advertisings/bn__230511_.jpg"/>
+            <Banner img="https://media.travel.com.vn/Advertisings/bn_230403_TourHongKong_1024-768px.webp"/>
+            <Banner img="https://th.bing.com/th/id/R.9689a50ce40f55f5eebb4dba8487c006?rik=NvZEQvvfsbjXsw&riu=http%3a%2f%2fhanoivietnamtourism.vn%2fwp-content%2fuploads%2f2019%2f06%2ftop-banner.jpg&ehk=bdGlfagQkipBQk1y%2f6t47WZpV7l3S1kbdN9279d2a8o%3d&risl=&pid=ImgRaw&r=0"/>
+          </Slider>
         </div>
         {/* Location List */}
         <div className={cx("location-container")}>
