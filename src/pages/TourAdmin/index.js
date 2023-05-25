@@ -16,6 +16,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import { getTour } from "~/GlobalFunction/Api";
 
 const style = {
   position: "absolute",
@@ -38,10 +39,13 @@ function TourAdmin() {
   const handleInputUpdate = () => setInputUpdate(true);
   const handleInputAdd = () => setInputUpdate(false);
   const navigate = useNavigate();
+  //API Product
   useEffect(() => {
-    axios.get("https://lav2.cf/api/tour").then((res) => {
-      setTour(res.data.data);
-    });
+    async function loadTour() {
+      const data = await getTour();
+      setTour(data);
+    }
+    loadTour();
   }, []);
   const columns = [
     {
@@ -119,6 +123,7 @@ function TourAdmin() {
   const [img_tour, setImgTour] = useState("");
   const [best_seller, setBestSeller] = useState(1);
   const [hot_tour, setHotTour] = useState(1);
+  console.log(img_tour);
   const resetFrom = () => {
     setIdTour("");
     setNameTour("");
@@ -134,7 +139,7 @@ function TourAdmin() {
   const handleAdd = () => {
     // e.preventDefault();
     axios
-      .post("https://lav2.cf/api/tour/store", {
+      .post("http://127.0.0.1:8000/api/tour/store", {
         id_tour,
         name_tour,
         date_back,
@@ -161,7 +166,7 @@ function TourAdmin() {
   };
   const handleDelete = (id) => {
     axios
-      .delete(`https://lav2.cf/api/tour/delete/${id}`)
+      .delete(`http://127.0.0.1:8000/api/tour/delete/${id}`)
       .then(() => {
         // xóa thành công, cập nhật lại danh sách tour
         const updatedTour = tour.filter((t) => t.id_tour !== id);
@@ -175,7 +180,7 @@ function TourAdmin() {
   };
   const handleUpdate = (id) => {
     axios
-      .get(`https://lav2.cf/api/tour/show/${id}`)
+      .get(`http://127.0.0.1:8000/api/tour/show/${id}`)
       .then((response) => {
         setShowTour(response.data);
         setIdTour(response.data.id_tour);
@@ -197,7 +202,7 @@ function TourAdmin() {
   const handleUpdateSubmit = (id) => {
     // // e.preventDefault();
     axios
-      .put(`https://lav2.cf/api/tour/update/${id}`, {
+      .put(`http://127.0.0.1:8000/api/tour/update/${id}`, {
         name_tour,
         date_back,
         content_tour,
@@ -266,6 +271,7 @@ function TourAdmin() {
             <form
               className={cx("store-input-container")}
               onSubmit={handleSubmit}
+              enctype="multipart/form-data"
             >
               <div className={cx("store-input")}>
                 <div className={cx("label-container")}>

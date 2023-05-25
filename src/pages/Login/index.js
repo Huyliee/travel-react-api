@@ -35,7 +35,12 @@ function Login() {
             timer: 1500,
             buttons:false,
           }).then(() => {
-            navigate('/');
+            if(res.data.permission === "user")
+            {
+              navigate('/');
+            }else{
+              navigate('/admin');
+            }
           });
       } catch (error) {
         setError(error.res.data.message);

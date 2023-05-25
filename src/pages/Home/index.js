@@ -48,7 +48,6 @@ function HomePage() {
     async function loadTour() {
       const data = await getTour();
       setProduct(data);
-      console.log(data);
     }
     loadTour();
   }, []);
@@ -285,6 +284,8 @@ function HomePage() {
             <Banner img="https://media.travel.com.vn/Advertisings/bn__230511_.jpg"/>
             <Banner img="https://media.travel.com.vn/Advertisings/bn_230403_TourHongKong_1024-768px.webp"/>
             <Banner img="https://th.bing.com/th/id/R.9689a50ce40f55f5eebb4dba8487c006?rik=NvZEQvvfsbjXsw&riu=http%3a%2f%2fhanoivietnamtourism.vn%2fwp-content%2fuploads%2f2019%2f06%2ftop-banner.jpg&ehk=bdGlfagQkipBQk1y%2f6t47WZpV7l3S1kbdN9279d2a8o%3d&risl=&pid=ImgRaw&r=0"/>
+            <Banner img="https://i.imgur.com/R0woH44.jpg"/>
+            <Banner img="https://i.imgur.com/mxZQmf7.jpg"/>
           </Slider>
         </div>
         {/* Location List */}

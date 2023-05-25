@@ -6,12 +6,14 @@ import HomeAdmin from "~/pages/HomeAdmin";
 import TourAdmin from "~/pages/TourAdmin";
 import UserAdmin from "~/pages/UserAdmin";
 import Register from "~/pages/Home/Register";
+import Contact from "~/pages/Contact";
 
 const publicRoutes = [
     {path: '/' , component:HomePage},
     {path: '/login' , component:Login},
     {path: '/signup' , component:Register},
     {path: '/tour' , component:Tour},
+    {path: '/contact' , component:Contact},
 ]
 
 const privateRoutes =[
