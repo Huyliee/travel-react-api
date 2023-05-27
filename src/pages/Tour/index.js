@@ -3,9 +3,9 @@ import classNames from "classnames/bind";
 import Filter from "./Filter";
 import ProductList from "./Product";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { Pagination } from "@mui/material";
 import ProductLoading from "./Product/ProductLoading";
+import { paginationApi, searchApi } from "~/GlobalFunction/Api";
 
 const cx = classNames.bind(styles);
 
@@ -30,24 +30,19 @@ function Tour() {
   const [tours,setTours] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios('http://127.0.0.1:8000/api/pagnination/tour?page=' + currentPage);
-      setTours(result.data.data.data);
-      setTotalPages(result.data.data.last_page);
+      const result = await paginationApi(currentPage);
+      setTours(result.data);
+      setTotalPages(result.last_page);
     };
     fetchData();
   }, [currentPage]);
-  console.log(totalPages);
   const handleSearch = useEffect(()=>{
-      axios
-        .get(`http://127.0.0.1:8000/api/search?name=${nameTour}`)
-        .then((res) => {
-          setTours(res.data.tours);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      
-    },[shouldSearch,nameTour])
+    async function Search() {
+      const res = await searchApi(nameTour);
+      setTours(res.tours);
+    }
+    Search();
+    },[shouldSearch,nameTour]);
   useEffect(()=>{
     setTimeout(()=>{
         setLoading(true);

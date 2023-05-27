@@ -61,10 +61,10 @@ function Header() {
         <div className={cx("sub-nav-container")}>
           <ul>
             <li>
-              <a href="/">Trang chủ</a>
+            <Link to="/">Trang chủ</Link>
             </li>
             <li>
-              <a href="/">Giới thiệu</a>
+            <Link to="/">Giới thiệu</Link>
             </li>
             <Tippy
               interactive
@@ -95,7 +95,7 @@ function Header() {
               <a href="/">Tin tức</a>
             </li>
             <li>
-              <a href="/">Liên hệ</a>
+              <Link to="/contact">Liên hệ</Link>
             </li>
           </ul>
         </div>

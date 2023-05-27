@@ -2,10 +2,10 @@ import styles from "./Register.module.scss";
 import classNames from "classnames/bind";
 import { TextField, Button } from "@mui/material";
 import {  useState } from "react";
-import axios from "axios";
 import { BeatLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
+import { registerApi } from "~/GlobalFunction/Api";
 
 const cx = classNames.bind(styles);
 
@@ -16,23 +16,17 @@ function Register() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSignUp = (e) =>{
+  const handleSignUp = (e) => {
     setLoading(true);
     e.preventDefault();
-    setTimeout(async ()=>{
-        axios
-        .post("http://127.0.0.1:8000/api/signup", {
-            customer_name,
-            email,
-            password,
-        })
-        .then((response) => {
-          console.log(response.data);
-          setLoading(false)
-          if(response.data.toast === "true")
-          {
-            swal("Thất bại!", response.data.error, "error");
-          }else{
+    setTimeout(async () => {
+      try {
+        const response = await registerApi(customer_name, email, password);
+        console.log(response);
+        setLoading(false);
+        if (response.toast === "true") {
+          swal("Thất bại!", response.error, "error");
+        } else {
           swal("Thành công!", "Bạn đã đăng ký thành công!", "success", {
             buttons: {
               confirm: {
@@ -48,12 +42,11 @@ function Register() {
             navigate('/login');
           });
         }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },1500)
-  }
+      } catch (error) {
+        console.log(error);
+      }
+    }, 1500);
+  };  
   return (
     <div className={cx("Login-main")}>
       <div className={cx("Login-container")}>

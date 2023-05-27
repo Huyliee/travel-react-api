@@ -1,8 +1,8 @@
 import classNames from "classnames/bind";
 import styles from "./Header.module.scss";
 import images from "~/component/assets/images";
-import axios from "axios";
 import { useState , useEffect } from "react";
+import { locationApi } from "~/GlobalFunction/Api";
 
 const cx = classNames.bind(styles);
 
@@ -13,20 +13,29 @@ function Wrapper() {
   const [dongNam, setDongNam] = useState([]);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/location/mb').then(response => {
-      setBac(response.data.data);
-    });
-    axios.get('http://127.0.0.1:8000/api/location/mt').then(response => {
-      setTrung(response.data.data);
-    });
-    axios.get('http://127.0.0.1:8000/api/location/tnb').then(response => {
-      setTayNam(response.data.data);
-    });
-    axios.get('http://127.0.0.1:8000/api/location/dnb').then(response => {
-      setDongNam(response.data.data);
-    });
+    async function loadBac() {
+      const data = await locationApi('mb');
+      setBac(data);
+    }
+    async function loadTrung() {
+      const data = await locationApi('mt');
+      setTrung(data);
+    }
+    async function loadTnb() {
+      const data = await locationApi('tnb');
+      setTayNam(data);
+    }
+    async function loadDnb() {
+      const data = await locationApi('dnb');
+      setDongNam(data);
+    }
+    loadBac();
+    loadTrung();
+    loadTnb();
+    loadDnb();
   }, []);
-
+  
+  console.log(bac);
   return (
     <div className={cx("tour-down-container")}>
       <div className={cx("tour-down-container-main")}>

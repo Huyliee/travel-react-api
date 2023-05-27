@@ -3,11 +3,11 @@ import classNames from "classnames/bind";
 import SocialLogin from "./social-login";
 import { TextField, Button } from "@mui/material";
 import {  useState } from "react";
-import axios from "axios";
 import { BeatLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
+import { loginApi } from "~/GlobalFunction/Api";
 
 const cx = classNames.bind(styles);
 
@@ -22,11 +22,9 @@ function Login() {
     e.preventDefault();
     setTimeout(async ()=>{
       try {
-        const res = await axios.post("http://127.0.0.1:8000/api/login", {
-          email,
-          password,
-        });
-        localStorage.setItem("access_token", res.data.access_token);
+        const res = await loginApi(email,password);
+        console.log(res.permission);
+        localStorage.setItem("access_token", res.access_token);
         setLoading(false)
           swal({
             title: "Thành công!",
@@ -35,7 +33,7 @@ function Login() {
             timer: 1500,
             buttons:false,
           }).then(() => {
-            if(res.data.permission === "user")
+            if(res.permission === "user")
             {
               navigate('/');
             }else{
@@ -43,7 +41,7 @@ function Login() {
             }
           });
       } catch (error) {
-        setError(error.res.data.message);
+        setError(error.res.message);
       }
     },1500)
   };  
