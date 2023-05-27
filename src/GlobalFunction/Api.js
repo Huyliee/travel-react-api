@@ -2,12 +2,12 @@ import axios from "axios"
 
 // Api load ra tất cả tour trong danh sách tour
 export const getTour = async ()=>{
-    const res = await axios.get('http://phpd19.ga/api/tour');
+    const res = await axios.get('https://phpd19.ga/api/tour');
     return res.data.data;
 }
 // Api đăng nhập
 export const loginApi = async (email, password)=>{
-    const res = await axios.post('http://phpd19.ga/api/login',{
+    const res = await axios.post('https://phpd19.ga/api/login',{
         email,
         password,
     })
@@ -15,7 +15,7 @@ export const loginApi = async (email, password)=>{
 }
 // Api đăng ký
 export const registerApi = async (customer_name,email,password)=>{
-    const res = await axios.post('http://phpd19.ga/api/signup',{
+    const res = await axios.post('https://phpd19.ga/api/signup',{
         customer_name,
         email,
         password,
@@ -24,16 +24,16 @@ export const registerApi = async (customer_name,email,password)=>{
 }
 //Api phân trang 
 export const paginationApi = async (currentPage)=>{
-    const res = await axios.get('http://phpd19.ga/api/pagnination/tour?page=' + currentPage);
+    const res = await axios.get('https://phpd19.ga/api/pagnination/tour?page=' + currentPage);
     return res.data.data;
 }
 // Api tìm kiếm
 export const searchApi = async (nameTour)=>{
-    const res = await axios.get(`http://phpd19.ga/api/search?name=${nameTour}`)
+    const res = await axios.get(`https://phpd19.ga/api/search?name=${nameTour}`)
     return res.data;
 }
 //Api tỉnh thành 
 export const locationApi = async (mien)=>{
-    const res = await axios.get(`http://phpd19.ga/api/location/${mien}`)
+    const res = await axios.get(`https://phpd19.ga/api/location/${mien}`)
     return res.data.data;
 }
