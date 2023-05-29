@@ -37,3 +37,8 @@ export const locationApi = async (mien)=>{
     const res = await axios.get(`https://phpd19.ga/api/location/${mien}`)
     return res.data.data;
 }
+//Api chi tiết tour
+export const detailTourApi = async (id) =>{
+    const res = await axios.get(`http://127.0.0.1:8000/api/detail/${id}`)
+    return res.data.data;
+}

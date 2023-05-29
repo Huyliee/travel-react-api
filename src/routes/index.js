@@ -7,6 +7,19 @@ import TourAdmin from "~/pages/TourAdmin";
 import UserAdmin from "~/pages/UserAdmin";
 import Register from "~/pages/Home/Register";
 import Contact from "~/pages/Contact";
+import DetailTour from "~/pages/DetailTour";
+// import { useState , useEffect } from "react";
+// import { getTour } from "~/GlobalFunction/Api";
+
+
+// const [products, setProduct] = useState([]);
+// useEffect(() => {
+//   async function loadTour() {
+//     const data = await getTour();
+//     setProduct(data);
+//   }
+//   loadTour();
+// }, []);
 
 const publicRoutes = [
     {path: '/' , component:HomePage},
@@ -14,6 +27,7 @@ const publicRoutes = [
     {path: '/signup' , component:Register},
     {path: '/tour' , component:Tour},
     {path: '/contact' , component:Contact},
+    {path: '/detail/:id' , component:DetailTour},
 ]
 
 const privateRoutes =[

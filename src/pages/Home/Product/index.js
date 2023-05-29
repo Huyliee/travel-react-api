@@ -3,17 +3,22 @@ import styles from "./Product.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faLocationDot, faStar } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import images from "~/component/assets/images";
 
 const cx = classNames.bind(styles);
 
-function Product({ img, name, location, price }) {
+function Product({id, img, name, location, price , onClick}) {
   const [activeHeart, setActiveHeart] = useState(false);
   const handleHeart = () => {
     setActiveHeart(!activeHeart);
   };
+  const handleClick = () => {
+    onClick(id);
+  };
   return (
-    <div className={cx("product-box")}>
+    <Link to={`/detail/${id}`} style={{textDecoration:'none'}}>
+    <div className={cx("product-box")} onClick={handleClick}>
       <div className={cx("product-img")}>
         <img src={images[img]} alt="Product Img" />
         <div className={cx("favourite-container", `${activeHeart ? 'active' : ''}`)} onClick={handleHeart}>
@@ -41,6 +46,7 @@ function Product({ img, name, location, price }) {
         </div>
       </div>
     </div>
+    </Link>
   );
 }
 

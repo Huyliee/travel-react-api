@@ -132,6 +132,12 @@ function HomePage() {
     ]    
   };
 
+  const [idTour,setIdTour] = useState("");
+  const handleIdTour = (id)=> ()=>{
+    setIdTour(id);
+  }
+  console.log(idTour);
+
   return (
     <div className={cx("Home-main")}>
       <div className={cx("Home-container")}>
@@ -461,9 +467,10 @@ function HomePage() {
                 name={product.name_tour}
                 location="Phú quốc"
                 price={product.adult_price}
+                id={product.id_tour}
+                onClick={() => handleIdTour(product.id_tour)}
               />
-            ))}
-            ;
+            ))};
           </div>
         </div>
         {/* Product List v2 */}
