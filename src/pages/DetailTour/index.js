@@ -9,7 +9,7 @@ import {
   faShoppingCart,
   faTicket,
 } from "@fortawesome/free-solid-svg-icons";
-import { Button, Container } from "@mui/material";
+import { Button, Container, ImageListItem, ImageList } from "@mui/material";
 
 const cx = classNames.bind(styles);
 
@@ -23,7 +23,24 @@ function DetailTour() {
     }
     detailData();
   }, [id]);
-  console.log(detailTour);
+  function modifyImages(images) {
+    return images.map((image, index) => {
+      if (index === 0) {
+        return {
+          ...image,
+          rows: 2,
+          cols: 2,
+        };
+      }
+      if (index === 3) {
+        return {
+          ...image,
+          cols: 2,
+        };
+      }
+      return image;
+    });
+  }
 
   return (
     <div className={cx("detail-container")}>
@@ -77,6 +94,26 @@ function DetailTour() {
             </div>
           </div>
         </div>
+      </Container>
+      <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
+        <ImageList cols={4} rowHeight={300} style={{ overflow: "hidden" }}>
+          {detailTour.images &&
+            Array.isArray(detailTour.images) &&
+            modifyImages(detailTour.images).map((image) => (
+              <ImageListItem key={image.id} cols={image.cols} rows={image.rows}>
+                <img
+                  src={image.url}
+                  alt=""
+                  style={{
+                    height: "auto",
+                    objectFit: "fill",
+                    borderRadius: "10px",
+                    padding: "1px",
+                  }}
+                />
+              </ImageListItem>
+            ))}
+        </ImageList>
       </Container>
     </div>
   );
