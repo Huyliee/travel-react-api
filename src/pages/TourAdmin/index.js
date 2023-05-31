@@ -96,7 +96,7 @@ function TourAdmin() {
       renderCell: (params) => (
         <img
           src={images[params.row.img_tour]}
-          style={{ objectFit: "cover" }}
+          style={{ objectFit: "cover",width:'100%',height:'100%' }}
           alt="Ảnh"
         />
       ),

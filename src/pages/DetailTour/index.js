@@ -9,7 +9,8 @@ import {
   faShoppingCart,
   faTicket,
 } from "@fortawesome/free-solid-svg-icons";
-import { Button, Container, ImageListItem, ImageList } from "@mui/material";
+import { Button, Container, ImageListItem, ImageList ,Box } from "@mui/material";
+import Itinerary from "./Itinerary";
 
 const cx = classNames.bind(styles);
 
@@ -114,6 +115,18 @@ function DetailTour() {
               </ImageListItem>
             ))}
         </ImageList>
+      </Container>
+      <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
+        <h2 className={cx("content-tour-heading")}>Điểm nhấn</h2>
+        <Box>
+            <p className={cx("content-tour-text")}>{detailTour.content_tour}</p>
+        </Box>
+      </Container>
+      <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
+      <h2 className={cx("content-tour-heading")}>Lịch trình</h2>
+      <Box>
+          <Itinerary />
+      </Box>
       </Container>
     </div>
   );
