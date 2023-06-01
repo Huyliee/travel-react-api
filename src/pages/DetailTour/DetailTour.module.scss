@@ -21,6 +21,7 @@
 .detail-rating{
     display: flex;
     margin-top: 20px;
+    align-items: center;
 }
 .number-rating{
     display: flex;
@@ -96,4 +97,10 @@
     text-align: justify;
     color: var(--text-color);
     font-weight: 450;
+}
+.weather-container{
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
 }
