@@ -31,7 +31,7 @@ function DetailTour() {
     async function getWeather() {
       try {
         const response = await axios.get(
-          `http://api.weatherapi.com/v1/current.json?key=${API_KEY_WEATHER}&q=Da Lat`
+          `https://api.weatherapi.com/v1/current.json?key=${API_KEY_WEATHER}&q=Da Lat`
         );
         setWeather(response?.data);
       } catch (error) {
