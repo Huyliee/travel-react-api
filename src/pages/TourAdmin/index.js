@@ -96,7 +96,7 @@ function TourAdmin() {
       renderCell: (params) => (
         <img
           src={images[params.row.img_tour]}
-          style={{ objectFit: "cover",width:'100%',height:'100%' }}
+          style={{ objectFit: "cover", width: "100%", height: "100%" }}
           alt="Ảnh"
         />
       ),
@@ -120,7 +120,7 @@ function TourAdmin() {
   const [place_go, setPlaceGo] = useState("");
   const [child_price, setChildPrice] = useState("");
   const [adult_price, setAdultPrice] = useState("");
-  const [img_tour, setImgTour] = useState("");
+  const [img_tour, setImgTour] = useState(null);
   const [best_seller, setBestSeller] = useState(1);
   const [hot_tour, setHotTour] = useState(1);
   console.log(img_tour);
@@ -132,31 +132,31 @@ function TourAdmin() {
     setPlaceGo("");
     setChildPrice("");
     setAdultPrice("");
-    setImgTour("");
+    setImgTour(null);
     setBestSeller("");
     setHotTour("");
   };
   const handleAdd = () => {
     // e.preventDefault();
+    const formData = new FormData();
+    formData.append("id_tour", id_tour);
+    formData.append("name_tour", name_tour);
+    formData.append("date_back", date_back);
+    formData.append("content_tour", content_tour);
+    formData.append("place_go", place_go);
+    formData.append("child_price", child_price);
+    formData.append("adult_price", adult_price);
+    formData.append("img_tour", img_tour);
+    formData.append("best_seller", best_seller);
+    formData.append("hot_tour", hot_tour);
     axios
-      .post("http://127.0.0.1:8000/api/tour/store", {
-        id_tour,
-        name_tour,
-        date_back,
-        content_tour,
-        place_go,
-        child_price,
-        adult_price,
-        img_tour,
-        best_seller,
-        hot_tour,
-      })
+      .post("https://phpd19.ga/api/tour/store", formData)
       .then((response) => {
         console.log(response.data);
         resetFrom();
         toast.success("Tour đã được lưu thành công.");
         setTimeout(() => {
-          navigate('/admin/tour')
+          navigate("/admin/tour");
         }, 3000); // chuyển hướng sau 2 giây
       })
       .catch((error) => {
@@ -199,25 +199,27 @@ function TourAdmin() {
         console.log(error);
       });
   };
+  console.log(content_tour);
   const handleUpdateSubmit = (id) => {
     // // e.preventDefault();
+    const formData = new FormData();
+    formData.append("id_tour", id_tour);
+    formData.append("name_tour", name_tour);
+    formData.append("date_back", date_back);
+    formData.append("content_tour", content_tour);
+    formData.append("place_go", place_go);
+    formData.append("child_price", child_price);
+    formData.append("adult_price", adult_price);
+    formData.append("img_tour", img_tour);
+    formData.append("best_seller", best_seller);
+    formData.append("hot_tour", hot_tour);
     axios
-      .put(`http://127.0.0.1:8000/api/tour/update/${id}`, {
-        name_tour,
-        date_back,
-        content_tour,
-        place_go,
-        child_price,
-        adult_price,
-        img_tour,
-        best_seller,
-        hot_tour,
-      })
+      .put(`http://127.0.0.1:8000/api/tour/update/${id}`, formData)
       .then((response) => {
         console.log(response.data);
         toast.success("Tour đã được cập nhật thành công.");
         setTimeout(() => {
-          navigate('/admin/tour')
+          navigate("/admin/tour");
         }, 3000); // chuyển hướng sau 2 giây
       })
       .catch((error) => {
@@ -244,13 +246,13 @@ function TourAdmin() {
       }}
     >
       <ToastContainer position="top-right" autoClose={3000} />
-        <h1 style={{ margin: "40px auto" }}>Quản lý tour du lịch</h1>
+      <h1 style={{ margin: "40px auto" }}>Quản lý tour du lịch</h1>
       <div>
-          <Button
-            variant="contained"
-            sx={{ marginBottom: "10px" }}
-            onClick={handleOpen}
-          >
+        <Button
+          variant="contained"
+          sx={{ marginBottom: "10px" }}
+          onClick={handleOpen}
+        >
           Thêm tour
         </Button>
         <Modal
@@ -383,7 +385,8 @@ function TourAdmin() {
                   <Button sx={{ width: "210px" }} component="label">
                     <input
                       type="file"
-                      onChange={(e) => setImgTour(e.target.files[0].name)}
+                      accept="image/*"
+                      onChange={(e) => setImgTour(e.target.files[0])}
                       ref={fileInputRef}
                     />
                   </Button>
