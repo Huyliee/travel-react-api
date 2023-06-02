@@ -8,6 +8,7 @@ import UserAdmin from "~/pages/UserAdmin";
 import Register from "~/pages/Home/Register";
 import Contact from "~/pages/Contact";
 import DetailTour from "~/pages/DetailTour";
+import News from "~/pages/News";
 // import { useState , useEffect } from "react";
 // import { getTour } from "~/GlobalFunction/Api";
 
@@ -27,6 +28,7 @@ const publicRoutes = [
     {path: '/signup' , component:Register},
     {path: '/tour' , component:Tour},
     {path: '/contact' , component:Contact},
+    {path: '/news' , component:News},
     {path: '/detail/:id' , component:DetailTour},
 ]
 

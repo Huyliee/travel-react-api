@@ -92,7 +92,7 @@ function Header() {
               </li>
             </Tippy>
             <li>
-              <a href="/">Tin tức</a>
+              <Link to="/news">Tin tức</Link>
             </li>
             <li>
               <Link to="/contact">Liên hệ</Link>
