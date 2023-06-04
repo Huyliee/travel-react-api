@@ -4,16 +4,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faLocationDot, faStar, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { Chip } from "@mui/material";
+import { Link } from "react-router-dom";
 import images from "~/component/assets/images";
 
 const cx = classNames.bind(styles);
 
-function ProductDisCount({ img, name, location, price }) {
+function ProductDisCount({ id,img, name, location, price }) {
   const [activeHeart, setActiveHeart] = useState(false);
   const handleHeart = () => {
     setActiveHeart(!activeHeart);
   };
   return (
+    <Link to={`/detail/${id}`} style={{textDecoration:'none'}}>
     <div className={cx("product-box")}>
       <div className={cx("product-img")}>
         <img src={images[img]} alt="Product Img" />
@@ -48,6 +50,7 @@ function ProductDisCount({ img, name, location, price }) {
         </div>
       </div>
     </div>
+    </Link>
   );
 }
 

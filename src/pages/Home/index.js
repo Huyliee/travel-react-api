@@ -552,6 +552,7 @@ function HomePage() {
                 name={product.name_tour}
                 location="Phú quốc"
                 price={product.adult_price}
+                id={product.id_tour}
               />
             ))}
           </div>

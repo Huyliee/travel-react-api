@@ -104,3 +104,24 @@
     align-items: center;
     margin-left: 10px;
 }
+.detail-info-container{
+    display: flex;
+    justify-content: space-between;
+}
+.detail-transport-box{
+    width: 636px;
+    height: 613px;
+    padding: 35px 15px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+.detail-hotel-container{
+    width: 636px;
+    height: 295px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+.detail-hotel-box{
+    padding: 35px 20px;
+}

@@ -69,6 +69,7 @@ function Tour() {
                 location="Phú quốc"
                 price={product.adult_price}
                 des={product.content_tour}
+                id={product.id_tour}
               />
             ))}
             {!loading && tours.map(() => (

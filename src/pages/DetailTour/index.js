@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import Itinerary from "./Itinerary";
 import axios from "axios";
+import Date from "./Date";
 
 const cx = classNames.bind(styles);
 
@@ -172,6 +173,60 @@ function DetailTour() {
         </Box>
       </Container>
       {/* /---------------------/ */}
+      {/* Ngày đi */}
+      <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
+      <h2 className={cx("content-tour-heading")}>Bảng giá</h2>
+      <Date />
+      </Container>
+      {/* Thông tin di chuyển */}
+      <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
+        <div className={cx("detail-info-container")}>
+          <div className={cx("detail-transport-container")}>
+            <h2 className={cx("content-tour-heading")}>Chi tiết tour</h2>
+            <Box>
+              <div className={cx("detail-transport-box")}>
+                <h3>Thông tin di chuyển</h3>
+                <div>
+                  <div></div>
+                  <div></div>
+                </div>
+                <div></div>
+              </div>
+            </Box>
+          </div>
+          <div>
+            <h2 className={cx("content-tour-heading")}>Chi tiết khách sạn & Hướng dẫn viên</h2>
+            <div className={cx("detail-hotel-container")}>
+              <Box>
+                <div className={cx("detail-hotel-box")}>
+                  <h3>Thông tin khách sạn</h3>
+                  <div></div>
+                  <div></div>
+                </div>
+              </Box>
+            </div>
+            <div className={cx("detail-hotel-container")}>
+              <Box>
+                <div className={cx("detail-hotel-box")}>
+                  <h3>Thông tin hướng dẫn viên</h3>
+                  <div>
+                    <p>HDV dẫn đoàn</p>
+                    <h3>Lê Ngọc Huy</h3>
+                    <p>Nhơn Đức - Nhà Bè - TP HCM</p>
+                    <p>09090909</p>
+                  </div>
+                  <div>
+                    <p>HDV phụ</p>
+                    <h3>Nguyễn Trọng Hiếu</h3>
+                    <p>Hiệp Phước - Nhà Bè - TP HCM</p>
+                    <p>09090909</p>
+                  </div>
+                </div>
+              </Box>
+            </div>
+          </div>
+        </div>
+      </Container>
     </div>
   );
 }

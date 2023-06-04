@@ -9,16 +9,18 @@ import {
 import { useState } from "react";
 import images from "~/component/assets/images";
 import { Skeleton } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
-function ProductList({ img, name, location, price, des }) {
+function ProductList({ id, img, name, location, price, des }) {
   const [activeHeart, setActiveHeart] = useState(false);
   const handleHeart = () => {
     setActiveHeart(!activeHeart);
   };
 
   return (
+    <Link to={`/detail/${id}`} style={{textDecoration:'none'}}>
     <div className={cx("product-box")}>
       <div className={cx("product-img")}>
         <img src={images[img]} alt="Product Img" />
@@ -61,6 +63,7 @@ function ProductList({ img, name, location, price, des }) {
         </div>
       </div>
     </div>
+    </Link>
   );
 }
 const loading = () => {

@@ -166,7 +166,7 @@ function TourAdmin() {
   };
   const handleDelete = (id) => {
     axios
-      .delete(`http://127.0.0.1:8000/api/tour/delete/${id}`)
+      .delete(`https://phpd19.ga/api/tour/delete/${id}`)
       .then(() => {
         // xóa thành công, cập nhật lại danh sách tour
         const updatedTour = tour.filter((t) => t.id_tour !== id);
@@ -214,7 +214,18 @@ function TourAdmin() {
     formData.append("best_seller", best_seller);
     formData.append("hot_tour", hot_tour);
     axios
-      .put(`http://127.0.0.1:8000/api/tour/update/${id}`, formData)
+      .put(`http://127.0.0.1:8000/api/tour/update/${id}`, {
+        name_tour,
+        date_back,
+        content_tour,
+        place_go,
+        child_price,
+        adult_price,
+        img_tour,
+        best_seller,
+        hot_tour,
+        formData
+      })
       .then((response) => {
         console.log(response.data);
         toast.success("Tour đã được cập nhật thành công.");
@@ -285,6 +296,7 @@ function TourAdmin() {
                     id="outlined-size-normal"
                     value={id_tour}
                     onChange={(e) => setIdTour(e.target.value)}
+                    sx={{width:'215px'}}
                   />
                 </div>
               </div>
@@ -298,6 +310,7 @@ function TourAdmin() {
                     id="outlined-size-normal"
                     value={name_tour}
                     onChange={(e) => setNameTour(e.target.value)}
+                    sx={{width:'215px'}}
                   />
                 </div>
               </div>
@@ -335,6 +348,7 @@ function TourAdmin() {
                     id="outlined-size-normal"
                     value={content_tour}
                     onChange={(e) => setContentTour(e.target.value)}
+                    sx={{width:'215px'}}
                   />
                 </div>
               </div>
@@ -348,6 +362,7 @@ function TourAdmin() {
                     id="outlined-size-normal"
                     value={place_go}
                     onChange={(e) => setPlaceGo(e.target.value)}
+                    sx={{width:'215px'}}
                   />
                 </div>
               </div>
@@ -361,6 +376,7 @@ function TourAdmin() {
                     id="outlined-size-normal"
                     value={child_price}
                     onChange={(e) => setChildPrice(e.target.value)}
+                    sx={{width:'215px'}}
                   />
                 </div>
               </div>
@@ -374,6 +390,7 @@ function TourAdmin() {
                     id="outlined-size-normal"
                     value={adult_price}
                     onChange={(e) => setAdultPrice(e.target.value)}
+                    sx={{width:'215px'}}
                   />
                 </div>
               </div>
