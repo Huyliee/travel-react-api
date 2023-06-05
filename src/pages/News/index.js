@@ -15,7 +15,7 @@ function News() {
     // const [fistNews, setFistnews] = useState({});
     useEffect(() => {
          async function loadNews(){
-        await axios.get("https://phpd19.ga/api/news").then((res) => {
+        await axios.get("http://127.0.0.1:8000/api/news").then((res) => {
             setNews(res.data.data);
             // const latest = news[news.length - 1];
             // setFistnews(latest);
