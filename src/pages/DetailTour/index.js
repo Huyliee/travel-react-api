@@ -1,5 +1,5 @@
 import { detailTourApi } from "~/GlobalFunction/Api";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./DetailTour.module.scss";
 import classNames from "classnames/bind";
@@ -74,6 +74,12 @@ function DetailTour() {
     window.scrollTo(0, 0);
   }, []);
 
+  //Chuyển tới danh sách ngày đi khi bấm nút đặt
+  const dateRef = useRef(null);
+  const handleBookTour = () => {
+    dateRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div className={cx("detail-container")}>
       <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
@@ -126,6 +132,7 @@ function DetailTour() {
                   fontSize: "15px",
                   fontWeight: "700",
                 }}
+                onClick={handleBookTour}
               >
                 <FontAwesomeIcon
                   icon={faShoppingCart}
@@ -174,9 +181,9 @@ function DetailTour() {
       </Container>
       {/* /---------------------/ */}
       {/* Ngày đi */}
-      <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
-      <h2 className={cx("content-tour-heading")}>Bảng giá</h2>
-      <Date />
+      <Container maxWidth="xl" style={{ padding: "20px 68px" }} ref={dateRef}>
+        <h2 className={cx("content-tour-heading")}>Bảng giá</h2>
+        <Date id={detailTour.id_tour}/>
       </Container>
       {/* Thông tin di chuyển */}
       <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
@@ -195,7 +202,9 @@ function DetailTour() {
             </Box>
           </div>
           <div>
-            <h2 className={cx("content-tour-heading")}>Chi tiết khách sạn & Hướng dẫn viên</h2>
+            <h2 className={cx("content-tour-heading")}>
+              Chi tiết khách sạn & Hướng dẫn viên
+            </h2>
             <div className={cx("detail-hotel-container")}>
               <Box>
                 <div className={cx("detail-hotel-box")}>
