@@ -8,6 +8,7 @@ import UserAdmin from "~/pages/UserAdmin";
 import Register from "~/pages/Home/Register";
 import Contact from "~/pages/Contact";
 import DetailTour from "~/pages/DetailTour";
+import NewsAdmin from "~/pages/NewsAdmin";
 import News from "~/pages/News";
 import Booking from "~/pages/Booking";
 // import { useState , useEffect } from "react";
