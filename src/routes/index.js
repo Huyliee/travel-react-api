@@ -38,6 +38,8 @@ const privateRoutes =[
     {path: '/admin' , component:HomeAdmin , layout:AdminLayout},
     {path: '/admin/tour' , component:TourAdmin , layout:AdminLayout},
     {path: '/admin/user' , component:UserAdmin , layout:AdminLayout},
+    {path: '/admin/news' , component:NewsAdmin , layout:AdminLayout},
+
 ]
 
 export {publicRoutes,privateRoutes}

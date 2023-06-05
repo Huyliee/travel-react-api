@@ -60,7 +60,7 @@ function News() {
                     {news.map((newItem) => (
                         <div className={cx("box-right")}>
                             <div className={cx("img-right")}>
-                                <img src={newItem.img} alt="hinhanh" />
+                                <img src={newItem.img_news} alt="hinhanh" />
                             </div>
                             <div className={cx("content-right")}>
                                 <p style={{ color: "rgb(253, 80, 86)" }}>Tin tức dữ liệu</p>
