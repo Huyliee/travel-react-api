@@ -1,6 +1,7 @@
 import { Container, TextField } from "@mui/material";
 import styles from "./Booking.module.scss";
 import classNames from "classnames/bind";
+import Quantity from "./Quantity";
 const cx = classNames.bind(styles);
 
 function Booking() {
@@ -11,27 +12,75 @@ function Booking() {
         <div className={cx("booking-body")}>
           <div className={cx("booking-info-customer")}>
             <div>
-                <h3 className={cx("content-tour-heading")} style={{fontSize:'22px'}}>Thông tin liên hệ</h3>
-                <div className={cx("text-field-container")}>
-                    <div>
-                        <div style={{display:'flex'}}><label>Họ và tên</label><p style={{color:'red'}}> *</p></div>
-                        <TextField id="outlined-basic" label="Outlined" variant="outlined" sx={{width:'385px' , marginTop:'10px'}}/>
-                    </div>
-                    <div>
-                        <div style={{display:'flex'}}><label>Email</label><p style={{color:'red'}}> *</p></div>
-                        <TextField id="outlined-basic" label="Outlined" variant="outlined" sx={{width:'385px' , marginTop:'10px'}}/>
-                    </div>
-                    <div style={{marginTop:'20px'}}>
-                        <div style={{display:'flex'}}><label>Số điện thoại</label><p style={{color:'red'}}> *</p></div>
-                        <TextField id="outlined-basic" label="Outlined" variant="outlined" sx={{width:'385px' , marginTop:'10px'}}/>
-                    </div>
-                    <div style={{marginTop:'20px'}}>
-                        <div style={{display:'flex'}}><label>Địa chỉ</label><p style={{color:'red'}}> *</p></div>
-                        <TextField id="outlined-basic" label="Outlined" variant="outlined" sx={{width:'385px' , marginTop:'10px'}}/>
-                    </div>
+              <h3
+                className={cx("content-tour-heading")}
+                style={{ fontSize: "22px" }}
+              >
+                Thông tin liên hệ
+              </h3>
+              <div className={cx("text-field-container")}>
+                <div>
+                  <div style={{ display: "flex" }}>
+                    <label>Họ và tên</label>
+                    <p style={{ color: "red" }}> *</p>
+                  </div>
+                  <TextField
+                    id="outlined-basic"
+                    label="Outlined"
+                    variant="outlined"
+                    sx={{ width: "385px", marginTop: "10px" }}
+                  />
                 </div>
+                <div>
+                  <div style={{ display: "flex" }}>
+                    <label>Email</label>
+                    <p style={{ color: "red" }}> *</p>
+                  </div>
+                  <TextField
+                    id="outlined-basic"
+                    label="Outlined"
+                    variant="outlined"
+                    sx={{ width: "385px", marginTop: "10px" }}
+                  />
+                </div>
+                <div style={{ marginTop: "20px" }}>
+                  <div style={{ display: "flex" }}>
+                    <label>Số điện thoại</label>
+                    <p style={{ color: "red" }}> *</p>
+                  </div>
+                  <TextField
+                    id="outlined-basic"
+                    label="Outlined"
+                    variant="outlined"
+                    sx={{ width: "385px", marginTop: "10px" }}
+                  />
+                </div>
+                <div style={{ marginTop: "20px" }}>
+                  <div style={{ display: "flex" }}>
+                    <label>Địa chỉ</label>
+                    <p style={{ color: "red" }}> *</p>
+                  </div>
+                  <TextField
+                    id="outlined-basic"
+                    label="Outlined"
+                    variant="outlined"
+                    sx={{ width: "385px", marginTop: "10px" }}
+                  />
+                </div>
+              </div>
             </div>
-
+            <div className={cx("quantity-customer-container")}>
+              <h3
+                className={cx("content-tour-heading")}
+                style={{ fontSize: "22px" }}
+              >
+                Hành khách
+              </h3>
+              <div>
+                <Quantity title="Người lớn" subtitle="&gt; 12" />
+                <Quantity title="Trẻ em" subtitle="Từ 5 - 11" />
+              </div>
+            </div>
           </div>
           <div className={cx("booking-info-tour")}></div>
         </div>
