@@ -42,3 +42,8 @@ export const detailTourApi = async (id) =>{
     const res = await axios.get(`http://127.0.0.1:8000/api/detail/${id}`)
     return res.data.data;
 }
+// Api load ra tất cả tin tức trong danh sách tour
+export const getNews = async ()=>{
+    const res = await axios.get('http://127.0.0.1:8000/api/news');
+    return res.data.data;
+}

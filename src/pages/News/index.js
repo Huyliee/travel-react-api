@@ -15,7 +15,7 @@ function News() {
     // const [fistNews, setFistnews] = useState({});
     useEffect(() => {
          async function loadNews(){
-        await axios.get("https://phpd19.ga/api/news").then((res) => {
+        await axios.get("http://127.0.0.1:8000/api/news").then((res) => {
             setNews(res.data.data);
             // const latest = news[news.length - 1];
             // setFistnews(latest);
@@ -60,7 +60,7 @@ function News() {
                     {news.map((newItem) => (
                         <div className={cx("box-right")}>
                             <div className={cx("img-right")}>
-                                <img src={newItem.img} alt="hinhanh" />
+                                <img src={newItem.img_news} alt="hinhanh" />
                             </div>
                             <div className={cx("content-right")}>
                                 <p style={{ color: "rgb(253, 80, 86)" }}>Tin tức dữ liệu</p>

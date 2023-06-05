@@ -9,6 +9,7 @@ import Register from "~/pages/Home/Register";
 import Contact from "~/pages/Contact";
 import DetailTour from "~/pages/DetailTour";
 import News from "~/pages/News";
+import NewsAdmin from "~/pages/NewsAdmin";
 // import { useState , useEffect } from "react";
 // import { getTour } from "~/GlobalFunction/Api";
 
@@ -36,6 +37,8 @@ const privateRoutes =[
     {path: '/admin' , component:HomeAdmin , layout:AdminLayout},
     {path: '/admin/tour' , component:TourAdmin , layout:AdminLayout},
     {path: '/admin/user' , component:UserAdmin , layout:AdminLayout},
+    {path: '/admin/news' , component:NewsAdmin , layout:AdminLayout},
+
 ]
 
 export {publicRoutes,privateRoutes}
