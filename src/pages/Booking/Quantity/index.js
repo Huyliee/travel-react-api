@@ -6,26 +6,31 @@ import { useState } from "react";
 import { TextField } from "@mui/material";
 import { MobileDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
 
 const cx = classNames.bind(styles);
 
-function Quantity({ title, subtitle }) {
+function Quantity({ title, subtitle ,customerInfo}) {
   const [quantityAdult, setQuantityAdult] = useState(1);
+
   const [customers, setCustomer] = useState([
     {
-      name: "",
-      age: "",
+      name_customer: "",
+      gender: "",
+      date:"",
     },
   ]);
 
   const handleAddQuantity = () => {
-    setQuantityAdult(quantityAdult + 1);
-    setCustomer([...customers, { name: "", age: "" }]);
+    setQuantityAdult((prevQuantity) => prevQuantity + 1);
+    setCustomer([...customers, { name_customer: "", gender: "",date:"" }]);
   };
 
   const handleMinusQuantity = () => {
     if (quantityAdult >= 1) {
-      setQuantityAdult(quantityAdult - 1);
+      setQuantityAdult((prevQuantity) => prevQuantity - 1);
+
     }
     setCustomer(customers.slice(0, quantityAdult - 1));
   };
@@ -34,8 +39,9 @@ function Quantity({ title, subtitle }) {
     const updatedCustomers = [...customers];
     updatedCustomers[index][field] = value;
     setCustomer(updatedCustomers);
+    customerInfo(updatedCustomers);
   };
-  console.log(customers);
+  // console.log(customers);
   return (
     <div>
       <div className={cx("quantity-customer-box")}>
@@ -73,9 +79,9 @@ function Quantity({ title, subtitle }) {
               id="outlined-basic"
               label="Họ và tên"
               variant="outlined"
-              value={customer.name}
+              value={customer.name_customer}
               onChange={(e) =>
-                handleCustomerInfoChange(index, "name", e.target.value)
+                handleCustomerInfoChange(index, "name_customer", e.target.value)
               }
               className={cx("input-info")}
             />
@@ -83,20 +89,27 @@ function Quantity({ title, subtitle }) {
               id="outlined-basic"
               label="Tuổi"
               variant="outlined"
-              value={customer.age}
+              value={customer.gender}
               onChange={(e) =>
-                handleCustomerInfoChange(index, "age", e.target.value)
+                handleCustomerInfoChange(index, "gender", e.target.value)
               }
               className={cx("input-info")}
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <MobileDatePicker
-                    placeholder="dd/mm/yyyy"
-                    sx={{
-                      width: 220,
-                      ".MuiInputBase-input": { height: 15, fontSize: 16 },
-                    }}
-                  />
+                   <DatePicker
+                      placeholder="dd/mm/yyyy"
+                      sx={{
+                        width: 220,
+                        ".MuiInputBase-input": { height: 15, fontSize: 16 },
+                      }}
+                      onChange={(newValue) => {
+                        const dateString = dayjs(newValue).format("YYYY-MM-DD");
+                        handleCustomerInfoChange(index, "date", dateString)
+                      }}
+                      renderInput={(params) => (
+                        <TextField {...params} value={customers[index].date} />
+                      )} // thêm đoạn này
+                    />
             </LocalizationProvider>
           </div>
         ))}

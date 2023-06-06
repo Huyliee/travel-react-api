@@ -25,6 +25,7 @@ function Login() {
         const res = await loginApi(email,password);
         console.log(res.permission);
         localStorage.setItem("access_token", res.access_token);
+        localStorage.setItem("id_customer",res.id);
         setLoading(false)
           swal({
             title: "Thành công!",
