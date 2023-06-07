@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleMinus, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { TextField } from "@mui/material";
-import { MobileDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
@@ -22,11 +22,14 @@ function Quantity({ title, subtitle ,customerInfo}) {
     },
   ]);
 
+  // Xử lý tăng số lương và tăng form
   const handleAddQuantity = () => {
     setQuantityAdult((prevQuantity) => prevQuantity + 1);
     setCustomer([...customers, { name_customer: "", gender: "",date:"" }]);
   };
 
+  
+  // Xử lý giảm số lương và giảm form
   const handleMinusQuantity = () => {
     if (quantityAdult >= 1) {
       setQuantityAdult((prevQuantity) => prevQuantity - 1);
@@ -35,6 +38,7 @@ function Quantity({ title, subtitle ,customerInfo}) {
     setCustomer(customers.slice(0, quantityAdult - 1));
   };
 
+  // Xử lý khi nhập dữ liệu vào input
   const handleCustomerInfoChange = (index, field, value) => {
     const updatedCustomers = [...customers];
     updatedCustomers[index][field] = value;
@@ -87,7 +91,7 @@ function Quantity({ title, subtitle ,customerInfo}) {
             />
             <TextField
               id="outlined-basic"
-              label="Tuổi"
+              label="Giới tính"
               variant="outlined"
               value={customer.gender}
               onChange={(e) =>
