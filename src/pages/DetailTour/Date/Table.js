@@ -65,7 +65,7 @@ function TablePrice({ id ,month}) {
                     align="right"
                   >
                     7.000.000đ
-                    <Link to={`/booking/tourId/${id}`}>
+                    <Link to={`/booking/tourId/${id}?state=${encodeURIComponent(id)}&date=${encodeURIComponent(row.id)}`}>
                     <Button variant="contained" style={{ marginLeft: "10px" }}>
                       Chọn ngày
                     </Button>
