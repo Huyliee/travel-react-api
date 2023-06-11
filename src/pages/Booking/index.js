@@ -12,7 +12,7 @@ import styles from "./Booking.module.scss";
 import classNames from "classnames/bind";
 import Quantity from "./Quantity";
 import axios from "axios";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 function Booking() {
@@ -20,11 +20,13 @@ function Booking() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  /////////////////////////
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const idTour = queryParams.get("state");
   const id_date = queryParams.get("date");
-  console.log(id_date);
+  const navigate = useNavigate();
+  ////////////////////////
   const id_customer = localStorage.getItem("id_customer");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -66,6 +68,8 @@ function Booking() {
       })
       .then((res) => {
         console.log(res);
+        const { id_order_tour } = res.data.order;
+        navigate(`/booking/payment/${id_order_tour}`);
       })
       .catch((error) => {
         console.log(error);
@@ -197,12 +201,10 @@ function Booking() {
             </div>
             <form onSubmit={handleCheckout} encType="multipart/form-data">
               {/* Rest of your code */}
-              <Link to="/booking/payment">
                 {" "}
                 <Button type="submit" variant="contained">
                   Đặt tour
                 </Button>
-              </Link>
             </form>
           </div>
           <div className={cx("booking-info-tour")}></div>

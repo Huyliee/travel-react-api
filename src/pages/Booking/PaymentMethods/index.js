@@ -1,17 +1,28 @@
 import styles from "./PayMethods.module.scss";
 import classNames from "classnames/bind";
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
   Container,
+  Radio,
   Step,
   StepLabel,
   Stepper,
 } from "@mui/material";
+import { useParams } from "react-router-dom";
+import { getDetailOrder } from "~/GlobalFunction/Api";
+import DetailCustomerTable from "./DetailCustomerTable";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoneyBill, faQrcode } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
 function PayMothods() {
+  //Chuyển lên đầu trang
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const steps = ["Nhập thông tin", "Thanh toán"];
   // CSS base Stepper MUI
   const customStyles = {
@@ -25,6 +36,24 @@ function PayMothods() {
       fontSize: "30px", // Tăng kích thước của icon
     },
     justifyContent: "flex-start",
+  };
+  /// Lấy dữ liệu url
+  const { idBooking } = useParams();
+  //Load api của chi tiết tour
+  const [detailOrder, setDetailOrder] = useState({});
+  const [listCustomer, setListCustomer] = useState([]);
+  useEffect(() => {
+    async function detailData() {
+      const data = await getDetailOrder(idBooking);
+      setDetailOrder(data);
+      setListCustomer(data.detail_order);
+    }
+    detailData();
+  }, [idBooking]);
+  //////////////////
+  const [selectRadio, setSelectRadio] = useState("tm");
+  const handleRadio = (e) => {
+    setSelectRadio(e.target.value);
   };
   return (
     <div>
@@ -54,19 +83,19 @@ function PayMothods() {
               <div className={cx("body-info-contact")}>
                 <div className={cx("body-info-text")}>
                   <span>Họ và tên</span>
-                  <p>Nguyễn Trọng Hiếu</p>
+                  <p>{detailOrder.name}</p>
                 </div>
                 <div className={cx("body-info-text")}>
                   <span>Email</span>
-                  <p>hieu745233@gmail.com</p>
+                  <p>{detailOrder.email}</p>
                 </div>
                 <div className={cx("body-info-text")}>
                   <span>Địa chỉ</span>
-                  <p>Cao Lỗ, Quận 8, HCM</p>
+                  <p>{detailOrder.address}</p>
                 </div>
                 <div className={cx("body-info-text")}>
                   <span>Điện thoại</span>
-                  <p>0909090909</p>
+                  <p>{detailOrder.phone}</p>
                 </div>
                 <div className={cx("body-info-text")}>
                   <span>Ghi chú</span>
@@ -92,7 +121,7 @@ function PayMothods() {
                 <div className={cx("text-detail-booking")}>
                   <p>
                     <span style={{ color: "#fd5056", fontWeight: "800" }}>
-                      230610308457
+                      {idBooking}
                     </span>{" "}
                     (Quý khách vui lòng nhớ số booking để thuận tiện cho các
                     giao dịch sau này)
@@ -102,8 +131,47 @@ function PayMothods() {
                   <p>7,490,000₫</p>
                   <p>10/06/2023 18:40:09</p>
                   <p>
-                    Thanh toán bằng quét QRCode - Thẻ tín dụng (VISA/MASTER/JCB)
-                    Thẻ ATM - Dịch vụ của VNPay
+                    <div className={cx("payment-methods")}>
+                      <div className={cx("payment-box")}>
+                        <div className={cx("payment-text")}>
+                          <FontAwesomeIcon icon={faMoneyBill} />
+                          <p>Tiền mặt</p>
+                        </div>
+                        <Radio
+                          checked={selectRadio === "tm"}
+                          onChange={handleRadio}
+                          value="tm"
+                          name="radio-buttons"
+                          inputProps={{ "aria-label": "A" }}
+                        />
+                      </div>
+                      <div className={cx("payment-box")}>
+                        <div className={cx("payment-text")}>
+                          <FontAwesomeIcon icon={faQrcode} />
+                          <p>Thanh toán VNPay</p>
+                        </div>
+                        <Radio
+                          checked={selectRadio === "vnpay"}
+                          onChange={handleRadio}
+                          value="vnpay"
+                          name="radio-buttons"
+                          inputProps={{ "aria-label": "B" }}
+                        />
+                      </div>
+                      <div className={cx("payment-box")}>
+                        <div className={cx("payment-text")}>
+                          <FontAwesomeIcon icon={faQrcode} />
+                          <p>Thanh toán MoMo</p>
+                        </div>
+                        <Radio
+                          checked={selectRadio === "momo"}
+                          onChange={handleRadio}
+                          value="momo"
+                          name="radio-buttons"
+                          inputProps={{ "aria-label": "B" }}
+                        />
+                      </div>
+                    </div>
                   </p>
                   <p>
                     Booking của quý khách đã được chúng tôi xác nhận thành công
@@ -130,7 +198,7 @@ function PayMothods() {
               <span>
                 Số booking:{" "}
                 <span style={{ color: "#fd5056", fontWeight: "800" }}>
-                  230610308457
+                  {idBooking}
                 </span>
               </span>
             </div>
@@ -208,6 +276,19 @@ function PayMothods() {
             </Button>
           </div>
         </Box>
+      </Container>
+      <Container
+        maxWidth="xl"
+        style={{ padding: "20px 68px", marginBottom: "20px" }}
+      >
+        <div className={cx("info-customer")}>
+          <div className={cx("heading")}>
+            <h5>Thông tin khách hàng</h5>
+          </div>
+          <div className={cx("body-info-customer")}>
+            <DetailCustomerTable listCustomer={listCustomer} />
+          </div>
+        </div>
       </Container>
     </div>
   );

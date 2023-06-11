@@ -17,6 +17,7 @@ span{
 .body-left-payment{
     height: 900px;
 }
+.info-customer,
 .info-contact,
 .detail-booking,
 .body-right-payment{
@@ -104,5 +105,27 @@ span{
     img{
         width: 150px;
         height: 150px;
+    }
+}
+.info-customer{
+    width: 100%;
+    padding: 12px 24px;
+}
+.payment-methods{
+    display: flex;
+}
+.payment-box{
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: #f9f9f9;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+.payment-text{
+    display: flex;
+    align-items: center;
+    p{
+        margin-left: 8px;
     }
 }
