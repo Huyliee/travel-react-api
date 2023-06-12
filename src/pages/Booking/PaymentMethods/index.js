@@ -15,6 +15,7 @@ import { getDetailOrder } from "~/GlobalFunction/Api";
 import DetailCustomerTable from "./DetailCustomerTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoneyBill, faQrcode } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 const cx = classNames.bind(styles);
 
@@ -54,6 +55,44 @@ function PayMothods() {
   const [selectRadio, setSelectRadio] = useState("tm");
   const handleRadio = (e) => {
     setSelectRadio(e.target.value);
+  };
+  // Thanh toán online
+  // const [paymentVN , setPaymentVN] = useState({
+  //   amount:15000000,
+  //   vnpUrl: null
+  // })
+  // const handlePayment = ()=>{
+  //   const {amount} = paymentVN;
+  //   axios.options('http://127.0.0.1:8000/api/create-payment')
+  //   .then(
+  //     res => {
+  //       axios.post('http://127.0.0.1:8000/api/create-payment',{total_price: amount})
+  //       .then(res =>{
+  //         const {vnpUrl} = res.data
+  //         // setPaymentVN(prevState => ({...prevState,vnpUrl}));
+  //         window.location.href = vnpUrl;
+  //       })
+  //       .catch(error => {
+  //         console.error('Error creating payment:', error);
+  //       });
+  //     }
+  //   ).catch(error => {
+  //     console.error('Error creating payment:', error);
+  //   });
+  // }
+  const handleMomo = async () => {
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/api/momo-payment', {
+        // Truyền các thông tin cần thiết cho yêu cầu thanh toán Momo
+        // ví dụ: amount, orderId, orderInfo,...
+      });
+
+      const { payUrl } = response.data;
+      window.location.href = payUrl; // Chuyển hướng người dùng đến URL thanh toán Momo
+    } catch (error) {
+      console.error('Error:', error);
+      // Xử lý lỗi
+    }
   };
   return (
     <div>
@@ -271,6 +310,7 @@ function PayMothods() {
                 marginTop: "20px",
               }}
               variant="contained"
+              onClick={handleMomo}
             >
               Thanh toán
             </Button>
