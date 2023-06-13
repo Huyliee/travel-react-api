@@ -12,6 +12,7 @@ import NewsAdmin from "~/pages/NewsAdmin";
 import News from "~/pages/News";
 import Booking from "~/pages/Booking";
 import PayMothods from "~/pages/Booking/PaymentMethods";
+import PaymentSuccess from "~/pages/Booking/PaymentSuccess";
 // import { useState , useEffect } from "react";
 // import { getTour } from "~/GlobalFunction/Api";
 
@@ -34,7 +35,8 @@ const publicRoutes = [
     {path: '/news' , component:News},
     {path: '/detail/:id' , component:DetailTour},
     {path: '/booking/tourId/:id' , component:Booking},
-    {path: '/booking/payment/:idBooking' , component:PayMothods},
+    {path: '/booking/payment/:idBooking/idTour/:idTour' , component:PayMothods},
+    {path: '/booking/payment/success' , component:PaymentSuccess},
 ]
 
 const privateRoutes =[

@@ -11,7 +11,7 @@ import {
   Stepper,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { getDetailOrder } from "~/GlobalFunction/Api";
+import { getDetailOrder ,detailTourApi} from "~/GlobalFunction/Api";
 import DetailCustomerTable from "./DetailCustomerTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoneyBill, faQrcode } from "@fortawesome/free-solid-svg-icons";
@@ -39,7 +39,7 @@ function PayMothods() {
     justifyContent: "flex-start",
   };
   /// Lấy dữ liệu url
-  const { idBooking } = useParams();
+  const { idBooking,idTour } = useParams();
   //Load api của chi tiết tour
   const [detailOrder, setDetailOrder] = useState({});
   const [listCustomer, setListCustomer] = useState([]);
@@ -52,48 +52,84 @@ function PayMothods() {
     detailData();
   }, [idBooking]);
   //////////////////
+  // const orderTime = detailOrder.order_time;
+  // const formatDate = format(new Date(orderTime),'dd/MM/yyyy HH:mm:ss')
   const [selectRadio, setSelectRadio] = useState("tm");
   const handleRadio = (e) => {
     setSelectRadio(e.target.value);
   };
+  console.log(selectRadio);
+  ////////////////
+  const [detailTour, setDetailTour] = useState({});
+  useEffect(() => {
+    async function detailData() {
+      const data = await detailTourApi(idTour);
+      setDetailTour(data);
+    }
+    detailData();
+  }, [idTour]);
+  console.log(detailTour);
+  //---------------------------//
   // Thanh toán online
-  // const [paymentVN , setPaymentVN] = useState({
-  //   amount:15000000,
-  //   vnpUrl: null
-  // })
-  // const handlePayment = ()=>{
-  //   const {amount} = paymentVN;
-  //   axios.options('http://127.0.0.1:8000/api/create-payment')
-  //   .then(
-  //     res => {
-  //       axios.post('http://127.0.0.1:8000/api/create-payment',{total_price: amount})
-  //       .then(res =>{
-  //         const {vnpUrl} = res.data
-  //         // setPaymentVN(prevState => ({...prevState,vnpUrl}));
-  //         window.location.href = vnpUrl;
-  //       })
-  //       .catch(error => {
-  //         console.error('Error creating payment:', error);
-  //       });
-  //     }
-  //   ).catch(error => {
-  //     console.error('Error creating payment:', error);
-  //   });
-  // }
+  const handlePayment = ()=>{
+    axios.options('http://127.0.0.1:8000/api/create-payment')
+    .then(
+      res => {
+        axios.post('http://127.0.0.1:8000/api/create-payment',{amount: total})
+        .then(res =>{
+          const {vnpUrl} = res.data
+          // setPaymentVN(prevState => ({...prevState,vnpUrl}));
+          window.location.href = vnpUrl;
+        })
+        .catch(error => {
+          console.error('Error creating payment:', error);
+        });
+      }
+    ).catch(error => {
+      console.error('Error creating payment:', error);
+    });
+  }
   const handleMomo = async () => {
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/momo-payment', {
-        // Truyền các thông tin cần thiết cho yêu cầu thanh toán Momo
-        // ví dụ: amount, orderId, orderInfo,...
-      });
-
+          amount: total
+        });
+      
       const { payUrl } = response.data;
-      window.location.href = payUrl; // Chuyển hướng người dùng đến URL thanh toán Momo
+      window.location.href = payUrl;
+      // console.log(payUrl); // Chuyển hướng người dùng đến URL thanh toán Momo
     } catch (error) {
       console.error('Error:', error);
       // Xử lý lỗi
     }
   };
+  // Xử lý khi chọn các phương thức thanh toán
+  const selectPayment = ()=>{
+    if(selectRadio === "momo")
+    {
+        handleMomo();
+    }else{
+        handlePayment();
+    }
+  }
+  //-------------------------//
+  /////Tính tổng tiền//////
+  const [total, setTotal] = useState("");
+  const handleTotalPrice = (listCustomer, detailTour) => {
+    let totalPrice = 0;
+    listCustomer.forEach((row) => {
+      const adultPrice = detailTour.adult_price ? detailTour.adult_price.replace(/,/g, "") : "0";
+      const childPrice = detailTour.child_price ? detailTour.child_price.replace(/,/g, "") : "0";
+      const price = row.age === "Người lớn" ? parseFloat(adultPrice) : parseFloat(childPrice);
+      totalPrice += price;
+    });
+    return totalPrice;
+  };
+  const totalTest = handleTotalPrice(listCustomer,detailTour);
+  useEffect(()=>{
+    setTotal(totalTest)
+  },[totalTest])
+  ///---------------------///
   return (
     <div>
       <Container
@@ -165,10 +201,10 @@ function PayMothods() {
                     (Quý khách vui lòng nhớ số booking để thuận tiện cho các
                     giao dịch sau này)
                   </p>
-                  <p>7,490,000₫</p>
+                  <p>{detailTour.adult_price}đ</p>
                   <p>0₫</p>
-                  <p>7,490,000₫</p>
-                  <p>10/06/2023 18:40:09</p>
+                  <p>{detailTour.adult_price}đ</p>
+                  <p>{detailOrder.order_time}</p>
                   <p>
                     <div className={cx("payment-methods")}>
                       <div className={cx("payment-box")}>
@@ -232,7 +268,7 @@ function PayMothods() {
             </div>
             <div className={cx("product")}>
               <p style={{ marginTop: "10px" }}>
-                Quy Nhơn - Eo Gió - Kỳ Co - Phú Yên - Gành Đá Dĩa
+                {detailTour.name_tour}
               </p>
               <span>
                 Số booking:{" "}
@@ -261,7 +297,7 @@ function PayMothods() {
               </div>
               <div className={cx("detail-text")}>
                 <div>
-                  <span>NDSGN590-028-150623VU-V</span>
+                  <span>{detailTour.id_tour}</span>
                 </div>
                 <div>
                   <span>HCM - QUY NHƠN - HCM</span>
@@ -273,7 +309,7 @@ function PayMothods() {
                   <span>18/06/2023</span>
                 </div>
                 <div>
-                  <span>TP. Hồ Chí Minh</span>
+                  <span>{detailTour.place_go}</span>
                 </div>
               </div>
             </div>
@@ -310,7 +346,7 @@ function PayMothods() {
                 marginTop: "20px",
               }}
               variant="contained"
-              onClick={handleMomo}
+              onClick={selectPayment}
             >
               Thanh toán
             </Button>
@@ -326,7 +362,7 @@ function PayMothods() {
             <h5>Thông tin khách hàng</h5>
           </div>
           <div className={cx("body-info-customer")}>
-            <DetailCustomerTable listCustomer={listCustomer} />
+            <DetailCustomerTable listCustomer={listCustomer} dataTour={detailTour} totalPrice={total}  />
           </div>
         </div>
       </Container>

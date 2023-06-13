@@ -38,18 +38,26 @@ function Booking() {
   });
   //Thêm dữ liệu vào mảng adultInfo khi nhập từ input của người lớn
   const handleAdultCustomerInfoChange = (info) => {
+    const updatedInfo = info.map((customer) => ({
+      ...customer,
+      age: 'Người lớn',
+    }));
     setDetail((prevInfo) => ({
       ...prevInfo,
-      adultInfo: info,
+      adultInfo: updatedInfo,
     }));
   };
   console.log(detail);
 
   //Thêm dữ liệu vào mảng childInfo khi nhập từ input của trẻ em
   const handleChildCustomerInfoChange = (info) => {
+    const updatedInfo = info.map((customer) => ({
+      ...customer,
+      age: 'Trẻ em',
+    }));
     setDetail((prevInfo) => ({
       ...prevInfo,
-      childInfo: info,
+      childInfo: updatedInfo,
     }));
   };
 
@@ -69,7 +77,7 @@ function Booking() {
       .then((res) => {
         console.log(res);
         const { id_order_tour } = res.data.order;
-        navigate(`/booking/payment/${id_order_tour}`);
+        navigate(`/booking/payment/${id_order_tour}/idTour/${idTour}`);
       })
       .catch((error) => {
         console.log(error);

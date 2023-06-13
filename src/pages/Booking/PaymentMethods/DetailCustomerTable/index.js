@@ -8,7 +8,18 @@ import {
   TableRow,
 } from "@mui/material";
 
-function DetailCustomerTable({ listCustomer }) {
+function DetailCustomerTable({ listCustomer ,dataTour , totalPrice}) {
+  // const totalPrice = (listCustomer,dataTour)=>{
+  //   let total = 0;
+  //   listCustomer.forEach((row)=>{
+  //     const adultPrice = dataTour.adult_price ? dataTour.adult_price.replace(/,/g, "") : "0";
+  //     const childPrice = dataTour.child_price ? dataTour.child_price.replace(/,/g, "") : "0";
+  //     const price = row.age === "Người lớn" ? parseFloat(adultPrice) : parseFloat(childPrice);
+  //     total += price;
+  //   })
+  //   return total;
+  // }
+  // const total = totalPrice(listCustomer,dataTour)
   return (
     <div>
       <TableContainer component={Paper}>
@@ -32,10 +43,10 @@ function DetailCustomerTable({ listCustomer }) {
                 <TableCell style={{ fontSize: "16px" }}>{row.birth}</TableCell>
                 <TableCell style={{ fontSize: "16px" }}>{row.sex}</TableCell>
                 <TableCell style={{ fontSize: "16px" }}></TableCell>
-                <TableCell style={{ fontSize: "16px" }}>Người lớn</TableCell>
+                <TableCell style={{ fontSize: "16px" }}>{row.age}</TableCell>
                 <TableCell style={{ fontSize: "16px" }}>
                   <span style={{ color: "#fd5056", fontWeight: "800" }}>
-                    7.490.000đ
+                    {row.age === "Người lớn" ? dataTour.adult_price : dataTour.child_price} đ
                   </span>
                 </TableCell>
               </TableRow>
@@ -45,7 +56,7 @@ function DetailCustomerTable({ listCustomer }) {
               <TableCell colSpan={2} style={{ fontSize: "16px" }} align="right">
                 Tổng thành tiền:{" "}
                 <span style={{ color: "#fd5056", fontWeight: "800" }}>
-                  15.000.000đ
+                  {totalPrice.toLocaleString()}đ
                 </span>
               </TableCell>
             </TableRow>
