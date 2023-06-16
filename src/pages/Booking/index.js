@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import {
   Box,
-  Button,
   Container,
   Step,
   StepLabel,
@@ -13,6 +12,7 @@ import classNames from "classnames/bind";
 import Quantity from "./Quantity";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import TravelCard from "./TravelCard";
 const cx = classNames.bind(styles);
 
 function Booking() {
@@ -36,6 +36,22 @@ function Booking() {
     adultInfo: [],
     childInfo: [],
   });
+  const [adultQuantity, setAdultQuantity] = useState(1);
+  const [childQuantity, setChildQuantity] = useState(1);
+
+  //số lượng người lớn
+  const handleAdultQuantityChange = (newQuantity) => {
+    setAdultQuantity(newQuantity);
+  };
+
+  //số lượng trẻ em
+  const handleChildQuantityChange = (newQuantity) => {
+    setChildQuantity(newQuantity);
+  };
+
+  //tổng số lượng
+  const totalQuantity = adultQuantity + childQuantity;
+
   //Thêm dữ liệu vào mảng adultInfo khi nhập từ input của người lớn
   const handleAdultCustomerInfoChange = (info) => {
     const updatedInfo = info.map((customer) => ({
@@ -199,23 +215,20 @@ function Booking() {
                   title="Người lớn"
                   subtitle="&gt; 12"
                   customerInfo={handleAdultCustomerInfoChange}
+                  quantity={handleAdultQuantityChange}
                 />
                 <Quantity
                   title="Trẻ em"
                   subtitle="Từ 5 - 11"
                   customerInfo={handleChildCustomerInfoChange}
+                  quantity={handleChildQuantityChange}
                 />
               </div>
             </div>
-            <form onSubmit={handleCheckout} encType="multipart/form-data">
-              {/* Rest of your code */}
-                {" "}
-                <Button type="submit" variant="contained">
-                  Đặt tour
-                </Button>
-            </form>
           </div>
-          <div className={cx("booking-info-tour")}></div>
+          <div className={cx("booking-info-tour")}>
+              <TravelCard quantityAdult={adultQuantity} quantityChild={childQuantity} totalQuantity={totalQuantity} checkout={handleCheckout} idTour={idTour}/>
+          </div>
         </div>
       </Container>
     </>

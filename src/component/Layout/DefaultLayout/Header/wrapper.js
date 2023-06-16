@@ -34,8 +34,6 @@ function Wrapper() {
     loadTnb();
     loadDnb();
   }, []);
-  
-  console.log(bac);
   return (
     <div className={cx("tour-down-container")}>
       <div className={cx("tour-down-container-main")}>
