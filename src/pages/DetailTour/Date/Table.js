@@ -12,8 +12,9 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { detailTourApi } from "~/GlobalFunction/Api";
 
-function TablePrice({ id ,month}) {
+function TablePrice({ id, month }) {
   const [date, setDate] = useState([]);
+  const access_login = localStorage.getItem("access_token");
   useEffect(() => {
     async function detailData() {
       const data = await detailTourApi(id);
@@ -21,7 +22,7 @@ function TablePrice({ id ,month}) {
       setDate(filteredData);
     }
     detailData();
-  }, [id,month]);
+  }, [id, month]);
   console.log(date);
   if (date === null) {
     return <div>Loading...</div>;
@@ -65,11 +66,30 @@ function TablePrice({ id ,month}) {
                     align="right"
                   >
                     7.000.000đ
-                    <Link to={`/booking/tourId/${id}?state=${encodeURIComponent(id)}&date=${encodeURIComponent(row.id)}`}>
-                    <Button variant="contained" style={{ marginLeft: "10px" }}>
-                      Chọn ngày
-                    </Button>
-                    </Link>
+                    {access_login ? (
+                      <Link
+                        to={`/booking/tourId/${id}?state=${encodeURIComponent(
+                          id
+                        )}&date=${encodeURIComponent(row.id)}`}
+                      >
+                        <Button
+                          variant="contained"
+                          style={{ marginLeft: "10px" }}
+                        >
+                          Chọn ngày
+                        </Button>
+                      </Link>
+                    ) : (
+                      <Link to="/login">
+                        {" "}
+                        <Button
+                          variant="contained"
+                          style={{ marginLeft: "10px" }}
+                        >
+                          Chọn ngày
+                        </Button>
+                      </Link>
+                    )}
                   </TableCell>
                 </TableRow>
               ))

@@ -2,7 +2,7 @@ import styles from "./Quantity.module.scss";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleMinus, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TextField } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -11,7 +11,7 @@ import dayjs from "dayjs";
 
 const cx = classNames.bind(styles);
 
-function Quantity({ title, subtitle ,customerInfo}) {
+function Quantity({ title, subtitle ,customerInfo,quantity}) {
   const [quantityAdult, setQuantityAdult] = useState(1);
 
   const [customers, setCustomer] = useState([
@@ -21,6 +21,11 @@ function Quantity({ title, subtitle ,customerInfo}) {
       date:"",
     },
   ]);
+
+  //lấy số lượng cho component cha xài
+  useEffect(()=>{
+    quantity(quantityAdult);
+  })
 
   // Xử lý tăng số lương và tăng form
   const handleAddQuantity = () => {

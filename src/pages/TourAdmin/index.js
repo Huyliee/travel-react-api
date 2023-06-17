@@ -150,7 +150,7 @@ function TourAdmin() {
     formData.append("best_seller", best_seller);
     formData.append("hot_tour", hot_tour);
     axios
-      .post("https://phpd19.ga/api/tour/store", formData)
+      .post("http://127.0.0.1:8000/api/tour/store", formData)
       .then((response) => {
         console.log(response.data);
         resetFrom();

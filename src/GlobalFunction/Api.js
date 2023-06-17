@@ -47,3 +47,8 @@ export const getNews = async ()=>{
     const res = await axios.get('http://127.0.0.1:8000/api/news');
     return res.data.data;
 }
+// Api chi tiết đơn hàng
+export const getDetailOrder = async (id)=>{
+    const res = await axios.get(`http://127.0.0.1:8000/api/order/detail/${id}`)
+    return res.data.data;
+}
