@@ -10,7 +10,6 @@ import Contact from "~/pages/Contact";
 import DetailTour from "~/pages/DetailTour";
 import NewsAdmin from "~/pages/NewsAdmin";
 import News from "~/pages/News";
-import NewsAdmin from "~/pages/NewsAdmin";
 import Booking from "~/pages/Booking";
 // import { useState , useEffect } from "react";
 // import { getTour } from "~/GlobalFunction/Api";
