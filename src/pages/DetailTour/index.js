@@ -19,6 +19,9 @@ import {
 import Itinerary from "./Itinerary";
 import axios from "axios";
 import Date from "./Date";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const cx = classNames.bind(styles);
 
@@ -78,6 +81,48 @@ function DetailTour() {
   const dateRef = useRef(null);
   const handleBookTour = () => {
     dateRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+  //Slick Slider
+  const settingsSlider = {
+    lazyLoad: 'ondemand',
+    dots: true,
+    infinite: true,
+    arrows: true,
+    speed: 300,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    responsive: [
+      {
+        breakpoint: 1210,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+        },
+      },
+      {
+        breakpoint: 960,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+        },
+      },
+      {
+        breakpoint: 740,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 540,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   return (
@@ -149,7 +194,7 @@ function DetailTour() {
         <ImageList cols={4} rowHeight={300} style={{ overflow: "hidden" }}>
           {detailTour.images &&
             Array.isArray(detailTour.images) &&
-            modifyImages(detailTour.images).map((image) => (
+            modifyImages(detailTour.images.slice(0, 4)).map((image) => (
               <ImageListItem key={image.id} cols={image.cols} rows={image.rows}>
                 <img
                   src={image.url}
@@ -164,6 +209,18 @@ function DetailTour() {
               </ImageListItem>
             ))}
         </ImageList>
+      </Container>
+      <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
+        <h2 className={cx("content-tour-heading")}>Những địa điểm tham quan</h2>
+        <Slider {...settingsSlider} className={cx("custom-slider")}>
+          {detailTour.images &&
+            Array.isArray(detailTour.images) &&
+            modifyImages(detailTour.images.slice(4)).map((image) => (
+              <div>
+                <img src={image.url} alt="" className={cx("img-slider")} />
+              </div>
+            ))}
+        </Slider>
       </Container>
       {/* /---------------------------/ */}
       <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
@@ -183,7 +240,7 @@ function DetailTour() {
       {/* Ngày đi */}
       <Container maxWidth="xl" style={{ padding: "20px 68px" }} ref={dateRef}>
         <h2 className={cx("content-tour-heading")}>Bảng giá</h2>
-        <Date id={detailTour.id_tour}/>
+        <Date id={detailTour.id_tour} />
       </Container>
       {/* Thông tin di chuyển */}
       <Container maxWidth="xl" style={{ padding: "20px 68px" }}>

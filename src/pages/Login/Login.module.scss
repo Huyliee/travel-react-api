@@ -84,3 +84,15 @@
     align-items: center; 
     z-index: 10000;
 }
+.face-login-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 250px;
+}
+.face-register-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

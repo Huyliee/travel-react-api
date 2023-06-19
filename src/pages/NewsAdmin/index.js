@@ -2,19 +2,19 @@ import styles from "./NewsAdmin.module.scss";
 import classNames from "classnames/bind";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState, useRef } from "react";
-// import axios from "axios";
+import axios from "axios";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import {  TextField } from "@mui/material";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getNews } from "~/GlobalFunction/Api";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -40,7 +40,7 @@ function NewsAdmin() {
   const [inputUpdate, setInputUpdate] = useState(false);
   // const handleInputUpdate = () => setInputUpdate(true);
   const handleInputAdd = () => setInputUpdate(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
 
 
@@ -116,6 +116,7 @@ function NewsAdmin() {
   const [date, setDateNews] = useState("");
   const [content_news, setContentNews] = useState("");
   const [img_news, setImgNews] = useState(null);
+  console.log(content_news);
   console.log(img_news);
   const resetFrom = () => {
     setIdNews("");
@@ -125,29 +126,29 @@ function NewsAdmin() {
     setImgNews(null);
 
   };
-  // const handleAdd = () => {
-  //   // e.preventDefault();
-  //   const formData = new FormData();
-  //   formData.append("id_news", id_news);
-  //   formData.append("title_news", title_news);
-  //   formData.append("date", date);
-  //   formData.append("content_new", content_news);
-  //   formData.append("img_news", img_news);
-  //   axios
-  //     .post("http://127.0.0.1:8000/api/news/store", formData)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       resetFrom();
-  //       toast.success("Tin đã được thêm thành công.");
-  //       setTimeout(() => {
-  //         navigate("/admin/news");
-  //       }, 3000); // chuyển hướng sau 2 giây
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       toast.error("Mã tin đã tồn tại trong hệ thống");
-  //     });
-  // };
+  const handleAdd = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("id_news", id_news);
+    formData.append("title_news", title_news);
+    formData.append("date", date);
+    formData.append("content_news", content_news);
+    // formData.append("img_news", img_news);
+    axios
+      .post("http://127.0.0.1:8000/api/news/store", formData)
+      .then((response) => {
+        console.log(response.data);
+        resetFrom();
+        toast.success("Tin đã được thêm thành công.");
+        setTimeout(() => {
+          navigate("/admin/news");
+        }, 3000); // chuyển hướng sau 2 giây
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Mã tin đã tồn tại trong hệ thống");
+      });
+  };
  
 
 
@@ -291,6 +292,7 @@ function NewsAdmin() {
                 variant="contained"
                 sx={{ marginTop: "10px" }}
                 type="submit"
+                onClick={handleAdd}
               >
                 {inputUpdate ? "Sửa" : "Thêm"} Tin tức
               </Button>
