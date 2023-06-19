@@ -16,8 +16,32 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import { getNews } from "~/GlobalFunction/Api";
+<<<<<<< HEAD
+// import { CKEditor } from "@ckeditor/ckeditor5-react";
+//  import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
+import { render } from "@testing-library/react";
+import Editor from 'ckeditor5-custom-build/build/ckeditor';
+import { CKEditor } from '@ckeditor/ckeditor5-react'
+
+// const editorConfiguration = {
+//     toolbar: [ 'heading',
+//     '|',
+//     'bold',
+//     'italic',
+//     'link',
+//     'bulletedList',
+//     'numberedList',
+//     'alignment',
+//     '|',
+//     'undo',
+//     'redo', ]
+// };
+
+=======
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+>>>>>>> 7a17e007f234b572449ef39126fb5a0f80d21844
 
 
 const style = {
@@ -116,8 +140,8 @@ function NewsAdmin() {
   const [date, setDateNews] = useState("");
   const [content_news, setContentNews] = useState("");
   const [img_news, setImgNews] = useState(null);
-  console.log(content_news);
   console.log(img_news);
+  console.log(content_news);
   const resetFrom = () => {
     setIdNews("");
     setTitleNews("");
@@ -126,31 +150,36 @@ function NewsAdmin() {
     setImgNews(null);
 
   };
-  const handleAdd = (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("id_news", id_news);
-    formData.append("title_news", title_news);
-    formData.append("date", date);
-    formData.append("content_news", content_news);
-    // formData.append("img_news", img_news);
-    axios
-      .post("http://127.0.0.1:8000/api/news/store", formData)
-      .then((response) => {
-        console.log(response.data);
-        resetFrom();
-        toast.success("Tin đã được thêm thành công.");
-        setTimeout(() => {
-          navigate("/admin/news");
-        }, 3000); // chuyển hướng sau 2 giây
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error("Mã tin đã tồn tại trong hệ thống");
-      });
-  };
+  // const handleAdd = () => {
+  //   // e.preventDefault();
+  //   const formData = new FormData();
+  //   formData.append("id_news", id_news);
+  //   formData.append("title_news", title_news);
+  //   formData.append("date", date);
+  //   formData.append("content_new", content_news);
+  //   formData.append("img_news", img_news);
+  //   axios
+  //     .post("http://127.0.0.1:8000/api/news/store", formData)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       resetFrom();
+  //       toast.success("Tin đã được thêm thành công.");
+  //       setTimeout(() => {
+  //         navigate("/admin/news");
+  //       }, 3000); // chuyển hướng sau 2 giây
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       toast.error("Mã tin đã tồn tại trong hệ thống");
+  //     });
+  // };
  
+>>>>>>> 7a17e007f234b572449ef39126fb5a0f80d21844
 
+  const handleEditorChange = (event, editor) => {
+    const data = editor.getData();
+    setContentNews(data);
+  };
 
   return (
     <div
@@ -264,20 +293,57 @@ function NewsAdmin() {
                 </div>
                 <div className={cx("input-container")}>
                   <CKEditor
-                    editor={ClassicEditor}
+                    editor={Editor}
                     data={content_news}
-                    onReady={(editor)=>{
-                      editor.editing.view.change((writer)=>{
-                        writer.setStyle('height','300px',editor.editing.view.document.getRoot());
-                        writer.setStyle('width', '600px', editor.editing.view.document.getRoot());
-                      })
+                    config={{
+                      toolbar: [
+                        'heading',
+                        '|',
+                        'bold',
+                        'italic',
+                        'link',
+                        'bulletedList',
+                        'numberedList',
+                        'alignment',
+                        '|',
+                        'undo',
+                        'redo',
+                        'fontSize',
+                        'fontColor',
+                        'imageInsert'
+
+                      ]
                     }}
-            
+                    onReady={(editor) => {
+                      editor.editing.view.change((writer) => {
+                        writer.setStyle('height', '300px', editor.editing.view.document.getRoot());
+                        writer.setStyle('width', '600px', editor.editing.view.document.getRoot());
+                      });
+                    }}
+                    onChange={handleEditorChange}
+
+
+                  />
+
+                  {/* <CKEditor
+                    editor={Editor}
+                    config={editorConfiguration}
+                    data="<p>Hello from CKEditor 5!</p>"
+                    onReady={editor => {
+                      // You can store the "editor" and use when it is needed.
+                      console.log('Editor is ready to use!', editor);
+                    }}
                     onChange={(event, editor) => {
                       const data = editor.getData();
-                      setContentNews(data);
+                      console.log({ event, editor, data });
                     }}
-                  />
+                    onBlur={(event, editor) => {
+                      console.log('Blur.', editor);
+                    }}
+                    onFocus={(event, editor) => {
+                      console.log('Focus.', editor);
+                    }}
+                  /> */}
                 </div>
               </div>
 
@@ -292,7 +358,6 @@ function NewsAdmin() {
                 variant="contained"
                 sx={{ marginTop: "10px" }}
                 type="submit"
-                onClick={handleAdd}
               >
                 {inputUpdate ? "Sửa" : "Thêm"} Tin tức
               </Button>
