@@ -16,9 +16,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import { getNews } from "~/GlobalFunction/Api";
-<<<<<<< HEAD
-// import { CKEditor } from "@ckeditor/ckeditor5-react";
-//  import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
 
 import { render } from "@testing-library/react";
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
@@ -38,10 +36,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react'
 //     'redo', ]
 // };
 
-=======
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
->>>>>>> 7a17e007f234b572449ef39126fb5a0f80d21844
+// import { CKEditor } from "@ckeditor/ckeditor5-react";
 
 
 const style = {
@@ -174,8 +169,6 @@ function NewsAdmin() {
   //     });
   // };
  
->>>>>>> 7a17e007f234b572449ef39126fb5a0f80d21844
-
   const handleEditorChange = (event, editor) => {
     const data = editor.getData();
     setContentNews(data);

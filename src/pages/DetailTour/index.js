@@ -22,6 +22,14 @@ import Date from "./Date";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import {
+  Timeline,
+  TimelineItem,
+  TimelineSeparator,
+  TimelineConnector,
+  TimelineContent,
+  TimelineDot,
+} from "@mui/lab";
 
 const cx = classNames.bind(styles);
 
@@ -84,7 +92,7 @@ function DetailTour() {
   };
   //Slick Slider
   const settingsSlider = {
-    lazyLoad: 'ondemand',
+    lazyLoad: "ondemand",
     dots: true,
     infinite: true,
     arrows: true,
@@ -250,11 +258,142 @@ function DetailTour() {
             <Box>
               <div className={cx("detail-transport-box")}>
                 <h3>Thông tin di chuyển</h3>
-                <div>
-                  <div></div>
-                  <div></div>
+                <div style={{display:'flex',borderBottom:'1px solid #bdbdbd',height:'208px'}}>
+                  <div className={cx("detail-transport-info")}>
+                    <p style={{marginTop:'10px'}}>
+                      Ngày đi - <span>22/06/2023</span>
+                    </p>
+                    <div className={cx("detail-transport-location-container")}>
+                      <div className={cx("detail-transport-location")}>
+                        <h4>TP.Hồ Chí Minh</h4>
+                        <h4>(Địa điểm)</h4>
+                      </div>
+                      <div className={cx("detail-transport-location")}>
+                        <h4>TP.Hồ Chí Minh</h4>
+                        <h4>(Địa điểm)</h4>
+                      </div>
+                    </div>
+                    <div className={cx("x")}>
+                      <Timeline
+                        position="left"
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                          padding:'0px'
+                        }}
+                      >
+                        <TimelineItem sx={{ transform: "rotate(-90deg)" }}>
+                          <TimelineSeparator sx={{ marginLeft: "121px" }}>
+                            <TimelineDot />
+                            <TimelineConnector sx={{ height: "191px" }} />
+                          </TimelineSeparator>
+                          <TimelineContent
+                            sx={{
+                              transform: "rotate(90deg)",
+                              marginTop: "-188px",
+                              padding: "16px",
+                            }}
+                          >
+                            05:30
+                          </TimelineContent>
+                        </TimelineItem>
+                        <TimelineItem
+                          sx={{
+                            transform: "rotate(-90deg)",
+                            paddingLeft: "0px",
+                          }}
+                        >
+                          <TimelineSeparator
+                            sx={{
+                              height: "273px",
+                              width: "49px",
+                              marginLeft: "179px"
+                            }}
+                          >
+                            <TimelineDot />
+                          </TimelineSeparator>
+                          <TimelineContent
+                            sx={{
+                              transform: "rotate(90deg)",
+                              marginTop: "-254px",
+                              padding: "30px 0px",
+                            }}
+                          >
+                            00:00
+                          </TimelineContent>
+                        </TimelineItem>
+                      </Timeline>
+                    </div>
+                  </div>
+                  <div className={cx("detail-transport-info")}>
+                    <p style={{marginTop:'10px'}}>
+                    Ngày về -  <span>25/06/2023</span>
+                    </p>
+                    <div className={cx("detail-transport-location-container")}>
+                      <div className={cx("detail-transport-location")}>
+                        <h4>TP.Hồ Chí Minh</h4>
+                        <h4>(Địa điểm)</h4>
+                      </div>
+                      <div className={cx("detail-transport-location")}>
+                        <h4>TP.Hồ Chí Minh</h4>
+                        <h4>(Địa điểm)</h4>
+                      </div>
+                    </div>
+                    <div className={cx("x")}>
+                      <Timeline
+                        position="left"
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                          padding:'0px'
+                        }}
+                      >
+                        <TimelineItem sx={{ transform: "rotate(-90deg)" }}>
+                          <TimelineSeparator sx={{ marginLeft: "121px" }}>
+                            <TimelineDot />
+                            <TimelineConnector sx={{ height: "191px" }} />
+                          </TimelineSeparator>
+                          <TimelineContent
+                            sx={{
+                              transform: "rotate(90deg)",
+                              marginTop: "-188px",
+                              padding: "16px",
+                            }}
+                          >
+                            05:30
+                          </TimelineContent>
+                        </TimelineItem>
+                        <TimelineItem
+                          sx={{
+                            transform: "rotate(-90deg)",
+                            paddingLeft: "0px",
+                          }}
+                        >
+                          <TimelineSeparator
+                            sx={{
+                              height: "273px",
+                              width: "49px",
+                              marginLeft: "179px"
+                            }}
+                          >
+                            <TimelineDot />
+                          </TimelineSeparator>
+                          <TimelineContent
+                            sx={{
+                              transform: "rotate(90deg)",
+                              marginTop: "-254px",
+                              padding: "30px 0px",
+                            }}
+                          >
+                            00:00
+                          </TimelineContent>
+                        </TimelineItem>
+                      </Timeline>
+                    </div>
+                  </div>
                 </div>
-                <div></div>
               </div>
             </Box>
           </div>

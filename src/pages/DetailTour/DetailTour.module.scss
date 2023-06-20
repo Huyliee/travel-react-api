@@ -131,4 +131,21 @@
     border-radius: 10px;
     object-fit: cover;
 }
-
+.detail-transport-location-container{
+    display: flex;
+    width: 282px;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.detail-transport-location{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    h4{
+        color: #4d4aef;
+        font-size: 13px;
+    }
+}
+.detail-transport-info{
+    width: 317px;
+}
