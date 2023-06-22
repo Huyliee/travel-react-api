@@ -138,10 +138,12 @@ function Header() {
                   <div {...attrs}>
                     <div className={cx("user-list-container")}>
                       <div className={cx("user-list-option")}>
+                        <Link to="/profile" style={{textDecoration:'none',color:'#000000'}}>
                         <div className={cx("user-list-box")}>
                           <AccountCircleIcon className={cx("user-list-icon")} />
-                          <span>Account</span>
+                          <span >Account</span>
                         </div>
+                        </Link>
                         <div className={cx("user-list-box")}>
                           <MessageIcon className={cx("user-list-icon")} />
                           <span>Message</span>
