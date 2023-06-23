@@ -1,6 +1,6 @@
 import styles from "./NewsAdmin.module.scss";
 import classNames from "classnames/bind";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import images from "~/component/assets/images";
@@ -20,6 +20,7 @@ import { getNews } from "~/GlobalFunction/Api";
 // import { CKEditor } from "@ckeditor/ckeditor5-react";
 //  import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
+
 import { render } from "@testing-library/react";
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import { CKEditor } from '@ckeditor/ckeditor5-react'
@@ -38,6 +39,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react'
 //     'redo', ]
 // };
 
+// import { CKEditor } from "@ckeditor/ckeditor5-react";
 
 
 const style = {
@@ -137,9 +139,6 @@ function NewsAdmin() {
   const [date, setDateNews] = useState("");
   const [content_news, setContentNews] = useState("");
   const [img_news, setImgNews] = useState(null);
-  console.log(id_news);
-  console.log(title_news);
-  console.log(date);
   console.log(img_news);
   console.log(content_news);
   const resetFrom = () => {
@@ -174,6 +173,30 @@ function NewsAdmin() {
       });
   };
 
+  // const handleAdd = () => {
+  //   // e.preventDefault();
+  //   const formData = new FormData();
+  //   formData.append("id_news", id_news);
+  //   formData.append("title_news", title_news);
+  //   formData.append("date", date);
+  //   formData.append("content_new", content_news);
+  //   formData.append("img_news", img_news);
+  //   axios
+  //     .post("http://127.0.0.1:8000/api/news/store", formData)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       resetFrom();
+  //       toast.success("Tin đã được thêm thành công.");
+  //       setTimeout(() => {
+  //         navigate("/admin/news");
+  //       }, 3000); // chuyển hướng sau 2 giây
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       toast.error("Mã tin đã tồn tại trong hệ thống");
+  //     });
+  // };
+ 
   const handleEditorChange = (event, editor) => {
     const data = editor.getData();
     setContentNews(data);
@@ -190,7 +213,10 @@ function NewsAdmin() {
       }}
     >
       <ToastContainer position="top-right" autoClose={3000} />
-      <h1 style={{ margin: "40px auto" }}>Quản lý tin tức</h1>
+      <div className={cx("heading-container")}>
+        <h1 style={{ margin: "40px 0px 40px 20px" }}>Quản lý tin tức</h1>
+        <img src="https://i.imgur.com/BNBtVP9.png" alt="" />
+      </div>
       <div>
         <Button
           variant="contained"
@@ -356,8 +382,6 @@ function NewsAdmin() {
                 variant="contained"
                 sx={{ marginTop: "10px" }}
                 type="submit"
-                onClick={handleAdd}
-
               >
                 {inputUpdate ? "Sửa" : "Thêm"} Tin tức
               </Button>
@@ -372,12 +396,30 @@ function NewsAdmin() {
         getRowId={(row) => row.id_news}
         autoHeight
         rowHeight={150}
+        slots={{ toolbar: GridToolbar }}
+        slotProps={{
+          toolbar: {
+            showQuickFilter: true,
+            quickFilterProps: { debounceMs: 500 },
+          },
+        }}
         sx={{
           "& .MuiDataGrid-colCell": {
             fontSize: "14px",
           },
           "& .MuiDataGrid-cell, & .MuiDataGrid-colCellTitle, ": {
             fontSize: "14px",
+          },
+          "& .MuiButtonBase-root": {
+            fontSize: "14px",
+          },
+          "& .MuiInputBase-root": {
+            fontSize: "14px",
+            padding:'8px',
+            border:'1px solid #d5d5d5',
+            borderRadius:'10px',
+            width:'300px',
+            margin:'5px 10px'
           },
         }}
       />

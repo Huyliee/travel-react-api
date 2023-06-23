@@ -2,7 +2,7 @@ import styles from "./Register.module.scss";
 import classNames from "classnames/bind";
 import { TextField, Button } from "@mui/material";
 import {  useState } from "react";
-import { BeatLoader } from "react-spinners";
+import {  HashLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { registerApi } from "~/GlobalFunction/Api";
@@ -125,7 +125,7 @@ function Register() {
             </label>
             {loading ? (
               <div className={cx("sweet-loading")}>
-              <BeatLoader  size={15} color={'#4f46e5'} /> </div>
+              <HashLoader  size={80} color={'#4f46e5'} /> </div>
              ) : (
               <Button
                 variant="contained"

@@ -1,6 +1,6 @@
 import styles from "./UserAdmin.module.scss";
 import classNames from "classnames/bind";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import images from "~/component/assets/images";
@@ -238,7 +238,10 @@ function UserAdmin() {
       }}
     >
     <ToastContainer position="top-right" autoClose={3000} />
-      <h1 style={{ margin: "40px auto" }}>Quản lý khách hàng</h1>
+    <div className={cx("heading-container")}>
+        <h1 style={{ margin: "40px 0px 40px 20px" }}>Quản lý khách hàng</h1>
+        <img src="https://i.imgur.com/BNBtVP9.png" alt="" />
+      </div>
       <div>
         <Button
             variant="contained"
@@ -411,12 +414,30 @@ function UserAdmin() {
         getRowId={(row) => row.id}
         autoHeight
         rowHeight={150}
+        slots={{ toolbar: GridToolbar }}
+        slotProps={{
+          toolbar: {
+            showQuickFilter: true,
+            quickFilterProps: { debounceMs: 500 },
+          },
+        }}
         sx={{
           "& .MuiDataGrid-colCell": {
             fontSize: "14px",
           },
           "& .MuiDataGrid-cell, & .MuiDataGrid-colCellTitle, ": {
             fontSize: "14px",
+          },
+          "& .MuiButtonBase-root": {
+            fontSize: "14px",
+          },
+          "& .MuiInputBase-root": {
+            fontSize: "14px",
+            padding:'8px',
+            border:'1px solid #d5d5d5',
+            borderRadius:'10px',
+            width:'300px',
+            margin:'5px 10px'
           },
         }}
       />

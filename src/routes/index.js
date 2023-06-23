@@ -13,6 +13,9 @@ import News from "~/pages/News";
 import Booking from "~/pages/Booking";
 import PayMothods from "~/pages/Booking/PaymentMethods";
 import PaymentSuccess from "~/pages/Booking/PaymentSuccess";
+import Profile from "~/pages/Profile";
+import ProfileLayout from "~/component/Layout/ProfileLayout";
+import Order from "~/pages/Profile/Order";
 // import { useState , useEffect } from "react";
 // import { getTour } from "~/GlobalFunction/Api";
 
@@ -37,6 +40,8 @@ const publicRoutes = [
     {path: '/booking/tourId/:id' , component:Booking},
     {path: '/booking/payment/:idBooking/idTour/:idTour' , component:PayMothods},
     {path: '/booking/payment/success' , component:PaymentSuccess},
+    {path: '/profile' , component:Profile , layout:ProfileLayout},
+    {path: '/profile/order' , component:Order , layout:ProfileLayout},
 ]
 
 const privateRoutes =[

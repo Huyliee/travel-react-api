@@ -44,11 +44,14 @@ const cx = classNames.bind(styles);
 
 function Header() {
   const token = localStorage.getItem("access_token");
+  const ggtoken = localStorage.getItem("ggtoken");
+  const avt = localStorage.getItem("picture");
   const navigate = useNavigate();
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   const [isOpenTravelRespon, setIsOpenTravelRespon] = useState(false);
   const handleLogout = () => {
     localStorage.removeItem("access_token");
+    localStorage.removeItem("ggtoken");
     navigate("/login");
   };
   return (
@@ -130,7 +133,7 @@ function Header() {
             </div>
           </Tippy>
           <div className={cx("login-sub-container")}>
-            {token ? (
+            { (token || ggtoken) ? (
               <Tippy
                 interactive
                 trigger="click"
@@ -138,10 +141,12 @@ function Header() {
                   <div {...attrs}>
                     <div className={cx("user-list-container")}>
                       <div className={cx("user-list-option")}>
+                        <Link to="/profile" style={{textDecoration:'none',color:'#000000'}}>
                         <div className={cx("user-list-box")}>
                           <AccountCircleIcon className={cx("user-list-icon")} />
-                          <span>Account</span>
+                          <span >Account</span>
                         </div>
+                        </Link>
                         <div className={cx("user-list-box")}>
                           <MessageIcon className={cx("user-list-icon")} />
                           <span>Message</span>
@@ -168,7 +173,7 @@ function Header() {
                   </div>
                 )}
               >
-                <Avatar sx={{ bgcolor: "#4f46e5" }}>H</Avatar>
+                <Avatar sx={{ bgcolor: "#4f46e5" }} src={avt} > </Avatar>
               </Tippy>
             ) : (
               <Link to="/login" className={cx("login-btn-link")}>
@@ -178,7 +183,7 @@ function Header() {
           </div>
           {/* Login responsive moblie */}
           <div className={cx("login-respon-container")}>
-            {token ? (
+            {(ggtoken || token) ? (
               <Tippy
                 interactive
                 trigger="click"
@@ -216,7 +221,7 @@ function Header() {
                   </div>
                 )}
               >
-                <Avatar sx={{ bgcolor: "#4f46e5" }}>H</Avatar>
+                <Avatar sx={{ bgcolor: "#4f46e5" }} >H</Avatar>
               </Tippy>
             ) : (
               <Link to="/login" className={cx("login-btn-link")}>
