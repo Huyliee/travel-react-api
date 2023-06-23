@@ -10,7 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import { loginApi } from "~/GlobalFunction/Api";
-
+import { GoogleLoginButton } from "react-social-login-buttons";
+import { LoginSocialGoogle } from "reactjs-social-login";
 const cx = classNames.bind(styles);
 const style = {
   position: 'absolute',
@@ -207,10 +208,29 @@ function Login() {
                 icon="https://cdn.faceio.net/select.svg"
               />
             </Button>
-            <SocialLogin
-              text="Continue with Google"
-              icon="https://chisfis-template.vercel.app/static/media/Google.b9361a382296ba2cbc182016085b0cc8.svg"
-            />
+            <LoginSocialGoogle 
+              client_id={
+                "609226686716-rha901hdhi60o2tsgsrik8k56pr9cs4n.apps.googleusercontent.com"
+              }
+              scope="openid profile email"
+              discoveryDocs="claims_supported"
+              access_type="offline"
+              onResolve={({provider,data})=>{
+                console.log(provider,data);
+                
+
+            localStorage.setItem("name",data.name);
+            localStorage.setItem("email", data.email);
+            localStorage.setItem("picture", data.picture);
+                
+              }}
+              onReject={(err)=>{
+                console.log(err);
+              }}
+            >
+                <GoogleLoginButton></GoogleLoginButton>
+            </LoginSocialGoogle>
+        
           </div>
           <div className={cx("text-line")}>
             <span>OR</span>
