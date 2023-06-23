@@ -2,6 +2,7 @@ import {
   faCalendarDay,
   faEnvelope,
   faMapLocation,
+  faSignature,
   faStar,
   faTicketAlt,
   faUsers,
@@ -28,7 +29,7 @@ function CardOrder({id,name,email,idTour}) {
     <div>
       <div className={cx("product-box")}>
         <div className={cx("product-img")}>
-          <img src="https://i.imgur.com/5BWOQwM.jpg" alt="Product Img" />
+          <img src={detail.img_tour} alt="Product Img" />
           <div className={cx("discount-container")}>
             <p>-10% this week</p>
           </div>
@@ -74,7 +75,7 @@ function CardOrder({id,name,email,idTour}) {
                 <span>{id}</span>
             </div>
             <div>
-                <FontAwesomeIcon icon={faTicketAlt} className={cx("location-tour-icon")} />
+                <FontAwesomeIcon icon={faSignature} className={cx("location-tour-icon")} />
                 <span>{name}</span>
             </div>
             <div>

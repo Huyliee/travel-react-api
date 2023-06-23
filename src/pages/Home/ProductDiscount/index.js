@@ -5,7 +5,6 @@ import { faHeart, faLocationDot, faStar, faUsers } from "@fortawesome/free-solid
 import { useState } from "react";
 import { Chip } from "@mui/material";
 import { Link } from "react-router-dom";
-import images from "~/component/assets/images";
 
 const cx = classNames.bind(styles);
 
@@ -18,7 +17,7 @@ function ProductDisCount({ id,img, name, location, price }) {
     <Link to={`/detail/${id}`} style={{textDecoration:'none'}}>
     <div className={cx("product-box")}>
       <div className={cx("product-img")}>
-        <img src={images[img]} alt="Product Img" />
+        <img src={img} alt="Product Img" />
         <div className={cx('discount-container')}>
           <p>-10% this week</p>
         </div>

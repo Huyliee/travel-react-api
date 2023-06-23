@@ -6,7 +6,7 @@ import classNames from "classnames/bind";
 import SocialLogin from "./social-login";
 import { TextField, Button, Modal, Box } from "@mui/material";
 import { useState } from "react";
-import { BeatLoader } from "react-spinners";
+import { HashLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
@@ -300,7 +300,7 @@ function Login() {
             </label>
             {loading ? (
               <div className={cx("sweet-loading")}>
-                <BeatLoader size={15} color={"#4f46e5"} />{" "}
+                <HashLoader size={80} color={"#4f46e5"} />{" "}
               </div>
             ) : (
               <Button

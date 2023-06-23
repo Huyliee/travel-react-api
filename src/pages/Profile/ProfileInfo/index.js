@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import {  ExpandLess, ExpandMore, Password } from "@mui/icons-material";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 
@@ -92,6 +93,7 @@ function ProfileInfo() {
               component="nav"
               aria-labelledby="nested-list-subheader"
             >
+              <Link to="/profile/order" style={{textDecoration:'none',color:"#000000"}}>
               <ListItemButton>
                 <ListItemText
                   primary="Đơn đặt tour"
@@ -103,6 +105,7 @@ function ProfileInfo() {
                   }}
                 />
                 </ListItemButton>
+                </Link>
             </List>
             <List
               sx={{

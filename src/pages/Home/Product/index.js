@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faLocationDot, faStar } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import images from "~/component/assets/images";
 
 const cx = classNames.bind(styles);
 
@@ -20,7 +19,7 @@ function Product({id, img, name, location, price , onClick}) {
     <Link to={`/detail/${id}`} style={{textDecoration:'none'}}>
     <div className={cx("product-box")} onClick={handleClick}>
       <div className={cx("product-img")}>
-        <img src={images[img]} alt="Product Img" />
+        <img src={img} alt="Product Img" />
         <div className={cx("favourite-container", `${activeHeart ? 'active' : ''}`)} onClick={handleHeart}>
           <FontAwesomeIcon icon={faHeart} className={cx("favourite-icon")} />
         </div>
