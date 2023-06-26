@@ -4,7 +4,6 @@ import { Box } from "@mui/material";
 const cx = classNames.bind(styles);
 const name = localStorage.getItem("name");
 const email = localStorage.getItem("email");
-const avt = localStorage.getItem("picture");
 function Profile() {
   return (
     <div>

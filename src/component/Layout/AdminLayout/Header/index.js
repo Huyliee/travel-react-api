@@ -3,20 +3,21 @@ import styles from "./Header.module.scss";
 import images from "~/component/assets/images";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-import SearchIcon from '@mui/icons-material/Search';
-import Badge from '@mui/material/Badge';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import LayersIcon from '@mui/icons-material/Layers';
-import Avatar from '@mui/material/Avatar';
+import SearchIcon from "@mui/icons-material/Search";
+import Badge from "@mui/material/Badge";
+import MailIcon from "@mui/icons-material/Mail";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import LayersIcon from "@mui/icons-material/Layers";
+import Avatar from "@mui/material/Avatar";
+import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
 function Header() {
   const Search = styled("div")(({ theme }) => ({
-    height:42,
-    display:"flex",
-    alignItems:"center",
+    height: 42,
+    display: "flex",
+    alignItems: "center",
     position: "relative",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -39,11 +40,11 @@ function Header() {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    color:"#ffffff"
+    color: "#ffffff",
   }));
 
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    fontWeight:600,
+    fontWeight: 600,
     color: "#ffffff",
     "& .MuiInputBase-input": {
       padding: theme.spacing(1, 1, 1, 0),
@@ -63,10 +64,10 @@ function Header() {
   return (
     <div className={cx("Main-nav")}>
       <div className={cx("logo-header")}>
-        <a className={cx("logo")} href="logo">
+        <Link to="/admin" className={cx("logo")}>
           <img src={images.logo} alt="Logo" />
           <span>Tour</span>
-        </a>
+        </Link>
       </div>
       <div className={cx("nav-header")}>
         <Search>
@@ -80,12 +81,12 @@ function Header() {
         </Search>
         <div className={cx("nav-user")}>
           <Badge badgeContent={4} color="success">
-            <MailIcon style={{fontSize:24,fill: "#ffffff"}}/>
+            <MailIcon style={{ fontSize: 24, fill: "#ffffff" }} />
           </Badge>
           <Badge badgeContent={4} color="success">
-            <NotificationsIcon style={{fontSize:24,fill: "#ffffff"}}/>
+            <NotificationsIcon style={{ fontSize: 24, fill: "#ffffff" }} />
           </Badge>
-          <LayersIcon style={{fontSize:24,fill: "#ffffff"}}/>
+          <LayersIcon style={{ fontSize: 24, fill: "#ffffff" }} />
           <Avatar>H</Avatar>
         </div>
       </div>

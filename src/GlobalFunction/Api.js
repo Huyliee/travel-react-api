@@ -52,8 +52,20 @@ export const getDetailOrder = async (id)=>{
     const res = await axios.get(`http://127.0.0.1:8000/api/order/detail/${id}`)
     return res.data.data;
 }
-//Api đơn đặt tour
+//Api đơn đặt tour theo id
 export const getOrder = async (id)=>{
     const res = await axios.get(`http://127.0.0.1:8000/api/order/${id}`)
     return res.data.data;
+}
+// Api đơn đặt tour
+
+export const getOrderTour = async ()=>{
+    const res = await axios.get(`http://127.0.0.1:8000/api/order`)
+    return res.data.data;
+}
+//Api số lượng data của table
+
+export const getQuantityData = async ()=>{
+    const res = await axios.get(`http://127.0.0.1:8000/api/analytic/quantityData`)
+    return res.data;
 }

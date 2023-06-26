@@ -166,16 +166,17 @@ function TourAdmin() {
   };
   const handleDelete = (id) => {
     axios
-      .delete(`https://phpd19.ga/api/tour/delete/${id}`)
+      .delete(`http://127.0.0.1:8000/api/tour/delete/${id}`)
       .then(() => {
         // xóa thành công, cập nhật lại danh sách tour
+
         const updatedTour = tour.filter((t) => t.id_tour !== id);
         setTour(updatedTour);
         toast.success("Tour đã được xóa thành công.");
       })
       .catch((error) => {
         console.log(error);
-        toast.error("Không thể xóa tour.");
+        toast.error("Không thể xóa tour vì tồn tại hóa đơn");
       });
   };
   const handleUpdate = (id) => {

@@ -5,7 +5,7 @@ import styles from "./Login.module.scss";
 import classNames from "classnames/bind";
 import SocialLogin from "./social-login";
 import { TextField, Button, Modal, Box } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HashLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -74,49 +74,58 @@ function Login() {
   const handleClose = () => setOpen(false);
 
   let faceioInstance = null;
-  const handleSignUp = () => {
-    setLoading(true);
-    setTimeout(async () => {
-      try {
-        const response = await registerApi(customer_name, email, password);
-        console.log(response);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    }, 1500);
-  };
+  useEffect(()=>{
+    const handleSignUp = () => {
+      setLoading(true);
+      setTimeout(async () => {
+        try {
+          const response = await registerApi(customer_name, email, password);
+          console.log(response);
+          setLoading(false);
+        } catch (error) {
+          console.log(error);
+        }
+      }, 1500);
+    };
+    handleSignUp();
+  },[email, password, customer_name, navigate, setOpen,faceioInstance])
 
   console.log(faceIO);
   if (faceIO && !faceioInstance) {
-    faceioInstance = new faceIO("fioaf1da");
+    faceioInstance = new faceIO("fioab4c8");
   }
 
   console.log(faceioInstance);
-  const faceRegistration = async (e) => {
-    e.preventDefault();
-    try {
-      const userInfo = await faceioInstance.enroll({
-        locale: "auto",
-        payload: {
-          email: email,
-          password: password,
-          username: customer_name,
-        },
-      });
-      await handleSignUp();
-      navigate("/login");
-      console.log(userInfo);
-      console.log("Unique Facial ID: ", userInfo.facialId);
-      console.log("Enrollment Date: ", userInfo.timestamp);
-      console.log("Gender: ", userInfo.details.gender);
-      console.log("Age Approximation: ", userInfo.details.age);
-      setOpen(false);
-    } catch (errorCode) {
-      console.log(errorCode);
-      handleError(errorCode);
-    }
-  };
+  useEffect(()=>{
+    const faceRegistration = async (e) => {
+      e.preventDefault();
+      try {
+        const userInfo = await faceioInstance.enroll({
+          locale: "auto",
+          payload: {
+            email: email,
+            password: password,
+            username: customer_name,
+          },
+        });
+        await handleSignUp();
+        navigate("/login");
+        console.log(userInfo);
+        console.log("Unique Facial ID: ", userInfo.facialId);
+        console.log("Enrollment Date: ", userInfo.timestamp);
+        console.log("Gender: ", userInfo.details.gender);
+        console.log("Age Approximation: ", userInfo.details.age);
+        setOpen(false);
+      } catch (errorCode) {
+        console.log(errorCode);
+        handleError(errorCode);
+      }
+    };
+    faceRegistration();
+  },[email, password, customer_name, navigate, setOpen,faceioInstance])
+  // useEffect(()=>{
+  //   faceRegistration();
+  // },[faceRegistration])
   const faceSignIn = async () => {
     handleClose();
     try {
@@ -128,6 +137,7 @@ function Login() {
       console.log("Unique Facial ID: ", userData.facialId);
       console.log("PayLoad: ", userData.payload);
       setOpen(false);
+      navigate("/");
     } catch (errorCode) {
       console.log(errorCode);
       handleError(errorCode);
