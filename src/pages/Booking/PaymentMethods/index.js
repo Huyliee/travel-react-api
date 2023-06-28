@@ -96,8 +96,8 @@ function PayMothods() {
           amount: total
         });
       console.log(response);
-      const { payUrl } = response;
-    //window.location.href = payUrl;
+
+    window.location.href = payUrl;
      // console.log(payUrl); // Chuyển hướng người dùng đến URL thanh toán Momo
     } catch (error) {
       console.error('Error:', error);
