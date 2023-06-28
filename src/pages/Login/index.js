@@ -268,7 +268,7 @@ function Login() {
               discoveryDocs="claims_supported"
               access_type="offline"
               onResolve={({provider,data})=>{
-                console.log(provider,data);
+                
                 
 
             localStorage.setItem("name",data.name);
