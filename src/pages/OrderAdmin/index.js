@@ -98,7 +98,7 @@ function OrderAdmin() {
   // xử lý xóa 
   const handleDelete = (id)=>{
     axios
-    .delete(`http://127.0.0.1:8000/api/order/delete/${id}`)
+    .delete(`https://travel2h.click/public_html/api/order/delete/${id}`)
     .then(() => {
       // xóa thành công, cập nhật lại danh sách tour
 

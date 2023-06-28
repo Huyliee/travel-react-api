@@ -33,6 +33,7 @@
     "normalize.css": "^8.0.1",
     "plyr-react": "^5.2.0",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-countup": "^6.4.2",
     "react-dom": "^18.2.0",
     "react-map-gl": "^7.0.24",

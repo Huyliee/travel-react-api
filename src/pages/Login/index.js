@@ -5,7 +5,7 @@ import styles from "./Login.module.scss";
 import classNames from "classnames/bind";
 import SocialLogin from "./social-login";
 import { TextField, Button, Modal, Box } from "@mui/material";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { HashLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -74,7 +74,6 @@ function Login() {
   const handleClose = () => setOpen(false);
 
   let faceioInstance = null;
-  useEffect(()=>{
     const handleSignUp = () => {
       setLoading(true);
       setTimeout(async () => {
@@ -87,8 +86,6 @@ function Login() {
         }
       }, 1500);
     };
-    handleSignUp();
-  },[email, password, customer_name, navigate, setOpen,faceioInstance])
 
   console.log(faceIO);
   if (faceIO && !faceioInstance) {
@@ -96,7 +93,6 @@ function Login() {
   }
 
   console.log(faceioInstance);
-  useEffect(()=>{
     const faceRegistration = async (e) => {
       e.preventDefault();
       try {
@@ -121,8 +117,6 @@ function Login() {
         handleError(errorCode);
       }
     };
-    faceRegistration();
-  },[email, password, customer_name, navigate, setOpen,faceioInstance])
   // useEffect(()=>{
   //   faceRegistration();
   // },[faceRegistration])
