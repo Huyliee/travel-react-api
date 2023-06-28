@@ -3,12 +3,12 @@ import classNames from "classnames/bind";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import images from "~/component/assets/images";
+// import images from "~/component/assets/images";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { Switch, TextField } from "@mui/material";
+import {  TextField } from "@mui/material";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
@@ -21,7 +21,7 @@ import { getNews } from "~/GlobalFunction/Api";
 //  import * as ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 
-import { render } from "@testing-library/react";
+// import { render } from "@testing-library/react";
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 
@@ -57,7 +57,7 @@ const style = {
 const cx = classNames.bind(styles);
 function NewsAdmin() {
   const [news, setNews] = useState({});
-  const [showNews, setShowNews] = useState({});
+  // const [showNews, setShowNews] = useState({});
   const fileInputRef = useRef(null);
   const [inputUpdate, setInputUpdate] = useState(false);
   // const handleInputUpdate = () => setInputUpdate(true);
@@ -79,14 +79,8 @@ function NewsAdmin() {
       field: "delete",
       headerName: "Xóa",
       width: 110,
-      renderCell: (params) => (
-        <Button
-          variant="contained"
-          color="secondary"
-        // onClick={() => {
-        //   handleDelete(params.row.id_tour);
-        // }}
-        >
+      renderCell: () => (
+        <Button variant="contained" color="secondary">
           Xóa
         </Button>
       ),
@@ -95,16 +89,8 @@ function NewsAdmin() {
       field: "update",
       headerName: "Sửa",
       width: 110,
-      renderCell: (params) => (
-        <Button
-          variant="contained"
-          color="secondary"
-        // onClick={() => {
-        //   handleUpdate(params.row.id_tour);
-        //   handleInputUpdate();
-        //   handleOpen();
-        // }}
-        >
+      renderCell: () => (
+        <Button variant="contained" color="secondary">
           Sửa
         </Button>
       ),
@@ -112,7 +98,6 @@ function NewsAdmin() {
     { field: "id_news", headerName: "ID", width: 190 },
     { field: "title_news", headerName: "Tiêu đề", width: 190 },
     { field: "date", headerName: "Ngày đăng tải", width: 190 },
-    ,
     {
       field: "img_news",
       headerName: "Ảnh tin tức",
@@ -126,6 +111,7 @@ function NewsAdmin() {
       ),
     },
   ];
+  
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -158,7 +144,7 @@ function NewsAdmin() {
     formData.append("content_new", content_news);
     formData.append("img_news", img_news);
     axios
-      .post("http://127.0.0.1:8000/api/news/store", formData)
+      .post("https://travel2h.click/public_html/api/news/store", formData)
       .then((response) => {
         console.log(response.data);
         resetFrom();
@@ -182,7 +168,7 @@ function NewsAdmin() {
   //   formData.append("content_new", content_news);
   //   formData.append("img_news", img_news);
   //   axios
-  //     .post("http://127.0.0.1:8000/api/news/store", formData)
+  //     .post("https://travel2h.click/public_html/api/news/store", formData)
   //     .then((response) => {
   //       console.log(response.data);
   //       resetFrom();
@@ -382,6 +368,7 @@ function NewsAdmin() {
                 variant="contained"
                 sx={{ marginTop: "10px" }}
                 type="submit"
+                onSubmit={handleAdd}
               >
                 {inputUpdate ? "Sửa" : "Thêm"} Tin tức
               </Button>

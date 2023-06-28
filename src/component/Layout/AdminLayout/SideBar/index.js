@@ -131,6 +131,14 @@ function SideBar() {
                 />
               </ListItemButton>
             </Link>
+            <Link to="/admin/order" className={cx("router-manage")}>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText
+                  primary="Quản lý đơn đặt tour"
+                  sx={{ ".MuiListItemText-primary": { fontSize: "14px" } }}
+                />
+              </ListItemButton>
+            </Link>
           </List>
         </Collapse>
       </div>

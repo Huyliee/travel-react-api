@@ -16,6 +16,7 @@ import PaymentSuccess from "~/pages/Booking/PaymentSuccess";
 import Profile from "~/pages/Profile";
 import ProfileLayout from "~/component/Layout/ProfileLayout";
 import Order from "~/pages/Profile/Order";
+import OrderAdmin from "~/pages/OrderAdmin";
 // import { useState , useEffect } from "react";
 // import { getTour } from "~/GlobalFunction/Api";
 
@@ -49,7 +50,7 @@ const privateRoutes =[
     {path: '/admin/tour' , component:TourAdmin , layout:AdminLayout},
     {path: '/admin/user' , component:UserAdmin , layout:AdminLayout},
     {path: '/admin/news' , component:NewsAdmin , layout:AdminLayout},
-
+    {path: '/admin/order' , component:OrderAdmin , layout:AdminLayout},
 ]
 
 export {publicRoutes,privateRoutes}

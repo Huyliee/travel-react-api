@@ -19,7 +19,7 @@ import {
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CartLocation from "./CartLocation";
 import WhyChooseBox from "./WhyChoose";
 import Product from "./Product";
@@ -31,9 +31,37 @@ import Slider from "react-slick";
 import { getTour } from "~/GlobalFunction/Api";
 import News from "./News";
 import Banner from "./Banner";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/all";
 
 const cx = classNames.bind(styles);
 function HomePage() {
+  const SlideElement = useRef(null);
+  const productElement = useRef(null);
+  const searchElement = useRef(null);
+  const bannerElement = useRef(null);
+  const locationElement = useRef(null);
+
+  useEffect(()=>{
+      gsap.registerPlugin(ScrollTrigger)
+      gsap.fromTo(SlideElement.current, {x:100,opacity:0},{
+        x: 0,
+        opacity: 1,
+        duration: 2
+      });
+      gsap.fromTo(searchElement.current,{opacity:0,x:-100},{opacity:1,x:0,duration:0.6,scrollTrigger: {
+        trigger: searchElement.current,
+        toggleActions: "play none none reverse",
+      },})
+      gsap.fromTo(bannerElement.current,{opacity:0,x:-100},{opacity:1,x:0,duration:0.6,scrollTrigger: {
+        trigger: bannerElement.current,
+        toggleActions: "play none none reverse",
+      },})
+      gsap.fromTo(locationElement.current,{opacity:0,x:-100},{opacity:1,x:0,duration:0.6,scrollTrigger: {
+        trigger: locationElement.current,
+        toggleActions: "play none none reverse",
+      },})
+  },[])
   const [guest, setGuest] = useState("Guests");
   const handleChange = (event) => {
     setGuest(event.target.value);
@@ -142,7 +170,7 @@ function HomePage() {
     <div className={cx("Home-main")}>
       <div className={cx("Home-container")}>
         {/* slide */}
-        <div className={cx("silde-container")}>
+        <div className={cx("silde-container")} ref={SlideElement}>
           <div className={cx("slide-content")}>
             <h1>Khám phá Mùa Hè độc đáo</h1>
             <p>
@@ -193,7 +221,7 @@ function HomePage() {
           </div>
         </div>
         {/* Search container */}
-        <div className={cx("search-container")}>
+        <div className={cx("search-container")} ref={searchElement}>
           <form className={cx("search-body")}>
             <div
               className={cx("input-container")}
@@ -280,7 +308,7 @@ function HomePage() {
           </form>
         </div>
         {/* Ưu đãi */}
-        <div className={cx("location-container")}>
+        <div className={cx("location-container")} ref={bannerElement}>
           <div className={cx("location-heading-container")}>
             <h2>Ưu đãi</h2>
             <span>Những ưu đãi hấp dẫn đang chờ đón bạn</span>
@@ -295,7 +323,7 @@ function HomePage() {
           </Slider>
         </div>
         {/* Location List */}
-        <div className={cx("location-container")}>
+        <div className={cx("location-container")} ref={locationElement}>
           <div className={cx("location-heading-container")}>
             <h2>Địa điểm du lịch nổi bật</h2>
             <span>Các tour du lịch tại nhiều địa điểm nổi bật</span>
@@ -350,7 +378,7 @@ function HomePage() {
             <h2>Tại sao lại lựa chọn chúng tôi?</h2>
             <span>Các tour du lịch tại nhiều địa điểm nổi bật</span>
           </div>
-          <div className={cx("why-choose-container")}>
+          <div className={cx("why-choose-container")}  ref={productElement}>
             <div className={cx("why-choose-img")}>
               <img src="https://i.imgur.com/igEP5Gj.jpg" alt="why choose" />
             </div>
@@ -469,6 +497,7 @@ function HomePage() {
                 price={product.adult_price}
                 id={product.id_tour}
                 onClick={() => handleIdTour(product.id_tour)}
+                ref={productElement}
               />
             ))};
           </div>

@@ -150,7 +150,7 @@ function TourAdmin() {
     formData.append("best_seller", best_seller);
     formData.append("hot_tour", hot_tour);
     axios
-      .post("http://127.0.0.1:8000/api/tour/store", formData)
+      .post("https://travel2h.click/public_html/api/tour/store", formData)
       .then((response) => {
         console.log(response.data);
         resetFrom();
@@ -166,21 +166,22 @@ function TourAdmin() {
   };
   const handleDelete = (id) => {
     axios
-      .delete(`https://phpd19.ga/api/tour/delete/${id}`)
+      .delete(`https://travel2h.click/public_html/api/tour/delete/${id}`)
       .then(() => {
         // xóa thành công, cập nhật lại danh sách tour
+
         const updatedTour = tour.filter((t) => t.id_tour !== id);
         setTour(updatedTour);
         toast.success("Tour đã được xóa thành công.");
       })
       .catch((error) => {
         console.log(error);
-        toast.error("Không thể xóa tour.");
+        toast.error("Không thể xóa tour vì tồn tại hóa đơn");
       });
   };
   const handleUpdate = (id) => {
     axios
-      .get(`http://127.0.0.1:8000/api/tour/show/${id}`)
+      .get(`https://travel2h.click/public_html/api/tour/show/${id}`)
       .then((response) => {
         setShowTour(response.data);
         setIdTour(response.data.id_tour);
@@ -214,7 +215,7 @@ function TourAdmin() {
     formData.append("best_seller", best_seller);
     formData.append("hot_tour", hot_tour);
     axios
-      .put(`http://127.0.0.1:8000/api/tour/update/${id}`, {
+      .put(`https://travel2h.click/public_html/api/tour/update/${id}`, {
         name_tour,
         date_back,
         content_tour,
