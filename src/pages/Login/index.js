@@ -260,7 +260,7 @@ function Login() {
               client_id={
                 "609226686716-rha901hdhi60o2tsgsrik8k56pr9cs4n.apps.googleusercontent.com"
               }
-              scope="openid profile email"
+              scope="openid profile email https://www.googleapis.com/auth/user.phonenumbers.read"
               discoveryDocs="claims_supported"
               access_type="offline"
               onResolve={({provider,data})=>{
@@ -272,7 +272,22 @@ function Login() {
             localStorage.setItem("picture", data.picture);
             localStorage.setItem("ggtoken", data.access_token);
             
-            navigate("/");
+            const customer_name = data.name;
+            const email = data.email;
+            const password = data.sub;
+            registerApi(customer_name,email,password);
+            console.log(password);
+            swal({
+              title: "Thành công!",
+              text: "Đăng nhập thành công!",
+              icon: "success",
+              timer: 1500,
+              buttons: false,
+            }).then(() => {
+           
+                navigate("/");
+              
+            });
               }}
               onReject={(err)=>{
                 console.log(err);

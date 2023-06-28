@@ -24,6 +24,7 @@ function Booking() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const idTour = queryParams.get("state");
+  console.log(idTour);
   const id_date = queryParams.get("date");
   const navigate = useNavigate();
   ////////////////////////

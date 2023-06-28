@@ -91,13 +91,13 @@ function PayMothods() {
   }
   const handleMomo = async () => {
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/momo-payment', {
+      const response = await axios.post("http://127.0.0.1:8000/api/momo-payment", {
           amount: total
         });
-      
-      const { payUrl } = response.data;
-      window.location.href = payUrl;
-      // console.log(payUrl); // Chuyển hướng người dùng đến URL thanh toán Momo
+      console.log(response);
+      const { payUrl } = response;
+    //window.location.href = payUrl;
+     // console.log(payUrl); // Chuyển hướng người dùng đến URL thanh toán Momo
     } catch (error) {
       console.error('Error:', error);
       // Xử lý lỗi
@@ -125,6 +125,7 @@ function PayMothods() {
     });
     return totalPrice;
   };
+  console.log(total);
   const totalTest = handleTotalPrice(listCustomer,detailTour);
   useEffect(()=>{
     setTotal(totalTest)

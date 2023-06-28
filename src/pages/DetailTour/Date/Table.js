@@ -15,6 +15,7 @@ import { detailTourApi } from "~/GlobalFunction/Api";
 function TablePrice({ id, month }) {
   const [date, setDate] = useState([]);
   const access_login = localStorage.getItem("access_token");
+  const ggtoken = localStorage.getItem("ggtoken");
   useEffect(() => {
     async function detailData() {
       const data = await detailTourApi(id);
@@ -66,7 +67,7 @@ function TablePrice({ id, month }) {
                     align="right"
                   >
                     7.000.000đ
-                    {access_login ? (
+                    {(access_login || ggtoken) ? (
                       <Link
                         to={`/booking/tourId/${id}?state=${encodeURIComponent(
                           id
