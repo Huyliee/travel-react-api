@@ -91,11 +91,8 @@ function PayMothods() {
   }
   const handleMomo = async () => {
     try {
-<<<<<<< HEAD
-      const response = await axios.post("http://127.0.0.1:8000/api/momo-payment", {
-=======
+      //const response = await axios.post("http://127.0.0.1:8000/api/momo-payment", {
       const response = await axios.post('https://travel2h.click/public_html/api/momo-payment', {
->>>>>>> 3f4e74dc7ac94a9e6deac0a2d968a3624f3166f1
           amount: total
         });
       console.log(response);
