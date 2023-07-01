@@ -14,7 +14,8 @@ import { loginApi } from "~/GlobalFunction/Api";
 import { GoogleLoginButton } from "react-social-login-buttons";
 import { LoginSocialGoogle } from "reactjs-social-login";
 import { registerApi } from "~/GlobalFunction/Api";
-
+import { LoginSocialFacebook } from "reactjs-social-login";
+import { FacebookLoginButton } from "react-social-login-buttons";
 const cx = classNames.bind(styles);
 const style = {
   position: "absolute",
@@ -34,12 +35,14 @@ const style = {
 };
 
 function Login() {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [customer_name, setCustomerName] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showRegister, setShowRegister] = useState(true);
+  
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     setLoading(true);
@@ -250,10 +253,60 @@ function Login() {
         <h2 className={cx("Login-text")}>Login</h2>
         <div className={cx("Login-container-body")}>
           <div className={cx("Login-social-container")}>
-            <SocialLogin
-              text="Continue with Facebook"
-              icon="https://chisfis-template.vercel.app/static/media/Facebook.c8b110290da41cf2d9e4312c085e008d.svg"
-            />
+          <LoginSocialFacebook  
+              appId="1504487773417163"
+
+              onResolve={(response) => {
+                
+                
+              
+              
+            
+                
+                  localStorage.setItem("name", response.data.name)
+                    localStorage.setItem("email", response.data.email)
+                    localStorage.setItem("picture", response.data.picture.data.url)
+                    localStorage.setItem("ggtoken", response.data.access_token)
+             
+
+         
+            //  const customer_name = data.name;
+            //  const email = data.email;
+            //  const password = data.sub;
+            // registerApi(customer_name,email,password);
+            // console.log(password);
+            swal({
+              title: "Thành công!",
+              text: "Đăng nhập thành công!",
+              icon: "success",
+              timer: 1500,
+              buttons: false,
+            }).then(() => {
+           
+                navigate("/");
+              
+            });
+              }}
+              onReject={(err) => {
+                console.log(err);
+              }}
+            >
+                <FacebookLoginButton style={{ 
+                   width:448,
+                   height:44,
+                   backgroundColor:'#eef2ff',
+                   borderRadius:2,
+                   padding:"12px 24px",
+                   lineHeight:"24px",
+                   fontSize:14,
+                   fontWeight:600,
+                   display:"flex",
+                   
+                   alignItems:"center",
+                   justifyContent:"center",
+                   cursor:'pointer'
+                }} ></FacebookLoginButton>
+            </LoginSocialFacebook>
             <Button onClick={handleOpen}>
               <SocialLogin
                 text="Continue with FaceIO"
