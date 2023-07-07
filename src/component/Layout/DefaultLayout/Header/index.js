@@ -52,6 +52,10 @@ function Header() {
   const handleLogout = () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("ggtoken");
+    localStorage.removeItem("email");
+    localStorage.removeItem("picture");
+    localStorage.removeItem("id_customer");
+    
     navigate("/login");
   };
   return (

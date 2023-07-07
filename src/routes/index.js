@@ -43,6 +43,7 @@ const publicRoutes = [
     {path: '/booking/payment/success' , component:PaymentSuccess},
     {path: '/profile' , component:Profile , layout:ProfileLayout},
     {path: '/profile/order' , component:Order , layout:ProfileLayout},
+    
 ]
 
 const privateRoutes =[

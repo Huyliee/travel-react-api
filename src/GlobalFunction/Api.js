@@ -69,3 +69,13 @@ export const getQuantityData = async ()=>{
     const res = await axios.get(`https://travel2h.click/public_html/api/analytic/quantityData`)
     return res.data;
 }
+//Api chi tiếtkhách hàng
+export const detailCustomerApi = async (id) =>{
+    const res = await axios.get(`http://127.0.0.1:8000/api/user/detail/${id}`)
+    return res.data.data;
+}
+//Api chi tiếtkhách hàng
+export const detailCustomerSocial = async (email) =>{
+    const res = await axios.get(`http://127.0.0.1:8000/api/user/social/${email}`)
+    return res.data;
+}

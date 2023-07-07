@@ -5,12 +5,12 @@ import styles from "./Login.module.scss";
 import classNames from "classnames/bind";
 import SocialLogin from "./social-login";
 import { TextField, Button, Modal, Box } from "@mui/material";
-import {  useState } from "react";
+import {  useEffect, useState } from "react";
 import { HashLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
-import { loginApi } from "~/GlobalFunction/Api";
+import { detailCustomerSocial, loginApi } from "~/GlobalFunction/Api";
 import { GoogleLoginButton } from "react-social-login-buttons";
 import { LoginSocialGoogle } from "reactjs-social-login";
 import { registerApi } from "~/GlobalFunction/Api";
@@ -42,6 +42,7 @@ function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showRegister, setShowRegister] = useState(true);
+  const [dataSocial,setDataSocial] = useState({});
   
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -246,6 +247,7 @@ function Login() {
     handleClose();
     faceRegistration(e);
   }
+
   return (
     <div className={cx("Login-main")}>
       <div className={cx("Login-container")}>
@@ -268,7 +270,7 @@ function Login() {
                     localStorage.setItem("picture", response.data.picture.data.url)
                     localStorage.setItem("ggtoken", response.data.access_token)
              
-
+                
          
             //  const customer_name = data.name;
             //  const email = data.email;
@@ -322,18 +324,20 @@ function Login() {
               access_type="offline"
               onResolve={({provider,data})=>{
                 
-                
+                console.log(data);
 
             localStorage.setItem("name",data.name);
             localStorage.setItem("email", data.email);
             localStorage.setItem("picture", data.picture);
             localStorage.setItem("ggtoken", data.access_token);
+            localStorage.setItem("idgg",data.sub);
             
             const customer_name = data.name;
             const email = data.email;
             const password = data.sub;
             registerApi(customer_name,email,password);
-            console.log(password);
+            const datagg = detailCustomerSocial(email);
+            setDataSocial(datagg);
             swal({
               title: "Thành công!",
               text: "Đăng nhập thành công!",

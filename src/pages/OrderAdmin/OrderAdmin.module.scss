@@ -43,3 +43,62 @@ input[type="file"]::-webkit-file-upload-button {
     border: none;
     cursor: pointer;
   }
+.modal-body{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.col-left{
+    width: 50%;
+}
+.info-contact-container{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.field-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 310px;
+    margin-bottom: 20px;
+}
+.field-label{
+    font-size: 14px;
+    font-weight: 500;
+}
+.field-text{
+    width: 215px;
+}
+.tour-container{
+    display: flex;
+    justify-content: space-between;
+}
+.heading{
+    font-size: 15px;
+    margin-bottom: 16px;
+}
+.col-right{
+    width: 47%;
+}
+.field-customer{
+    width: 136px;
+    margin-right: 20px!important;
+    margin-bottom: 10px!important;
+}
+.info-customer{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    min-height: 380px;
+}
+.button-quantity-container{
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+    margin: 10px auto;
+}
+.button-quantity{
+    width: 100px;
+    height: 30px;
+}

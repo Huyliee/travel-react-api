@@ -46,12 +46,15 @@
         font-size: 15px;
     }
 }
-.profile-change-info{
-
+.profile-update-row{
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 0px;
+    width: 100%;
 }
 .profile-change-row{
     display: flex;
-    width: 350px;
+    width: 100%;
     justify-content: space-between;
     padding: 16px 0px;
     span,

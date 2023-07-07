@@ -1,10 +1,32 @@
 import classNames from "classnames/bind";
 import styles from "./Profile.module.scss";
-import { Box } from "@mui/material";
+import { Box} from "@mui/material";
+import InfoCustomer from "./InfoCustomer";
+import { useEffect, useState } from "react";
+import { detailCustomerApi, detailCustomerSocial } from "~/GlobalFunction/Api";
 const cx = classNames.bind(styles);
-const name = localStorage.getItem("name");
-const email = localStorage.getItem("email");
 function Profile() {
+  const idCustomer = localStorage.getItem('id_customer');
+  const email = localStorage.getItem('email');
+  const [detailCustomer, setDetailCustomer] = useState({});
+  const [detailSocial,setDetailSocial]= useState({});
+  console.log(email);
+  useEffect(() => {
+    async function detailData() {
+      if (idCustomer) {
+        const data = await detailCustomerApi(idCustomer);
+        setDetailCustomer(data);
+      } else if (email) {
+        const data = await detailCustomerSocial(email);
+        setDetailSocial(data);
+      }
+    }
+    detailData();
+  }, [idCustomer, email]);
+
+
+  
+  console.log(detailSocial);
   return (
     <div>
       <Box>
@@ -16,60 +38,15 @@ function Profile() {
               được sử dụng ra sao.
             </span>
           </div>
-          <div className={cx("profile-change-info")}>
-            <div className={cx("profile-change-row")}>
-              <h5>Họ và tên: </h5>
-              <span>{name}</span>
-            </div>
-          </div>
-          <div className={cx("profile-change-info")}>
-            <div className={cx("profile-change-row")}>
-              <h5>Số tour đã đi:</h5>
-              <span>Chưa có thông tin</span>
-            </div>
-          </div>
-          <div className={cx("profile-change-info")}>
-            <div className={cx("profile-change-row")}>
-              <h5>Email:</h5>
-              <span>{email}</span>
-            </div>
-          </div>
-          <div className={cx("profile-change-info")}>
-            <div className={cx("profile-change-row")}>
-              <h5>Số điện thoại:</h5>
-              <span>0931487873</span>
-            </div>
-          </div>
-          <div className={cx("profile-change-info")}>
-            <div className={cx("profile-change-row")}>
-              <h5>Ngày sinh:</h5>
-              <span>Chưa có thông tin</span>
-            </div>
-          </div>
-          <div className={cx("profile-change-info")}>
-            <div className={cx("profile-change-row")}>
-              <h5>Giới tính:</h5>
-              <span>Chưa có thông tin</span>
-            </div>
-          </div>
-          <div className={cx("profile-change-info")}>
-            <div className={cx("profile-change-row")}>
-              <h5>Quốc tịch:</h5>
-              <span>Chưa có thông tin</span>
-            </div>
-          </div>
-          <div className={cx("profile-change-info")}>
-            <div className={cx("profile-change-row")}>
-              <h5>Địa chỉ:</h5>
-              <span>Chưa có thông tin</span>
-            </div>
-          </div>
-          <div className={cx("profile-change-info")}>
-            <div className={cx("profile-change-row")}>
-              <h5>CMND:</h5>
-              <span>Chưa có thông tin</span>
-            </div>
-          </div>
+          <InfoCustomer title="Họ và tên" value={detailCustomer.customer_name} inputName="customer_name"/>
+          <InfoCustomer title="Số tour đã đi" value="Chưa có thông tin" />
+          <InfoCustomer title="Email" value={detailCustomer.email} inputName="email"/>
+          <InfoCustomer title="Số điện thoại" value={detailCustomer.phone} inputName="phone"/>
+          <InfoCustomer title="Ngày sinh" value={detailCustomer.date_of_birth} inputName="date_of_birth"/>
+          <InfoCustomer title="Giới tính" value={detailCustomer.gender} inputName="gender"/>
+          <InfoCustomer title="Quốc tịch" value="Chưa có thông tin" />
+          <InfoCustomer title="Địa chỉ" value={detailCustomer.address} inputName="address"/>
+          <InfoCustomer title="CMND" value="Chưa có thông tin" />
         </div>
       </Box>
     </div>
