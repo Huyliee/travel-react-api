@@ -41,6 +41,9 @@ function TablePrice({ id, month }) {
                 Hạng tour
               </TableCell>
               <TableCell style={{ fontSize: "20px" }} align="right">
+                Số chỗ còn nhận
+              </TableCell>
+              <TableCell style={{ fontSize: "20px" }} align="right">
                 Giá tour
               </TableCell>
             </TableRow>
@@ -62,8 +65,11 @@ function TablePrice({ id, month }) {
                   <TableCell style={{ fontSize: "16px" }} align="right">
                     Tour trọn gói
                   </TableCell>
+                  <TableCell style={{ fontSize: "16px" }} align="center">
+                    {row.seats === 0 ? <p style={{color:"#ff0000"}}>Hết chỗ</p> : `${row.seats} Chỗ`}
+                  </TableCell>
                   <TableCell
-                    style={{ fontSize: "16px", color: "red" }}
+                    style={{ fontSize: "16px", color: "red"}}
                     align="right"
                   >
                     7.000.000đ
@@ -71,11 +77,13 @@ function TablePrice({ id, month }) {
                       <Link
                         to={`/booking/tourId/${id}?state=${encodeURIComponent(
                           id
-                        )}&date=${encodeURIComponent(row.id)}`}
+                        )}&date=${encodeURIComponent(row.id)}&seat=${encodeURIComponent(row.seats)}`}
+                        style={row.seats === 0 ? { pointerEvents: 'none' } : {}}
                       >
                         <Button
                           variant="contained"
                           style={{ marginLeft: "10px" }}
+                          disabled={row.seats === 0}
                         >
                           Chọn ngày
                         </Button>

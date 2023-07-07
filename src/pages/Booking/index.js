@@ -13,6 +13,7 @@ import Quantity from "./Quantity";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import TravelCard from "./TravelCard";
+import { ToastContainer, toast } from "react-toastify";
 const cx = classNames.bind(styles);
 
 function Booking() {
@@ -26,6 +27,7 @@ function Booking() {
   const idTour = queryParams.get("state");
   console.log(idTour);
   const id_date = queryParams.get("date");
+  const seats = queryParams.get("seat");
   const navigate = useNavigate();
   ////////////////////////
   const id_customer = localStorage.getItem("id_customer");
@@ -114,9 +116,14 @@ function Booking() {
     },
     justifyContent: "flex-start",
   };
+  //Thông báo quá số lượng chỗ
+  if(totalQuantity >= seats){
+    toast.error("Quá số lượng chỗ");
+  }
   return (
     <>
       <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
+      <ToastContainer position="top-right" autoClose={3000} />
         <Box sx={{ width: "100%", marginBottom: "20px" }}>
           <Stepper alternativeLabel sx={customStyles}>
             {steps.map((label) => (
@@ -217,12 +224,16 @@ function Booking() {
                   subtitle="&gt; 12"
                   customerInfo={handleAdultCustomerInfoChange}
                   quantity={handleAdultQuantityChange}
+                  seat={seats}
+                  totalQuantity={totalQuantity}
                 />
                 <Quantity
                   title="Trẻ em"
                   subtitle="Từ 5 - 11"
                   customerInfo={handleChildCustomerInfoChange}
                   quantity={handleChildQuantityChange}
+                  seat={seats}
+                  totalQuantity={totalQuantity}
                 />
               </div>
             </div>

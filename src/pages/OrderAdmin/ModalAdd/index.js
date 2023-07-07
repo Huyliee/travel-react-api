@@ -40,7 +40,7 @@ function ModalAdd({ open, handleClose , order , customer}) {
   const [valueTour, setValueTour] = useState(null);
   const [date, setDate] = useState({});
   const [valueDate, setValueDate] = useState({});
-  const [isDateDisabled, setIsDateDisabled] = useState(true);
+  const [isDateDisabled, setIsDateDisabled] = useState(false);
   const [adultFormCount, setAdultFormCount] = useState(1);
   const [childFormCount, setChildFormCount] = useState(1);
   const [adultFormData, setAdultFormData] = useState([]);
@@ -203,6 +203,7 @@ function ModalAdd({ open, handleClose , order , customer}) {
   const idChooseTour = detail.adultInfo[0]?.id_tour;
   const idChooseDate = order.id_date;
   const dateUpdate = detailTour?.date_go?.find((dateItem) => dateItem.id === idChooseDate)
+  console.log(dateUpdate);
   useEffect(() => {
     async function detailData() {
       const data = await detailTourApi(idChooseTour);
