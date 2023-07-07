@@ -64,17 +64,20 @@ function ModalAdd({ open, handleClose , order , customer}) {
         address: order.address || "",
       });
     }
-    if(customer)
-    {
+    if (customer) {
+      const adultCustomers = customer.filter((info) => info.age === "Người lớn");
+      const childCustomers = customer.filter((info) => info.age !== "Người lớn");
+    
       setDetail({
-        adultInfo: customer.adultInfo || [],
-        childInfo: customer.childInfo || [],
-      })
+        adultInfo: adultCustomers,
+        childInfo: childCustomers,
+      });
+      setAdultFormCount(detail.adultInfo.length);
+      setChildFormCount(detail.childInfo.length);
     }
-  }, [order,customer]);
+  }, [order,customer,detail]);
   console.log(formData);
   console.log(order);
-  console.log(customer);
   console.log(detail);
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -195,18 +198,19 @@ function ModalAdd({ open, handleClose , order , customer}) {
         console.log(error);
       });
   };
-  // const [detailOrder, setDetailOrder] = useState({});
-  // const [listCustomer, setListCustomer] = useState([]);
-  // useEffect(() => {
-  //   async function detailData() {
-  //     const data = await getDetailOrder(idBooking);
-  //     setDetailOrder(data);
-  //     setListCustomer(data.detail_order);
-  //   }
-  //   detailData();
-  // }, [idBooking]);
-  // console.log(detailOrder);
-  // console.log(listCustomer);
+  //Chi tiết tour
+  const [detailTour, setDetailTour] = useState({});
+  const idChooseTour = detail.adultInfo[0]?.id_tour;
+  const idChooseDate = order.id_date;
+  const dateUpdate = detailTour?.date_go?.find((dateItem) => dateItem.id === idChooseDate)
+  useEffect(() => {
+    async function detailData() {
+      const data = await detailTourApi(idChooseTour);
+      setDetailTour(data);
+    }
+    detailData();
+  }, [idChooseTour]);
+  console.log(detailTour);
   const renderAdultForms = () => {
     const adultForms = [];
     for (let i = 0; i < adultFormCount; i++) {
@@ -216,6 +220,7 @@ function ModalAdd({ open, handleClose , order , customer}) {
             label={`Họ tên người lớn ${i + 1}`}
             variant="outlined"
             className={cx("field-customer")}
+            value={detail.adultInfo[i]?.name_customer || ""}
             onChange={(event) =>
               handleAdultFormChange(i, "name_customer", event.target.value)
             }
@@ -225,7 +230,7 @@ function ModalAdd({ open, handleClose , order , customer}) {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={adultFormData[i]?.gender || ""}
+              value={adultFormData[i]?.gender || detail.adultInfo[i]?.sex || ""}
               onChange={(event) =>
                 handleAdultFormChange(i, "gender", event.target.value)
               }
@@ -254,6 +259,7 @@ function ModalAdd({ open, handleClose , order , customer}) {
             label={`CMND người lớn ${i + 1}`}
             variant="outlined"
             className={cx("field-customer")}
+            value={detail.adultInfo[i]?.CMND || ""}
             onChange={(event) =>
               handleAdultFormChange(i, "CMND", event.target.value)
             }
@@ -273,6 +279,7 @@ function ModalAdd({ open, handleClose , order , customer}) {
             label={`Thông tin trẻ em ${i + 1}`}
             variant="outlined"
             className={cx("field-customer")}
+            value={detail.childInfo[i]?.name_customer || ""}
             onChange={(event) =>
               handleChildFormChange(i, "name_customer", event.target.value)
             }
@@ -282,7 +289,7 @@ function ModalAdd({ open, handleClose , order , customer}) {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={childFormData[i]?.gender || ""}
+              value={childFormData[i]?.gender || detail.childInfo[i]?.sex  || ""}
               onChange={(event) =>
                 handleChildFormChange(i, "gender", event.target.value)
               }
@@ -311,6 +318,7 @@ function ModalAdd({ open, handleClose , order , customer}) {
             label={`Thông tin trẻ em ${i + 1}`}
             variant="outlined"
             className={cx("field-customer")}
+            value={detail.childInfo[i]?.CMND || ""}
             onChange={(event) =>
               handleChildFormChange(i, "CMND", event.target.value)
             }
@@ -386,7 +394,7 @@ function ModalAdd({ open, handleClose , order , customer}) {
               <h4 className={cx("heading")}>Tour du lịch</h4>
               <Box className={cx("tour-container")}>
                 <Autocomplete
-                  value={valueTour}
+                  value={valueTour || detailTour}
                   options={dataTour}
                   getOptionLabel={(option) => option.name_tour || ""}
                   onChange={handleOnChange}
@@ -400,7 +408,7 @@ function ModalAdd({ open, handleClose , order , customer}) {
                   )}
                 />
                 <Autocomplete
-                  value={valueDate}
+                  value={valueDate || dateUpdate}
                   options={date}
                   getOptionLabel={(option) => option.date || ""}
                   onChange={handleOnChangeDate}
