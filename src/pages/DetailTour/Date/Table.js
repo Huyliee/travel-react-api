@@ -65,8 +65,8 @@ function TablePrice({ id, month }) {
                   <TableCell style={{ fontSize: "16px" }} align="right">
                     Tour trọn gói
                   </TableCell>
-                  <TableCell style={{ fontSize: "16px" }} align="center">
-                    {row.seats === 0 ? <p style={{color:"#ff0000"}}>Hết chỗ</p> : `${row.seats} Chỗ`}
+                  <TableCell style={{ fontSize: "16px" }} align="right">
+                    {row.seats === 0 ? <p style={{color:"#ff0000",paddingRight:'50px'}}>Hết chỗ</p> : <p style={{paddingRight:'50px'}}>{row.seats} Chỗ</p>}
                   </TableCell>
                   <TableCell
                     style={{ fontSize: "16px", color: "red"}}
