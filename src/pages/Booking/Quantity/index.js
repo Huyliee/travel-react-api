@@ -11,7 +11,7 @@ import dayjs from "dayjs";
 
 const cx = classNames.bind(styles);
 
-function Quantity({ title, subtitle ,customerInfo,quantity}) {
+function Quantity({ title, subtitle ,customerInfo,quantity,seat,totalQuantity}) {
   const [quantityAdult, setQuantityAdult] = useState(1);
 
   const [customers, setCustomer] = useState([
@@ -29,8 +29,10 @@ function Quantity({ title, subtitle ,customerInfo,quantity}) {
 
   // Xử lý tăng số lương và tăng form
   const handleAddQuantity = () => {
+    if(totalQuantity < seat){
     setQuantityAdult((prevQuantity) => prevQuantity + 1);
     setCustomer([...customers, { name_customer: "", gender: "",date:"" }]);
+    }
   };
 
   
