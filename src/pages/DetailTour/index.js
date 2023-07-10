@@ -30,6 +30,7 @@ import {
   TimelineContent,
   TimelineDot,
 } from "@mui/lab";
+import FacebookComment from "../commentFb";
 
 const cx = classNames.bind(styles);
 
@@ -431,8 +432,14 @@ function DetailTour() {
             </div>
           </div>
         </div>
+        <div>
+       
+         
+          <FacebookComment url={`https://travel-react-api.netlify.app/detail/${id}`} width={1000} numPosts={5} />
+        </div>
       </Container>
     </div>
+    
   );
 }
 

@@ -71,11 +71,16 @@ export const getQuantityData = async ()=>{
 }
 //Api chi tiếtkhách hàng
 export const detailCustomerApi = async (id) =>{
-    const res = await axios.get(`http://127.0.0.1:8000/api/user/detail/${id}`)
+    const res = await axios.get(`https://travel2h.click/public_html/api/user/detail/${id}`)
     return res.data.data;
 }
 //Api chi tiếtkhách hàng
 export const detailCustomerSocial = async (email) =>{
-    const res = await axios.get(`http://127.0.0.1:8000/api/user/social/${email}`)
+    const res = await axios.get(`https://travel2h.click/public_html/api/user/social/${email}`)
     return res.data;
+}
+//Api chi tiết tin tức
+export const detailNews = async (id) =>{
+    const res = await axios.get(`https://travel2h.click/public_html/api/news/detail/${id}`)
+    return res.data.data;
 }

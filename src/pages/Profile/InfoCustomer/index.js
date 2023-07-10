@@ -6,6 +6,7 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { detailCustomerApi } from "~/GlobalFunction/Api";
+import { detailCustomerSocial } from "~/GlobalFunction/Api";
 const cx = classNames.bind(styles);
 
 function InfoCustomer({ value, title, inputName }) {
@@ -53,7 +54,7 @@ function InfoCustomer({ value, title, inputName }) {
 
   const handleUpdateSubmit = () => {
     axios
-      .put(`http://127.0.0.1:8000/api/user/update/${idCustomer}`, formData)
+      .put(`https://travel2h.click/public_html/api/user/update/${idCustomer}`, formData)
       .then((response) => {
         console.log(response.data);
         window.location.reload(); 
