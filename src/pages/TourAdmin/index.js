@@ -150,7 +150,11 @@ function TourAdmin() {
     formData.append("best_seller", best_seller);
     formData.append("hot_tour", hot_tour);
     axios
-      .post("https://travel2h.click/public_html/api/tour/store", formData)
+      .post("http://127.0.0.1:8000/api/tour/store", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((response) => {
         console.log(response.data);
         resetFrom();
@@ -200,7 +204,7 @@ function TourAdmin() {
         console.log(error);
       });
   };
-  console.log(content_tour);
+  console.log(img_tour);
   const handleUpdateSubmit = (id) => {
     // // e.preventDefault();
     const formData = new FormData();
@@ -409,6 +413,7 @@ function TourAdmin() {
                       accept="image/*"
                       onChange={(e) => setImgTour(e.target.files[0])}
                       ref={fileInputRef}
+                      name="img_tour"
                     />
                   </Button>
                 </div>

@@ -38,6 +38,7 @@ function DetailTour() {
   const [detailTour, setDetailTour] = useState({});
   const [weather, setWeather] = useState({});
   const API_KEY_WEATHER = "cd80aaec45724113a6c125437230106";
+  console.log(id);
   //Api thời tiết
   useEffect(() => {
     async function getWeather() {

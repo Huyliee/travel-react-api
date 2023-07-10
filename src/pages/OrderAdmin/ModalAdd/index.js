@@ -34,7 +34,7 @@ const style = {
   flexDirection: "column",
 };
 
-function ModalAdd({ open, handleClose , order , customer}) {
+function ModalAdd({ open, handleClose , order , customer, button}) {
   const id_customer = localStorage.getItem('id_customer');
   const [dataTour, setDataTour] = useState({});
   const [valueTour, setValueTour] = useState(null);
@@ -56,12 +56,19 @@ function ModalAdd({ open, handleClose , order , customer}) {
     address:  '',
   });
   useEffect(() => {
-    if (order) {
+    if (order && !button) {
       setFormData({
         name: order.name || "",
         email: order.email || "",
         phone: order.phone || "",
         address: order.address || "",
+      });
+    }else{
+      setFormData({
+        name:  "",
+        email: "",
+        phone: "",
+        address:  "",
       });
     }
     if (customer) {
@@ -72,13 +79,11 @@ function ModalAdd({ open, handleClose , order , customer}) {
         adultInfo: adultCustomers,
         childInfo: childCustomers,
       });
-      setAdultFormCount(detail.adultInfo.length);
-      setChildFormCount(detail.childInfo.length);
+      // setAdultFormCount(detail.adultInfo.length);
+      // setChildFormCount(detail.childInfo.length);
     }
-  }, [order,customer,detail]);
-  console.log(formData);
-  console.log(order);
-  console.log(detail);
+  }, [order,customer,detail,button]);
+  console.log(adultFormCount);
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
@@ -146,7 +151,7 @@ function ModalAdd({ open, handleClose , order , customer}) {
   }, [valueTour]);
   ///Xử lý tăng giảm số lượng form trẻ em và người lớn
   const handleIncreaseAdult = () => {
-    setAdultFormCount(adultFormCount + 1);
+    setAdultFormCount(adultFormCount + 1);  
   };
   const handleDecreaseAdult = () => {
     if (adultFormCount > 0) {
@@ -221,7 +226,7 @@ function ModalAdd({ open, handleClose , order , customer}) {
             label={`Họ tên người lớn ${i + 1}`}
             variant="outlined"
             className={cx("field-customer")}
-            value={detail.adultInfo[i]?.name_customer || ""}
+            value={!button ? detail.adultInfo[i]?.name_customer : ""}
             onChange={(event) =>
               handleAdultFormChange(i, "name_customer", event.target.value)
             }
@@ -231,7 +236,7 @@ function ModalAdd({ open, handleClose , order , customer}) {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={adultFormData[i]?.gender || detail.adultInfo[i]?.sex || ""}
+              value={!button ? (adultFormData[i]?.gender || detail.adultInfo[i]?.sex) : ""}
               onChange={(event) =>
                 handleAdultFormChange(i, "gender", event.target.value)
               }
@@ -260,7 +265,7 @@ function ModalAdd({ open, handleClose , order , customer}) {
             label={`CMND người lớn ${i + 1}`}
             variant="outlined"
             className={cx("field-customer")}
-            value={detail.adultInfo[i]?.CMND || ""}
+            value={!button ? detail.adultInfo[i]?.CMND : ""}
             onChange={(event) =>
               handleAdultFormChange(i, "CMND", event.target.value)
             }
@@ -338,7 +343,7 @@ function ModalAdd({ open, handleClose , order , customer}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography>Thêm đơn đặt tour</Typography>
+          <Typography style={{fontSize:'18px',fontWeight:'500',borderBottom:'1px solid #ddd',padding:'10px 0px'}}>Thêm đơn đặt tour</Typography>
           <Box className={cx("modal-body")}>
             <Box className={cx("col-left")}>
               <h4 className={cx("heading")}>Thông tin liên hệ</h4>
@@ -395,7 +400,7 @@ function ModalAdd({ open, handleClose , order , customer}) {
               <h4 className={cx("heading")}>Tour du lịch</h4>
               <Box className={cx("tour-container")}>
                 <Autocomplete
-                  value={valueTour || detailTour}
+                  value={!button ? (valueTour || detailTour) : ""}
                   options={dataTour}
                   getOptionLabel={(option) => option.name_tour || ""}
                   onChange={handleOnChange}

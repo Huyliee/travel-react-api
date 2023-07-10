@@ -141,7 +141,7 @@ function NewsAdmin() {
     formData.append("id_news", id_news);
     formData.append("title_news", title_news);
     formData.append("date", date);
-    formData.append("content_new", content_news);
+    formData.append("content_news", content_news);
     formData.append("img_news", img_news);
     axios
       .post("https://travel2h.click/public_html/api/news/store", formData)
@@ -159,29 +159,6 @@ function NewsAdmin() {
       });
   };
 
-  // const handleAdd = () => {
-  //   // e.preventDefault();
-  //   const formData = new FormData();
-  //   formData.append("id_news", id_news);
-  //   formData.append("title_news", title_news);
-  //   formData.append("date", date);
-  //   formData.append("content_new", content_news);
-  //   formData.append("img_news", img_news);
-  //   axios
-  //     .post("https://travel2h.click/public_html/api/news/store", formData)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       resetFrom();
-  //       toast.success("Tin đã được thêm thành công.");
-  //       setTimeout(() => {
-  //         navigate("/admin/news");
-  //       }, 3000); // chuyển hướng sau 2 giây
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       toast.error("Mã tin đã tồn tại trong hệ thống");
-  //     });
-  // };
  
   const handleEditorChange = (event, editor) => {
     const data = editor.getData();
@@ -229,7 +206,8 @@ function NewsAdmin() {
             </Typography>
             <form
               className={cx("store-input-container")}
-            // onSubmit={handleSubmit}
+            onSubmit={handleAdd}
+            enctype="multipart/form-data"
             >
               <div className={cx("store-input")}>
                 <div className={cx("label-container")}>
@@ -357,18 +335,10 @@ function NewsAdmin() {
                 </div>
               </div>
 
-
-
-
-
-
-
-
               <Button
                 variant="contained"
                 sx={{ marginTop: "10px" }}
                 type="submit"
-                onSubmit={handleAdd}
               >
                 {inputUpdate ? "Sửa" : "Thêm"} Tin tức
               </Button>
