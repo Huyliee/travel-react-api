@@ -25,7 +25,7 @@ function Profile() {
     }
     detailData();
  
-  }, [idCustomer, email]);  
+  }, [idCustomer, email,ggtoken]);  
 
 
   ggtoken?localStorage.setItem('id_customer',detailSocial[0]?.id):console.log('loi');
