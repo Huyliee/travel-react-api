@@ -55,6 +55,8 @@ function Header() {
     localStorage.removeItem("email");
     localStorage.removeItem("picture");
     localStorage.removeItem("id_customer");
+    localStorage.removeItem("name");
+    localStorage.removeItem("idgg");
     
     navigate("/login");
   };

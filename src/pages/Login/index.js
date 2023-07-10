@@ -248,6 +248,7 @@ function Login() {
     faceRegistration(e);
   }
 
+
   return (
     <div className={cx("Login-main")}>
       <div className={cx("Login-container")}>
@@ -323,7 +324,7 @@ function Login() {
               discoveryDocs="claims_supported"
               access_type="offline"
               onResolve={({provider,data})=>{
-                
+                console.log(data.phone_number);
                 console.log(data);
 
             localStorage.setItem("name",data.name);
@@ -331,13 +332,12 @@ function Login() {
             localStorage.setItem("picture", data.picture);
             localStorage.setItem("ggtoken", data.access_token);
             localStorage.setItem("idgg",data.sub);
-            
+         
             const customer_name = data.name;
             const email = data.email;
             const password = data.sub;
             registerApi(customer_name,email,password);
-            const datagg = detailCustomerSocial(email);
-            setDataSocial(datagg);
+   
             swal({
               title: "Thành công!",
               text: "Đăng nhập thành công!",

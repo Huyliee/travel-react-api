@@ -17,6 +17,7 @@ import Profile from "~/pages/Profile";
 import ProfileLayout from "~/component/Layout/ProfileLayout";
 import Order from "~/pages/Profile/Order";
 import OrderAdmin from "~/pages/OrderAdmin";
+import DetailNews from "~/pages/DetailNews";
 // import { useState , useEffect } from "react";
 // import { getTour } from "~/GlobalFunction/Api";
 
@@ -37,6 +38,7 @@ const publicRoutes = [
     {path: '/tour' , component:Tour},
     {path: '/contact' , component:Contact},
     {path: '/news' , component:News},
+    {path: '/detailnews/:id' , component:DetailNews},
     {path: '/detail/:id' , component:DetailTour},
     {path: '/booking/tourId/:id' , component:Booking},
     {path: '/booking/payment/:idBooking/idTour/:idTour' , component:PayMothods},

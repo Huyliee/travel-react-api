@@ -8,25 +8,29 @@ const cx = classNames.bind(styles);
 function Profile() {
   const idCustomer = localStorage.getItem('id_customer');
   const email = localStorage.getItem('email');
+  const ggtoken = localStorage.getItem('ggtoken');
   const [detailCustomer, setDetailCustomer] = useState({});
   const [detailSocial,setDetailSocial]= useState({});
-  console.log(email);
   useEffect(() => {
     async function detailData() {
-      if (idCustomer) {
-        const data = await detailCustomerApi(idCustomer);
-        setDetailCustomer(data);
-      } else if (email) {
+      if (ggtoken) {
+      
         const data = await detailCustomerSocial(email);
         setDetailSocial(data);
+      } else {
+       
+        const data = await detailCustomerApi(idCustomer);
+        setDetailCustomer(data);
       }
     }
     detailData();
-  }, [idCustomer, email]);
+ 
+  }, [idCustomer, email]);  
 
 
-  
-  console.log(detailSocial);
+  ggtoken?localStorage.setItem('id_customer',detailSocial[0]?.id):console.log('loi');
+  console.log(detailSocial[0]?.id);
+
   return (
     <div>
       <Box>
@@ -37,15 +41,17 @@ function Profile() {
               Cập nhật thông tin của Quý khách và tìm hiểu các thông tin này
               được sử dụng ra sao.
             </span>
+        
           </div>
-          <InfoCustomer title="Họ và tên" value={detailCustomer.customer_name} inputName="customer_name"/>
+         
+          <InfoCustomer title="Họ và tên"       value={ggtoken?detailSocial[0]?.customer_name : detailCustomer.customer_name} inputName="customer_name"/>
           <InfoCustomer title="Số tour đã đi" value="Chưa có thông tin" />
-          <InfoCustomer title="Email" value={detailCustomer.email} inputName="email"/>
-          <InfoCustomer title="Số điện thoại" value={detailCustomer.phone} inputName="phone"/>
-          <InfoCustomer title="Ngày sinh" value={detailCustomer.date_of_birth} inputName="date_of_birth"/>
-          <InfoCustomer title="Giới tính" value={detailCustomer.gender} inputName="gender"/>
+          <InfoCustomer title="Email" value={ggtoken?detailSocial[0]?.email : detailCustomer.email} inputName="email"/>
+          <InfoCustomer title="Số điện thoại" value={ggtoken?detailSocial[0]?.phone : detailCustomer.phone} inputName="phone"/>
+          <InfoCustomer title="Ngày sinh" value={ggtoken?detailSocial[0]?.date_of_birth : detailCustomer.date_of_birth} inputName="date_of_birth"/>
+          <InfoCustomer title="Giới tính" value={ggtoken?detailSocial[0]?.gender : detailCustomer.gender} inputName="gender"/>
           <InfoCustomer title="Quốc tịch" value="Chưa có thông tin" />
-          <InfoCustomer title="Địa chỉ" value={detailCustomer.address} inputName="address"/>
+          <InfoCustomer title="Địa chỉ" value={ggtoken?detailSocial[0]?.address : detailCustomer.address} inputName="address"/>
           <InfoCustomer title="CMND" value="Chưa có thông tin" />
         </div>
       </Box>

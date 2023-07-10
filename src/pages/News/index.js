@@ -58,16 +58,20 @@ function News() {
 
 
                     {news.map((newItem) => (
-                        <div className={cx("box-right")}>
+                        <Link to={`/detailnews/${newItem.id_news}`}  style={{ textDecoration:"none" }} >
+                                    <div className={cx("box-right")}>
                             <div className={cx("img-right")}>
                                 <img src={newItem.img_news} alt="hinhanh" />
                             </div>
                             <div className={cx("content-right")}>
                                 <p style={{ color: "rgb(253, 80, 86)" }}>Tin tức dữ liệu</p>
-                                <Link style={{ textDecoration: "none", fontWeight: "600" }}>{newItem.title_news}</Link>
+                                <p style={{ textDecoration: "none", fontWeight: "600" }}>{newItem.title_news}</p>
                                 <p>{newItem.date}</p>
                             </div>
                         </div>
+                        </Link>
+                   
+            
                     ))};
                 </div>
 
