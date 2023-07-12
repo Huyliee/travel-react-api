@@ -5,7 +5,8 @@ import styles from "./Login.module.scss";
 import classNames from "classnames/bind";
 import SocialLogin from "./social-login";
 import { TextField, Button, Modal, Box } from "@mui/material";
-import {   useState } from "react";
+import {  useState } from "react";
+
 import { HashLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -42,6 +43,7 @@ function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showRegister, setShowRegister] = useState(true);
+  const [dataSocial,setDataSocial] = useState({});
   
   const navigate = useNavigate();
   const handleSubmit = async (e) => {

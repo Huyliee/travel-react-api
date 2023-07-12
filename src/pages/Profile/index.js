@@ -28,6 +28,7 @@ function Profile() {
   }, [idCustomer, email , ggtoken]);  
 
 
+
   ggtoken?localStorage.setItem('id_customer',detailSocial[0]?.id):console.log('loi');
   console.log(detailSocial[0]?.id);
 

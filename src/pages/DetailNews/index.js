@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { detailNews } from "~/GlobalFunction/Api";
 import { useParams } from "react-router-dom";
+
 import React from "react";
 const cx = classNames.bind(styles);
 
@@ -43,7 +44,7 @@ function DetailNews() {
          
           <div>
           <img src={detailNew.img_news} alt="hinhanh"/> 
-            <div>
+            <div className={cx("content-news")}>
             {htmlContent}
             </div>
                             
