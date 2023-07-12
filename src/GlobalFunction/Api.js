@@ -84,3 +84,8 @@ export const detailNews = async (id) =>{
     const res = await axios.get(`https://travel2h.click/public_html/api/news/detail/${id}`)
     return res.data.data;
 }
+//Api danh sách khách hàng của 1 ngày cụ thể của 1 tour
+export const listCustomerOfDate = async (id) =>{
+    const res = await axios.get(`http://127.0.0.1:8000/api/datego/order/${id}`)
+    return res.data.data;
+}

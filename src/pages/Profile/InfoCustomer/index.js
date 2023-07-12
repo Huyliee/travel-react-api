@@ -6,7 +6,6 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { detailCustomerApi } from "~/GlobalFunction/Api";
-import { detailCustomerSocial } from "~/GlobalFunction/Api";
 const cx = classNames.bind(styles);
 
 function InfoCustomer({ value, title, inputName }) {

@@ -123,7 +123,7 @@ function Booking() {
   return (
     <>
       <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
-      <ToastContainer position="top-right" autoClose={3000} />
+      {/* <ToastContainer position="top-right" autoClose={3000} /> */}
         <Box sx={{ width: "100%", marginBottom: "20px" }}>
           <Stepper alternativeLabel sx={customStyles}>
             {steps.map((label) => (

@@ -15,7 +15,7 @@ import { ToastContainer } from "react-toastify";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getTour } from "~/GlobalFunction/Api";
 
 const style = {
@@ -458,6 +458,11 @@ function TourAdmin() {
         columns={columns}
         getRowId={(row) => row.id_tour}
         autoHeight
+        onRowClick={(params, event) => {
+          const stateParam = encodeURIComponent(JSON.stringify(params.row));
+          const url = `/admin/tour/${params.row.id_tour}?state=${stateParam}`;
+          window.location.href = url;
+        }}
         rowHeight={150}
         slots={{ toolbar: GridToolbar }}
         slotProps={{
@@ -467,6 +472,7 @@ function TourAdmin() {
           },
         }}
         sx={{
+          cursor:"pointer",
           "& .MuiDataGrid-colCell": {
             fontSize: "14px",
           },

@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   FormControl,
   FormControlLabel,
   InputLabel,
@@ -14,14 +15,26 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState } from "react";
 import styles from "./Filter.module.scss";
 import classNames from "classnames/bind";
+import Annyang  from "annyang";
 
 const cx = classNames.bind(styles);
 
 function Filter({handleInput,nameTour,handleKeyPress}) {
   const [value, setValue] = useState([0, 100]);
+  const [speechText,setSpeechText] = useState({});
+  console.log(speechText);
   const handleChange = (e, newValue) => {
     setValue(newValue);
   };
+  const handleSpeechRecognition = () => {
+    Annyang.start({ autoRestart: false, continuous: false });
+    Annyang.addCallback('result', (phrases) => {
+      const searchQuery = phrases[0]; // Lấy cụm từ đầu tiên trong kết quả nhận dạng giọng nói
+      setSpeechText(searchQuery);
+      Annyang.abort(); // Dừng nhận dạng giọng nói sau khi nhận được kết quả
+    });
+  };
+
   return (
     <div>
       <div className={cx("titile-container")}>
@@ -120,6 +133,9 @@ function Filter({handleInput,nameTour,handleKeyPress}) {
               label="Còn chỗ"
             />
           </FormControl>
+        </div>
+        <div>
+        <Button onClick={handleSpeechRecognition}>Voice Search</Button>
         </div>
       </div>
     </div>

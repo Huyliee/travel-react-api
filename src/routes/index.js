@@ -18,6 +18,7 @@ import ProfileLayout from "~/component/Layout/ProfileLayout";
 import Order from "~/pages/Profile/Order";
 import OrderAdmin from "~/pages/OrderAdmin";
 import DetailNews from "~/pages/DetailNews";
+import DetailTourAdmin from "~/pages/TourAdmin/DetailTourAdmin";
 // import { useState , useEffect } from "react";
 // import { getTour } from "~/GlobalFunction/Api";
 
@@ -51,6 +52,7 @@ const publicRoutes = [
 const privateRoutes =[
     {path: '/admin' , component:HomeAdmin , layout:AdminLayout},
     {path: '/admin/tour' , component:TourAdmin , layout:AdminLayout},
+    {path: '/admin/tour/:id' , component:DetailTourAdmin, layout:AdminLayout},
     {path: '/admin/user' , component:UserAdmin , layout:AdminLayout},
     {path: '/admin/news' , component:NewsAdmin , layout:AdminLayout},
     {path: '/admin/order' , component:OrderAdmin , layout:AdminLayout},

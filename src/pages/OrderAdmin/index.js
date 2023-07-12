@@ -18,7 +18,7 @@ function OrderAdmin() {
   const [detailOrder, setDetailOrder] = useState({});
   const [listCustomer, setListCustomer] = useState([]);
   const [isAdd,setIsAdd] = useState(false);
-  console.log(isAdd);
+
 
   //Api Detail Order
     const handleUpdate = async (idBooking)=>  {
@@ -33,8 +33,7 @@ function OrderAdmin() {
       setOrder(data);
     }
     loadTour();
-  }, []);
-  console.log(order);
+  }, [order]);
   // Dữ liệu cột
   const columns = [
     {
@@ -175,6 +174,10 @@ function OrderAdmin() {
         columns={columns}
         getRowId={(row) => row.id_order_tour}
         autoHeight
+        onRowClick={(params, event) => {
+          // Xử lý sự kiện onclick ở đây
+          console.log('Dòng được click:', params.row);
+        }}
         rowHeight={150}
         slots={{ toolbar: GridToolbar }}
         slotProps={{
@@ -184,6 +187,7 @@ function OrderAdmin() {
           },
         }}
         sx={{
+          cursor:"pointer",
           "& .MuiDataGrid-colCell": {
             fontSize: "14px",
           },

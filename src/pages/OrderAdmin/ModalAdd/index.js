@@ -82,8 +82,7 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
       // setAdultFormCount(detail.adultInfo.length);
       // setChildFormCount(detail.childInfo.length);
     }
-  }, [order,customer,detail,button]);
-  console.log(adultFormCount);
+  }, [order,customer,detail,button])
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
@@ -91,7 +90,6 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
       [name]: value,
     }));
   };
-  console.log(formData);
     //Thêm dữ liệu vào mảng adultInfo khi nhập từ input của người lớn
     const handleAdultCustomerInfoChange = (info) => {
       const updatedInfo = info.map((customer) => ({
@@ -208,7 +206,6 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
   const idChooseTour = detail.adultInfo[0]?.id_tour;
   const idChooseDate = order.id_date;
   const dateUpdate = detailTour?.date_go?.find((dateItem) => dateItem.id === idChooseDate)
-  console.log(dateUpdate);
   useEffect(() => {
     async function detailData() {
       const data = await detailTourApi(idChooseTour);
@@ -216,7 +213,6 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
     }
     detailData();
   }, [idChooseTour]);
-  console.log(detailTour);
   const renderAdultForms = () => {
     const adultForms = [];
     for (let i = 0; i < adultFormCount; i++) {
