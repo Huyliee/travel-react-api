@@ -15,7 +15,7 @@ import { ToastContainer } from "react-toastify";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getTour } from "~/GlobalFunction/Api";
 
 const style = {
@@ -150,7 +150,11 @@ function TourAdmin() {
     formData.append("best_seller", best_seller);
     formData.append("hot_tour", hot_tour);
     axios
-      .post("https://travel2h.click/public_html/api/tour/store", formData)
+      .post("http://127.0.0.1:8000/api/tour/store", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((response) => {
         console.log(response.data);
         resetFrom();
@@ -200,7 +204,7 @@ function TourAdmin() {
         console.log(error);
       });
   };
-  console.log(content_tour);
+  console.log(img_tour);
   const handleUpdateSubmit = (id) => {
     // // e.preventDefault();
     const formData = new FormData();
@@ -409,6 +413,7 @@ function TourAdmin() {
                       accept="image/*"
                       onChange={(e) => setImgTour(e.target.files[0])}
                       ref={fileInputRef}
+                      name="img_tour"
                     />
                   </Button>
                 </div>
@@ -453,6 +458,11 @@ function TourAdmin() {
         columns={columns}
         getRowId={(row) => row.id_tour}
         autoHeight
+        onRowClick={(params, event) => {
+          const stateParam = encodeURIComponent(JSON.stringify(params.row));
+          const url = `/admin/tour/${params.row.id_tour}?state=${stateParam}`;
+          window.location.href = url;
+        }}
         rowHeight={150}
         slots={{ toolbar: GridToolbar }}
         slotProps={{
@@ -462,6 +472,7 @@ function TourAdmin() {
           },
         }}
         sx={{
+          cursor:"pointer",
           "& .MuiDataGrid-colCell": {
             fontSize: "14px",
           },

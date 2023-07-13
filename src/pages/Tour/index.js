@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { Pagination } from "@mui/material";
 import ProductLoading from "./Product/ProductLoading";
 import { paginationApi, searchApi } from "~/GlobalFunction/Api";
+import { useLocation } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
@@ -15,11 +16,20 @@ function Tour() {
   const [shouldSearch, setShouldSearch] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [priceValue, setPriceValue] = useState("");
 
-  const handleInput = (e)=>{
-    setNameTour(e.target.value)
-  }
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const id_location = queryParams.get("nameTour");
+  console.log(id_location);
+
+  const handleInput = (e) => {
+    setNameTour(e.target.value);
+  };
+  const handleSliderChange = (event, newValue) => {
+    setPriceValue(newValue);
+  };
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       setShouldSearch(true);
@@ -27,7 +37,7 @@ function Tour() {
       setShouldSearch(false);
     }
   };
-  const [tours,setTours] = useState([]);
+  const [tours, setTours] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       const result = await paginationApi(currentPage);
@@ -36,56 +46,67 @@ function Tour() {
     };
     fetchData();
   }, [currentPage]);
-  const handleSearch = useEffect(()=>{
+  const handleSearch = useEffect(() => {
     async function Search() {
-      const res = await searchApi(nameTour);
+      const res = await searchApi(nameTour,priceValue,id_location);
       setTours(res.tours);
     }
     Search();
-    },[shouldSearch,nameTour]);
-  useEffect(()=>{
-    setTimeout(()=>{
-        setLoading(true);
-    },3000)
-  },[])
+  }, [shouldSearch, nameTour , priceValue,id_location]);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(true);
+    }, 3000);
+  }, []);
+  console.log(priceValue.toLocaleString());
   return (
     <div className={cx("tour-container")}>
       <form className={cx("tour-main")}>
         <div className={cx("filter-container")}>
-          <Filter handleInput={handleInput} nameTour={nameTour} handleSearch={handleSearch} handleKeyPress={handleKeyPress} />
+          <Filter
+            handleInput={handleInput}
+            nameTour={nameTour}
+            handleSearch={handleSearch}
+            handleKeyPress={handleKeyPress}
+            priceTour={priceValue}
+            handleSliderChange={handleSliderChange}
+          />
         </div>
         <div className={cx("product-container")}>
           <div className={cx("title-container")}>
-          <span>
-            <h1>Các tour du lịch</h1>
-          </span>
+            <span>
+              <h1>Các tour du lịch</h1>
+            </span>
           </div>
           <div className={cx("list-tour-container")}>
-            {loading && tours.map((product, index) => (
-              <ProductList
-                key={index}
-                img={product.img_tour}
-                name={product.name_tour}
-                location="Phú quốc"
-                price={product.adult_price}
-                des={product.content_tour}
-                id={product.id_tour}
-              />
-            ))}
-            {!loading && tours.map(() => (
-              <ProductLoading
-              />
-            ))}
-            <Pagination 
+            {loading &&
+              tours.map((product, index) => (
+                <ProductList
+                  key={index}
+                  img={product.img_tour}
+                  name={product.name_tour}
+                  location="Phú quốc"
+                  price={product.adult_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                  des={product.content_tour}
+                  id={product.id_tour}
+                />
+              ))}
+            {!loading && tours.map(() => <ProductLoading />)}
+            <Pagination
               count={totalPages}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
               color="primary"
-              onChange={(e,page)=>{
+              onChange={(e, page) => {
                 setCurrentPage(page);
                 window.scrollTo(0, 0);
               }}
-              sx={{width:'100%',display:'flex',justifyContent:'center',marginTop:'20px'}}
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "20px",
+              }}
             />
           </div>
         </div>

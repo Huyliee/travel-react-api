@@ -29,8 +29,7 @@ function DetailNews() {
     return (
         <Container>
             <Breadcrumbs separator={<NavigateNext fontSize="small" />}>
-
-                <Link to="/" style={{ fontSize: "13px" }}>
+                <Link to="/" style={{ fontSize: "13px" }} className={cx("Login-text")}>
                     Trang Chủ
                 </Link>
                 <Link to="/news" style={{ fontSize: "13px" }}>

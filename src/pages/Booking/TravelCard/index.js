@@ -51,8 +51,8 @@ function TravelCard({
   }, [idTour]);
   let totalPrice = 0;
   if (detailTour && detailTour.adult_price && detailTour.child_price) {
-    const adultPrice = parseFloat(detailTour.adult_price.replace(/,/g, ""));
-    const childPrice = parseFloat(detailTour.child_price.replace(/,/g, ""));
+    const adultPrice = parseFloat(detailTour.adult_price);
+    const childPrice = parseFloat(detailTour.child_price);
   
     totalPrice =quantityAdult * adultPrice + quantityChild * childPrice;
   }

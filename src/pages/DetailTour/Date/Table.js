@@ -89,11 +89,12 @@ function TablePrice({ id, month }) {
                         </Button>
                       </Link>
                     ) : (
-                      <Link to="/login">
+                      <Link to="/login" style={row.seats === 0 ? { pointerEvents: 'none' } : {}}>
                         {" "}
                         <Button
                           variant="contained"
                           style={{ marginLeft: "10px" }}
+                          disabled={row.seats === 0}
                         >
                           Chọn ngày
                         </Button>

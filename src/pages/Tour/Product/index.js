@@ -7,7 +7,6 @@ import {
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import images from "~/component/assets/images";
 import { Skeleton } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -23,7 +22,7 @@ function ProductList({ id, img, name, location, price, des }) {
     <Link to={`/detail/${id}`} style={{textDecoration:'none'}}>
     <div className={cx("product-box")}>
       <div className={cx("product-img")}>
-        <img src={images[img]} alt="Product Img" />
+        <img src={img} alt="Product Img" />
         <div className={cx("discount-container")}>
           <p>-10% this week</p>
         </div>

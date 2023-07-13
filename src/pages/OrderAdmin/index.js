@@ -17,6 +17,8 @@ function OrderAdmin() {
   const [order, setOrder] = useState({});
   const [detailOrder, setDetailOrder] = useState({});
   const [listCustomer, setListCustomer] = useState([]);
+  const [isAdd,setIsAdd] = useState(false);
+
 
   //Api Detail Order
     const handleUpdate = async (idBooking)=>  {
@@ -31,8 +33,7 @@ function OrderAdmin() {
       setOrder(data);
     }
     loadTour();
-  }, []);
-  console.log(order);
+  }, [order]);
   // Dữ liệu cột
   const columns = [
     {
@@ -77,8 +78,8 @@ function OrderAdmin() {
           variant="contained"
           onClick={() => {
             handleUpdate(params.row.id_order_tour);
-            // handleInputUpdate();
             handleOpen();
+            handleButtonUpdate();
           }}
         >
           <FontAwesomeIcon icon={faPenToSquare} />
@@ -107,6 +108,8 @@ function OrderAdmin() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleButtonAdd = () => setIsAdd(true);
+  const handleButtonUpdate = () => setIsAdd(false);
   // xử lý xóa 
   const handleDelete = (id)=>{
     axios
@@ -155,19 +158,26 @@ function OrderAdmin() {
       <div>
         <Button
           variant="contained"
-          sx={{ marginBottom: "10px" }}
-          onClick={handleOpen}
+          sx={{ marginBottom: "10px", }}
+          onClick={() =>{
+            handleOpen();
+            handleButtonAdd();
+          }}
         >
-          Thêm đơn đặt tour
+          <p style={{fontSize:'13px'}}>Thêm đơn đặt tour</p>
         </Button>
         {/* Modal thêm  */}
-        <ModalAdd open={open} handleClose={handleClose} order={detailOrder} customer={listCustomer}/>
+        <ModalAdd open={open} handleClose={handleClose} order={detailOrder} customer={listCustomer} button={isAdd}/>
       </div>
       <DataGrid
         rows={order}
         columns={columns}
         getRowId={(row) => row.id_order_tour}
         autoHeight
+        onRowClick={(params, event) => {
+          // Xử lý sự kiện onclick ở đây
+          console.log('Dòng được click:', params.row);
+        }}
         rowHeight={150}
         slots={{ toolbar: GridToolbar }}
         slotProps={{
@@ -177,6 +187,7 @@ function OrderAdmin() {
           },
         }}
         sx={{
+          cursor:"pointer",
           "& .MuiDataGrid-colCell": {
             fontSize: "14px",
           },

@@ -92,12 +92,13 @@ function PayMothods() {
   const handleMomo = async () => {
     try {
       //const response = await axios.post("https://travel2h.click/public_html/api/momo-payment", {
-      const response = await axios.post('https://travel2h.click/public_html/api/momo-payment', {
+      const response = await axios.post('http://127.0.0.1:8000/api/momo-payment', {
           amount: total
         });
       console.log(response);
       const { payUrl } = response.data;
-     window.location.href = payUrl;
+    window.location.href = payUrl;
+
      // console.log(payUrl); // Chuyển hướng người dùng đến URL thanh toán Momo
     } catch (error) {
       console.error('Error:', error);
@@ -119,8 +120,8 @@ function PayMothods() {
   const handleTotalPrice = (listCustomer, detailTour) => {
     let totalPrice = 0;
     listCustomer.forEach((row) => {
-      const adultPrice = detailTour.adult_price ? detailTour.adult_price.replace(/,/g, "") : "0";
-      const childPrice = detailTour.child_price ? detailTour.child_price.replace(/,/g, "") : "0";
+      const adultPrice = detailTour?.adult_price ? detailTour?.adult_price : "0";
+      const childPrice = detailTour?.child_price ? detailTour?.child_price : "0";
       const price = row.age === "Người lớn" ? parseFloat(adultPrice) : parseFloat(childPrice);
       totalPrice += price;
     });
@@ -203,9 +204,9 @@ function PayMothods() {
                     (Quý khách vui lòng nhớ số booking để thuận tiện cho các
                     giao dịch sau này)
                   </p>
-                  <p>{detailTour.adult_price}đ</p>
+                  <p>{total.toLocaleString()}đ</p>
                   <p>0₫</p>
-                  <p>{detailTour.adult_price}đ</p>
+                  <p>{total.toLocaleString()}đ</p>
                   <p>{detailOrder.order_time}</p>
                   <p>
                     <div className={cx("payment-methods")}>

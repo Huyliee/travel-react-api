@@ -40,7 +40,7 @@ function ProductDisCount({ id,img, name, location, price }) {
         </div>
         <div className={cx("line-product")}></div>
         <div className={cx("price-tour-container")}>
-          <span className={cx("price-tour-text")}>{price}đ /person</span>
+          <span className={cx("price-tour-text")}>{price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}đ /person</span>
           <div className={cx("rating-container")}>
             <FontAwesomeIcon icon={faStar} className={cx("rating-star")} />
             <span className={cx("rating-text")}>4.8</span>
