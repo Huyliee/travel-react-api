@@ -90,10 +90,10 @@ export const detailNews = async (id) =>{
 //Api chi tiết hóa đơn đặt tour
 export const detailTourOder = async (id) =>{
     const res = await axios.get(`https://travel2h.click/public_html/api/order/detail/${id}`)
-=======
+return res.data.data;
+}
 //Api danh sách khách hàng của 1 ngày cụ thể của 1 tour
 export const listCustomerOfDate = async (id) =>{
     const res = await axios.get(`http://127.0.0.1:8000/api/datego/order/${id}`)
->>>>>>> 40e1eb478103bdba426b4679c9a535ac70be5d7d
     return res.data.data;
 }
