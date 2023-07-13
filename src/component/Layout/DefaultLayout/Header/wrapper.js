@@ -3,6 +3,7 @@ import styles from "./Header.module.scss";
 import images from "~/component/assets/images";
 import { useState , useEffect } from "react";
 import { locationApi } from "~/GlobalFunction/Api";
+import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
@@ -43,7 +44,7 @@ function Wrapper() {
             <li className={cx("header-list-nav")}>Miền bắc</li>
             {
               bac.map(tinh => (
-                <li>{tinh.name_location}</li>
+                <li><Link to={`/tour?nameTour=${encodeURIComponent(tinh.id_location)}`} style={{textDecoration:'none',fontSize:'14px',fontWeight:'500'}}>{tinh.name_location}</Link></li>
               ))
             }
           </ul>

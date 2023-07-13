@@ -120,8 +120,8 @@ function PayMothods() {
   const handleTotalPrice = (listCustomer, detailTour) => {
     let totalPrice = 0;
     listCustomer.forEach((row) => {
-      const adultPrice = detailTour.adult_price ? detailTour.adult_price.replace(/,/g, "") : "0";
-      const childPrice = detailTour.child_price ? detailTour.child_price.replace(/,/g, "") : "0";
+      const adultPrice = detailTour?.adult_price ? detailTour?.adult_price : "0";
+      const childPrice = detailTour?.child_price ? detailTour?.child_price : "0";
       const price = row.age === "Người lớn" ? parseFloat(adultPrice) : parseFloat(childPrice);
       totalPrice += price;
     });
@@ -204,9 +204,9 @@ function PayMothods() {
                     (Quý khách vui lòng nhớ số booking để thuận tiện cho các
                     giao dịch sau này)
                   </p>
-                  <p>{detailTour.adult_price}đ</p>
+                  <p>{total.toLocaleString()}đ</p>
                   <p>0₫</p>
-                  <p>{detailTour.adult_price}đ</p>
+                  <p>{total.toLocaleString()}đ</p>
                   <p>{detailOrder.order_time}</p>
                   <p>
                     <div className={cx("payment-methods")}>

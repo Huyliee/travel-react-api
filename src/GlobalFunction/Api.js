@@ -28,8 +28,10 @@ export const paginationApi = async (currentPage)=>{
     return res.data.data;
 }
 // Api tìm kiếm
-export const searchApi = async (nameTour)=>{
-    const res = await axios.get(`https://travel2h.click/public_html/api/search?name=${nameTour}`)
+export const searchApi = async (nameTour,priceTour,id_location)=>{
+    const res = await axios.get(`http://127.0.0.1:8000/api/search?tourLocationId=${id_location}`,{
+        params: {name: nameTour , adult_price : priceTour , id_location: id_location}
+    })
     return res.data;
 }
 //Api tỉnh thành 

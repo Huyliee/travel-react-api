@@ -9,31 +9,61 @@ import {
   Slider,
   Switch,
   TextField,
+  Typography,
 } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState } from "react";
 import styles from "./Filter.module.scss";
 import classNames from "classnames/bind";
-import Annyang  from "annyang";
+import Annyang from "annyang";
 
 const cx = classNames.bind(styles);
 
-function Filter({handleInput,nameTour,handleKeyPress}) {
-  const [value, setValue] = useState([0, 100]);
-  const [speechText,setSpeechText] = useState({});
+function Filter({
+  handleInput,
+  nameTour,
+  handleKeyPress,
+  priceTour,
+  handleSliderChange,
+}) {
+  const [speechText, setSpeechText] = useState({});
   console.log(speechText);
-  const handleChange = (e, newValue) => {
-    setValue(newValue);
-  };
   const handleSpeechRecognition = () => {
     Annyang.start({ autoRestart: false, continuous: false });
-    Annyang.addCallback('result', (phrases) => {
+    Annyang.addCallback("result", (phrases) => {
       const searchQuery = phrases[0]; // Lấy cụm từ đầu tiên trong kết quả nhận dạng giọng nói
       setSpeechText(searchQuery);
       Annyang.abort(); // Dừng nhận dạng giọng nói sau khi nhận được kết quả
     });
   };
+
+  const marks = [
+    {
+      value: 0,
+      label: "0",
+    },
+    {
+      value: 1000000,
+      label: "1Tr",
+    },
+    {
+      value: 3000000,
+      label: "3Tr",
+    },
+    {
+      value: 5000000,
+      label: "5Tr",
+    },
+    {
+      value: 7000000,
+      label: "7Tr",
+    },
+    {
+      value: 10000000,
+      label: "10Tr",
+    },
+  ];
 
   return (
     <div>
@@ -69,7 +99,7 @@ function Filter({handleInput,nameTour,handleKeyPress}) {
 
         <div className={cx("tour-filter")}>
           <span>Địa điểm du lịch</span>
-          <FormControl sx={{  minWidth: 290 }}>
+          <FormControl sx={{ minWidth: 290 }}>
             <InputLabel id="demo-simple-select-helper-label">
               Địa điểm
             </InputLabel>
@@ -97,7 +127,7 @@ function Filter({handleInput,nameTour,handleKeyPress}) {
         </div>
         <div className={cx("tour-filter")}>
           <span>Số người</span>
-          <FormControl sx={{  minWidth: 290 }}>
+          <FormControl sx={{ minWidth: 290 }}>
             <InputLabel id="demo-simple-select-helper-label">
               Số người
             </InputLabel>
@@ -113,12 +143,33 @@ function Filter({handleInput,nameTour,handleKeyPress}) {
           <span>Ngân sách của quý khách</span>
           <Box sx={{ width: 290 }}>
             <Slider
-              getAriaLabel={() => "Temperature range"}
-              value={value}
-              onChange={handleChange}
+              getAriaLabel={() => "Minimum distance shift"}
+              value={priceTour}
+              onChange={handleSliderChange}
               valueLabelDisplay="auto"
+              max={10000000}
+              step={1000000}
+              disableSwap
+              marks={marks}
+              sx={{
+                color: "#ffbf44",
+                "& .MuiSlider-thumb": {
+                  color: "#fff",
+                  width: "15px",
+                  height: "15px",
+                },
+
+                "& .MuiSlider-rail": {
+                  opacity: 0.5,
+                  backgroundColor: "#bfbfbf",
+                },
+              }}
               //  getAriaValueText={valuetext}
             />
+            <Typography gutterBottom sx={{ border: "1px" , fontSize:'16px',marginTop:'20px',color:'#fd5056',fontWeight:500 }}>
+              Price:{" "}
+              {priceTour.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} VND
+            </Typography>
           </Box>
         </div>
         <div className={cx("tour-filter")}>
@@ -130,12 +181,12 @@ function Filter({handleInput,nameTour,handleKeyPress}) {
             />
             <FormControlLabel
               control={<Switch defaultChecked />}
-              label="Còn chỗ"
+              label="Tour hot"
             />
           </FormControl>
         </div>
         <div>
-        <Button onClick={handleSpeechRecognition}>Voice Search</Button>
+          <Button onClick={handleSpeechRecognition}>Voice Search</Button>
         </div>
       </div>
     </div>

@@ -142,9 +142,9 @@ function DetailTour() {
           <div className={cx("detail-infomation-col-1")}>
             <div className={cx("detail-id")}>
               <FontAwesomeIcon icon={faTicket} />
-              <span>{detailTour.id_tour}</span>
+              <span>{detailTour?.id_tour}</span>
             </div>
-            <h1 className={cx("detail-name-tour")}>{detailTour.name_tour}</h1>
+            <h1 className={cx("detail-name-tour")}>{detailTour?.name_tour}</h1>
             <div className={cx("detail-rating")}>
               <div className={cx("number-rating")}>
                 <span>9</span>
@@ -174,7 +174,7 @@ function DetailTour() {
           </div>
           <div className={cx("detail-infomation-col-2")}>
             <div className={cx("detail-col-pirce")}>
-              <span>{detailTour.adult_price}đ</span> / khách
+              <span>{detailTour?.adult_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}đ</span> / khách
             </div>
             <div className={cx("detail-col-pirce")}>
               <Button
@@ -202,9 +202,9 @@ function DetailTour() {
       {/* Hiển thị List Image của MUI */}
       <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
         <ImageList cols={4} rowHeight={300} style={{ overflow: "hidden" }}>
-          {detailTour.images &&
-            Array.isArray(detailTour.images) &&
-            modifyImages(detailTour.images.slice(0, 4)).map((image) => (
+          {detailTour?.images &&
+            Array.isArray(detailTour?.images) &&
+            modifyImages(detailTour?.images.slice(0, 4)).map((image) => (
               <ImageListItem key={image.id} cols={image.cols} rows={image.rows}>
                 <img
                   src={image.url}
@@ -223,9 +223,9 @@ function DetailTour() {
       <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
         <h2 className={cx("content-tour-heading")}>Những địa điểm tham quan</h2>
         <Slider {...settingsSlider} className={cx("custom-slider")}>
-          {detailTour.images &&
-            Array.isArray(detailTour.images) &&
-            modifyImages(detailTour.images.slice(4)).map((image) => (
+          {detailTour?.images &&
+            Array.isArray(detailTour?.images) &&
+            modifyImages(detailTour?.images.slice(4)).map((image) => (
               <div>
                 <img src={image.url} alt="" className={cx("img-slider")} />
               </div>
@@ -236,7 +236,7 @@ function DetailTour() {
       <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
         <h2 className={cx("content-tour-heading")}>Điểm nhấn</h2>
         <Box>
-          <p className={cx("content-tour-text")}>{detailTour.content_tour}</p>
+          <p className={cx("content-tour-text")}>{detailTour?.content_tour}</p>
         </Box>
       </Container>
       {/* Lịch trình */}
@@ -250,7 +250,7 @@ function DetailTour() {
       {/* Ngày đi */}
       <Container maxWidth="xl" style={{ padding: "20px 68px" }} ref={dateRef}>
         <h2 className={cx("content-tour-heading")}>Bảng giá</h2>
-        <Date id={detailTour.id_tour} />
+        <Date id={detailTour?.id_tour} />
       </Container>
       {/* Thông tin di chuyển */}
       <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
