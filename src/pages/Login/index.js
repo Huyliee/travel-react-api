@@ -286,7 +286,7 @@ function Login() {
               buttons: false,
             }).then(() => {
            
-                navigate("/");
+                navigate("/profile");
               
             });
               }}
@@ -346,7 +346,7 @@ function Login() {
               buttons: false,
             }).then(() => {
            
-                navigate("/");
+                navigate("/profile");
               
             });
               }}

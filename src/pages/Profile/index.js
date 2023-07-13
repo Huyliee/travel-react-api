@@ -44,11 +44,11 @@ function Profile() {
         
           </div>
          
-          <InfoCustomer title="Họ và tên"       value={ggtoken?detailSocial[0]?.customer_name : detailCustomer.customer_name} inputName="customer_name"/>
+          <InfoCustomer title="Họ và tên"       value={ggtoken?detailSocial[0]?.customer_name : detailCustomer.customer_name} inputName="customer_name" date="true"/>
           <InfoCustomer title="Số tour đã đi" value="Chưa có thông tin" />
           <InfoCustomer title="Email" value={ggtoken?detailSocial[0]?.email : detailCustomer.email} inputName="email"/>
           <InfoCustomer title="Số điện thoại" value={ggtoken?detailSocial[0]?.phone : detailCustomer.phone} inputName="phone"/>
-          <InfoCustomer title="Ngày sinh" value={ggtoken?detailSocial[0]?.date_of_birth : detailCustomer.date_of_birth} inputName="date_of_birth"/>
+          <InfoCustomer title="Ngày sinh" value={ggtoken?detailSocial[0]?.date_of_birth : detailCustomer.date_of_birth} inputName="date_of_birth" date="false"/>
           <InfoCustomer title="Giới tính" value={ggtoken?detailSocial[0]?.gender : detailCustomer.gender} inputName="gender"/>
           <InfoCustomer title="Quốc tịch" value="Chưa có thông tin" />
           <InfoCustomer title="Địa chỉ" value={ggtoken?detailSocial[0]?.address : detailCustomer.address} inputName="address"/>

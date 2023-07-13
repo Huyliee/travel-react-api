@@ -9,9 +9,11 @@ import { detailCustomerApi } from "~/GlobalFunction/Api";
 
 const cx = classNames.bind(styles);
 
-function InfoCustomer({ value, title, inputName }) {
+function InfoCustomer({ value, title, inputName,date }) {
   const idCustomer = localStorage.getItem("id_customer");
   const [isEdit, setIsEdit] = useState(false);
+  const [isDate,setIsDate] = useState(date);
+  console.log(setIsDate);
   const showUpdateRow = () => {
     setIsEdit(true);
   };
@@ -51,7 +53,7 @@ function InfoCustomer({ value, title, inputName }) {
       [name]: value,
     }));
   };
-
+console.log(formData);
   const handleUpdateSubmit = () => {
     axios
       .put(`https://travel2h.click/public_html/api/user/update/${idCustomer}`, formData)
@@ -85,15 +87,16 @@ function InfoCustomer({ value, title, inputName }) {
         {isEdit && (
           <div className={cx("profile-update-row")}>
             <div style={{ width: "160px" }}></div>
-            <TextField
+            {isDate ?  <TextField
               id="outlined-basic"
-              label="Họ và tên"
+              label={inputName}
               variant="outlined"
               style={{ width: "200px" }}
               value={formData[inputName]}
               onChange={handleChange}
               name={inputName}
-            />
+            />: ""}
+           
             <Button variant="contained" onClick={handleButton}>
               Xong
             </Button>

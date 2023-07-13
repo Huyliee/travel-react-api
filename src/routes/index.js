@@ -18,6 +18,7 @@ import ProfileLayout from "~/component/Layout/ProfileLayout";
 import Order from "~/pages/Profile/Order";
 import OrderAdmin from "~/pages/OrderAdmin";
 import DetailNews from "~/pages/DetailNews";
+import DetailOrderTour from "~/pages/Profile/Order/detail-tour-oder";
 // import { useState , useEffect } from "react";
 // import { getTour } from "~/GlobalFunction/Api";
 
@@ -36,6 +37,7 @@ const publicRoutes = [
     {path: '/login' , component:Login},
     {path: '/signup' , component:Register},
     {path: '/tour' , component:Tour},
+    {path: '/detai_order_tour/:id', component:DetailOrderTour},
     {path: '/contact' , component:Contact},
     {path: '/news' , component:News},
     {path: '/detailnews/:id' , component:DetailNews},

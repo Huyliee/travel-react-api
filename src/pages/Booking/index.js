@@ -31,8 +31,10 @@ function Booking() {
   const navigate = useNavigate();
   ////////////////////////
   const id_customer = localStorage.getItem("id_customer");
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
+  const nameSocial = localStorage.getItem("name");
+  const emailocial      = localStorage.getItem("email");
+  const [email, setEmail] = useState(nameSocial);
+  const [name, setName] = useState(emailocial);
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [detail, setDetail] = useState({
@@ -120,6 +122,17 @@ function Booking() {
   if(totalQuantity >= seats){
     toast.error("Quá số lượng chỗ");
   }
+  //   useEffect(() => {
+  //   async function detailData() {
+  //     if (ggtoken) {
+      
+  //       const data = await detailCustomerSocial(email);
+  //       setDetailSocial(data);
+  //     } 
+  //   }
+  //   detailData();
+ 
+  // }, [email,ggtoken]);
   return (
     <>
       <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
