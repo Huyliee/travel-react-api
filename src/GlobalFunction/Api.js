@@ -86,7 +86,7 @@ export const detailNews = async (id) =>{
     const res = await axios.get(`https://travel2h.click/public_html/api/news/detail/${id}`)
     return res.data.data;
 }
-<<<<<<< HEAD
+
 //Api chi tiết hóa đơn đặt tour
 export const detailTourOder = async (id) =>{
     const res = await axios.get(`https://travel2h.click/public_html/api/order/detail/${id}`)
