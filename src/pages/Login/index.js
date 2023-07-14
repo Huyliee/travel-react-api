@@ -5,13 +5,13 @@ import styles from "./Login.module.scss";
 import classNames from "classnames/bind";
 import SocialLogin from "./social-login";
 import { TextField, Button, Modal, Box } from "@mui/material";
-import {  useState } from "react";
+import { useState } from "react";
 
 import { HashLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
-import {  loginApi } from "~/GlobalFunction/Api";
+import { loginApi } from "~/GlobalFunction/Api";
 import { GoogleLoginButton } from "react-social-login-buttons";
 import { LoginSocialGoogle } from "reactjs-social-login";
 import { registerApi } from "~/GlobalFunction/Api";
@@ -36,15 +36,14 @@ const style = {
 };
 
 function Login() {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [customer_name, setCustomerName] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showRegister, setShowRegister] = useState(true);
-  const [dataSocial,setDataSocial] = useState({});
-  
+  const [dataSocial, setDataSocial] = useState({});
+
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     setLoading(true);
@@ -55,6 +54,7 @@ function Login() {
         console.log(res.permission);
         localStorage.setItem("access_token", res.access_token);
         localStorage.setItem("id_customer", res.id);
+        localStorage.setItem("permission", res.permission);
         setLoading(false);
         swal({
           title: "Thành công!",
@@ -63,10 +63,10 @@ function Login() {
           timer: 1500,
           buttons: false,
         }).then(() => {
-          if (res.permission === "user") {
-            navigate("/");
-          } else {
+          if (res.permission === "admin") {
             navigate("/admin");
+          } else {
+            navigate("/");
           }
         });
       } catch (error) {
@@ -79,18 +79,18 @@ function Login() {
   const handleClose = () => setOpen(false);
 
   let faceioInstance = null;
-    const handleSignUp = () => {
-      setLoading(true);
-      setTimeout(async () => {
-        try {
-          const response = await registerApi(customer_name, email, password);
-          console.log(response);
-          setLoading(false);
-        } catch (error) {
-          console.log(error);
-        }
-      }, 1500);
-    };
+  const handleSignUp = () => {
+    setLoading(true);
+    setTimeout(async () => {
+      try {
+        const response = await registerApi(customer_name, email, password);
+        console.log(response);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    }, 1500);
+  };
 
   console.log(faceIO);
   if (faceIO && !faceioInstance) {
@@ -98,30 +98,30 @@ function Login() {
   }
 
   console.log(faceioInstance);
-    const faceRegistration = async (e) => {
-      e.preventDefault();
-      try {
-        const userInfo = await faceioInstance.enroll({
-          locale: "auto",
-          payload: {
-            email: email,
-            password: password,
-            username: customer_name,
-          },
-        });
-        await handleSignUp();
-        navigate("/login");
-        console.log(userInfo);
-        console.log("Unique Facial ID: ", userInfo.facialId);
-        console.log("Enrollment Date: ", userInfo.timestamp);
-        console.log("Gender: ", userInfo.details.gender);
-        console.log("Age Approximation: ", userInfo.details.age);
-        setOpen(false);
-      } catch (errorCode) {
-        console.log(errorCode);
-        handleError(errorCode);
-      }
-    };
+  const faceRegistration = async (e) => {
+    e.preventDefault();
+    try {
+      const userInfo = await faceioInstance.enroll({
+        locale: "auto",
+        payload: {
+          email: email,
+          password: password,
+          username: customer_name,
+        },
+      });
+      await handleSignUp();
+      navigate("/login");
+      console.log(userInfo);
+      console.log("Unique Facial ID: ", userInfo.facialId);
+      console.log("Enrollment Date: ", userInfo.timestamp);
+      console.log("Gender: ", userInfo.details.gender);
+      console.log("Age Approximation: ", userInfo.details.age);
+      setOpen(false);
+    } catch (errorCode) {
+      console.log(errorCode);
+      handleError(errorCode);
+    }
+  };
   // useEffect(()=>{
   //   faceRegistration();
   // },[faceRegistration])
@@ -243,12 +243,11 @@ function Login() {
     setShowRegister(true);
   };
 
-  const handleSubmitFace = (e)=>{
+  const handleSubmitFace = (e) => {
     e.preventDefault();
     handleClose();
     faceRegistration(e);
-  }
-
+  };
 
   return (
     <div className={cx("Login-main")}>
@@ -257,59 +256,50 @@ function Login() {
         <h2 className={cx("Login-text")}>Login</h2>
         <div className={cx("Login-container-body")}>
           <div className={cx("Login-social-container")}>
-          <LoginSocialFacebook  
+            <LoginSocialFacebook
               appId="1504487773417163"
-
               onResolve={(response) => {
-                
-                
-              
-              
-            
-                
-                  localStorage.setItem("name", response.data.name)
-                    localStorage.setItem("email", response.data.email)
-                    localStorage.setItem("picture", response.data.picture.data.url)
-                    localStorage.setItem("ggtoken", response.data.access_token)
-             
-                
-         
-            //  const customer_name = data.name;
-            //  const email = data.email;
-            //  const password = data.sub;
-            // registerApi(customer_name,email,password);
-            // console.log(password);
-            swal({
-              title: "Thành công!",
-              text: "Đăng nhập thành công!",
-              icon: "success",
-              timer: 1500,
-              buttons: false,
-            }).then(() => {
-           
-                navigate("/");
-              
-            });
+                localStorage.setItem("name", response.data.name);
+                localStorage.setItem("email", response.data.email);
+                localStorage.setItem("picture", response.data.picture.data.url);
+                localStorage.setItem("ggtoken", response.data.access_token);
+
+                //  const customer_name = data.name;
+                //  const email = data.email;
+                //  const password = data.sub;
+                // registerApi(customer_name,email,password);
+                // console.log(password);
+                swal({
+                  title: "Thành công!",
+                  text: "Đăng nhập thành công!",
+                  icon: "success",
+                  timer: 1500,
+                  buttons: false,
+                }).then(() => {
+                  navigate("/");
+                });
               }}
               onReject={(err) => {
                 console.log(err);
               }}
             >
-                <FacebookLoginButton style={{ 
-                   width:448,
-                   height:44,
-                   backgroundColor:'#eef2ff',
-                   borderRadius:2,
-                   padding:"12px 24px",
-                   lineHeight:"24px",
-                   fontSize:14,
-                   fontWeight:600,
-                   display:"flex",
-                   
-                   alignItems:"center",
-                   justifyContent:"center",
-                   cursor:'pointer'
-                }} ></FacebookLoginButton>
+              <FacebookLoginButton
+                style={{
+                  width: 448,
+                  height: 44,
+                  backgroundColor: "#eef2ff",
+                  borderRadius: 2,
+                  padding: "12px 24px",
+                  lineHeight: "24px",
+                  fontSize: 14,
+                  fontWeight: 600,
+                  display: "flex",
+
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
+              ></FacebookLoginButton>
             </LoginSocialFacebook>
             <Button onClick={handleOpen}>
               <SocialLogin
@@ -317,61 +307,60 @@ function Login() {
                 icon="https://cdn.faceio.net/select.svg"
               />
             </Button>
-            <LoginSocialGoogle  
+            <LoginSocialGoogle
               client_id={
                 "609226686716-rha901hdhi60o2tsgsrik8k56pr9cs4n.apps.googleusercontent.com"
               }
               scope="openid profile email https://www.googleapis.com/auth/user.phonenumbers.read"
               discoveryDocs="claims_supported"
               access_type="offline"
-              onResolve={({provider,data})=>{
+              onResolve={({ provider, data }) => {
                 console.log(data.phone_number);
                 console.log(data);
 
-            localStorage.setItem("name",data.name);
-            localStorage.setItem("email", data.email);
-            localStorage.setItem("picture", data.picture);
-            localStorage.setItem("ggtoken", data.access_token);
-            localStorage.setItem("idgg",data.sub);
-         
-            const customer_name = data.name;
-            const email = data.email;
-            const password = data.sub;
-            registerApi(customer_name,email,password);
-   
-            swal({
-              title: "Thành công!",
-              text: "Đăng nhập thành công!",
-              icon: "success",
-              timer: 1500,
-              buttons: false,
-            }).then(() => {
-           
-                navigate("/");
-              
-            });
+                localStorage.setItem("name", data.name);
+                localStorage.setItem("email", data.email);
+                localStorage.setItem("picture", data.picture);
+                localStorage.setItem("ggtoken", data.access_token);
+                localStorage.setItem("idgg", data.sub);
+
+                const customer_name = data.name;
+                const email = data.email;
+                const password = data.sub;
+                registerApi(customer_name, email, password);
+
+                swal({
+                  title: "Thành công!",
+                  text: "Đăng nhập thành công!",
+                  icon: "success",
+                  timer: 1500,
+                  buttons: false,
+                }).then(() => {
+                  navigate("/");
+                });
               }}
-              onReject={(err)=>{
+              onReject={(err) => {
                 console.log(err);
               }}
             >
-                <GoogleLoginButton style={{ 
-                   width:448,
-                   height:44,
-                   backgroundColor:'#eef2ff',
-                   borderRadius:2,
-                   padding:"12px 24px",
-                   lineHeight:"24px",
-                   fontSize:14,
-                   fontWeight:600,
-                   display:"flex",
-                   
-                   alignItems:"center",
-                   justifyContent:"center",
-                   cursor:'pointer'
-                }} ></GoogleLoginButton>
+              <GoogleLoginButton
+                style={{
+                  width: 448,
+                  height: 44,
+                  backgroundColor: "#eef2ff",
+                  borderRadius: 2,
+                  padding: "12px 24px",
+                  lineHeight: "24px",
+                  fontSize: 14,
+                  fontWeight: 600,
+                  display: "flex",
+
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
+              ></GoogleLoginButton>
             </LoginSocialGoogle>
-        
           </div>
           <div className={cx("text-line")}>
             <span>OR</span>
@@ -456,7 +445,11 @@ function Login() {
             {showRegister ? (
               <div className={cx("face-login-container")}>
                 <h1>Đăng nhập bằng khuôn mặt</h1>
-                <img src="https://i.imgur.com/S4qQMoV.png" alt="" style={{width:'50px',height:'50px'}} />
+                <img
+                  src="https://i.imgur.com/S4qQMoV.png"
+                  alt=""
+                  style={{ width: "50px", height: "50px" }}
+                />
                 <Button
                   variant="contained"
                   style={{ width: "300px", height: "45px" }}
@@ -473,9 +466,16 @@ function Login() {
                 </Button>
               </div>
             ) : (
-              <div className={cx("face-register-container")} style={{alignItems:'center'}}>
+              <div
+                className={cx("face-register-container")}
+                style={{ alignItems: "center" }}
+              >
                 <h1>Đăng ký bằng khuôn mặt</h1>
-                <img src="https://i.imgur.com/S4qQMoV.png" alt="" style={{width:'50px',height:'50px'}} />
+                <img
+                  src="https://i.imgur.com/S4qQMoV.png"
+                  alt=""
+                  style={{ width: "50px", height: "50px" }}
+                />
                 <form
                   onSubmit={handleSubmitFace}
                   className={cx("face-register-container")}
@@ -550,14 +550,13 @@ function Login() {
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </label>
-                    <Button
-                      variant="contained"
-                      type="submit"
-                      sx={{ margin: "20px 0px", height: "40px" }}
-                    >
-                      Đăng ký
-                    </Button>
-                  
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    sx={{ margin: "20px 0px", height: "40px" }}
+                  >
+                    Đăng ký
+                  </Button>
                 </form>
                 <Button
                   variant="contained"

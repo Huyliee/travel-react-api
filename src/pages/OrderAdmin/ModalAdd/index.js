@@ -40,7 +40,7 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
   const [valueTour, setValueTour] = useState(null);
   const [date, setDate] = useState({});
   const [valueDate, setValueDate] = useState({});
-  const [isDateDisabled, setIsDateDisabled] = useState(false);
+  const [isDateDisabled, setIsDateDisabled] = useState(true);
   const [adultFormCount, setAdultFormCount] = useState(1);
   const [childFormCount, setChildFormCount] = useState(1);
   const [adultFormData, setAdultFormData] = useState([]);
@@ -55,34 +55,7 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
     phone:  '',
     address:  '',
   });
-  useEffect(() => {
-    if (order && !button) {
-      setFormData({
-        name: order.name || "",
-        email: order.email || "",
-        phone: order.phone || "",
-        address: order.address || "",
-      });
-    }else{
-      setFormData({
-        name:  "",
-        email: "",
-        phone: "",
-        address:  "",
-      });
-    }
-    if (customer) {
-      const adultCustomers = customer.filter((info) => info.age === "Người lớn");
-      const childCustomers = customer.filter((info) => info.age !== "Người lớn");
-    
-      setDetail({
-        adultInfo: adultCustomers,
-        childInfo: childCustomers,
-      });
-      // setAdultFormCount(detail.adultInfo.length);
-      // setChildFormCount(detail.childInfo.length);
-    }
-  }, [order,customer,detail,button])
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
@@ -142,7 +115,8 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
     async function detailData() {
       if (valueTour) {
         const data = await detailTourApi(valueTour.id_tour);
-        setDate(data.date_go);
+        const filteredData = data.date_go.filter((item) => item.seats !== 0);
+      setDate(filteredData);
       }
     }
     detailData();
@@ -222,7 +196,7 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
             label={`Họ tên người lớn ${i + 1}`}
             variant="outlined"
             className={cx("field-customer")}
-            value={!button ? detail.adultInfo[i]?.name_customer : ""}
+            value={button ? detail.adultInfo[i]?.name_customer : ""}
             onChange={(event) =>
               handleAdultFormChange(i, "name_customer", event.target.value)
             }
@@ -232,7 +206,7 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={!button ? (adultFormData[i]?.gender || detail.adultInfo[i]?.sex) : ""}
+              value={button ? (adultFormData[i]?.gender || detail.adultInfo[i]?.sex) : ""}
               onChange={(event) =>
                 handleAdultFormChange(i, "gender", event.target.value)
               }
@@ -261,7 +235,7 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
             label={`CMND người lớn ${i + 1}`}
             variant="outlined"
             className={cx("field-customer")}
-            value={!button ? detail.adultInfo[i]?.CMND : ""}
+            value={button ? detail.adultInfo[i]?.CMND : ""}
             onChange={(event) =>
               handleAdultFormChange(i, "CMND", event.target.value)
             }
@@ -396,7 +370,7 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
               <h4 className={cx("heading")}>Tour du lịch</h4>
               <Box className={cx("tour-container")}>
                 <Autocomplete
-                  value={!button ? (valueTour || detailTour) : ""}
+                  value={button ? (valueTour || detailTour) : ""}
                   options={dataTour}
                   getOptionLabel={(option) => option.name_tour || ""}
                   onChange={handleOnChange}
@@ -424,9 +398,11 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
                     />
                   )}
                 />
+                
               </Box>
-              <form onSubmit={handleCheckout} encType="multipart/form-data">
+              <form onSubmit={handleCheckout} encType="multipart/form-data" style={{display:'flex',justifyContent:'space-between'}}>
               <Button type="submit">Thêm</Button>
+                {valueDate === "" ? "" : <h3>Số chỗ còn: {valueDate?.seats}</h3>}
               </form>
             </Box>
             <Box className={cx("col-right")}>

@@ -174,12 +174,17 @@ function OrderAdmin() {
         columns={columns}
         getRowId={(row) => row.id_order_tour}
         autoHeight
+        
         onRowClick={(params, event) => {
           // Xử lý sự kiện onclick ở đây
           console.log('Dòng được click:', params.row);
         }}
         rowHeight={150}
-        slots={{ toolbar: GridToolbar }}
+        slots={{ toolbar: GridToolbar ,csvOptions: {
+          fileName: 'customerDataBase',
+          delimiter: ';',
+          utf8WithBom: false,
+        },}}
         slotProps={{
           toolbar: {
             showQuickFilter: true,

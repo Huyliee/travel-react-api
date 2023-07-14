@@ -43,9 +43,11 @@ function Tour() {
       const result = await paginationApi(currentPage);
       setTours(result.data);
       setTotalPages(result.last_page);
+      
     };
     fetchData();
   }, [currentPage]);
+  console.log(tours);
   const handleSearch = useEffect(() => {
     async function Search() {
       const res = await searchApi(nameTour,priceValue,id_location);
@@ -58,7 +60,6 @@ function Tour() {
       setLoading(true);
     }, 3000);
   }, []);
-  console.log(priceValue.toLocaleString());
   return (
     <div className={cx("tour-container")}>
       <form className={cx("tour-main")}>

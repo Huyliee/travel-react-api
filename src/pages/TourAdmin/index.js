@@ -3,7 +3,6 @@ import classNames from "classnames/bind";
 import { DataGrid , GridToolbar } from "@mui/x-data-grid";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import images from "~/component/assets/images";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -15,7 +14,7 @@ import { ToastContainer } from "react-toastify";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { getTour } from "~/GlobalFunction/Api";
 
 const style = {
@@ -47,17 +46,34 @@ function TourAdmin() {
     }
     loadTour();
   }, []);
+
+  const handleCellClick = (params, event) => {
+    const { field } = params;
+    
+    if (field === "delete") {
+      handleDelete(params.row.id_tour);
+    } else if (field === "update") {
+      handleUpdate(params.row.id_tour);
+      handleInputUpdate();
+      handleOpen();
+    } else {
+      const stateParam = encodeURIComponent(JSON.stringify(params.row));
+      const url = `/admin/tour/${params.row.id_tour}?state=${stateParam}`;
+      window.location.href = url;
+    }
+  };
+
   const columns = [
     {
       field: "delete",
       headerName: "Xóa",
       width: 110,
-      renderCell: (params) => (
+      renderCell: (params,event) => (
         <Button
           variant="contained"
           color="secondary"
           onClick={() => {
-            handleDelete(params.row.id_tour);
+            handleCellClick(params, event)
           }}
         >
           Xóa
@@ -68,14 +84,12 @@ function TourAdmin() {
       field: "update",
       headerName: "Sửa",
       width: 110,
-      renderCell: (params) => (
+      renderCell: (params,event) => (
         <Button
           variant="contained"
           color="secondary"
           onClick={() => {
-            handleUpdate(params.row.id_tour);
-            handleInputUpdate();
-            handleOpen();
+            handleCellClick(params, event)
           }}
         >
           Sửa
@@ -95,7 +109,7 @@ function TourAdmin() {
       width: 150,
       renderCell: (params) => (
         <img
-          src={images[params.row.img_tour]}
+          src={params.row.img_tour}
           style={{ objectFit: "cover", width: "100%", height: "100%" }}
           alt="Ảnh"
         />
@@ -458,11 +472,7 @@ function TourAdmin() {
         columns={columns}
         getRowId={(row) => row.id_tour}
         autoHeight
-        onRowClick={(params, event) => {
-          const stateParam = encodeURIComponent(JSON.stringify(params.row));
-          const url = `/admin/tour/${params.row.id_tour}?state=${stateParam}`;
-          window.location.href = url;
-        }}
+        onCellClick={handleCellClick}
         rowHeight={150}
         slots={{ toolbar: GridToolbar }}
         slotProps={{
