@@ -42,7 +42,6 @@ function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showRegister, setShowRegister] = useState(true);
-  const [dataSocial, setDataSocial] = useState({});
 
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -135,7 +134,10 @@ function Login() {
       console.log(userData);
       console.log("Unique Facial ID: ", userData.facialId);
       console.log("PayLoad: ", userData.payload);
-      setOpen(false);
+      localStorage.setItem("faceId",userData.facialId)
+      localStorage.setItem("payload",userData.payload.email)
+      localStorage.setItem("name",userData.payload.username)
+      localStorage.setItem("email",userData.payload.email)
       navigate("/");
     } catch (errorCode) {
       console.log(errorCode);
@@ -347,7 +349,7 @@ function Login() {
               buttons: false,
             }).then(() => {
            
-                navigate("/");
+              navigate("/profile");
               
             });
               }}

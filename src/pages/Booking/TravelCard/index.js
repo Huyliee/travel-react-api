@@ -34,6 +34,7 @@ function TravelCard({
   totalQuantity,
   checkout,
   idTour,
+  onUpdateTotalPrice 
 }) {
   const style = {
     fontSize: "16px",
@@ -56,6 +57,7 @@ function TravelCard({
   
     totalPrice =quantityAdult * adultPrice + quantityChild * childPrice;
   }
+  onUpdateTotalPrice(totalPrice);
   return (
     <div>
       <Container>
@@ -66,14 +68,13 @@ function TravelCard({
           <div className={cx("image")}>
             <p>Tour trọn gói : {idTour}</p>
             <img
-              src="https://saigontourist.net/uploads/destination/TrongNuoc/mienbac/sapa/Sapa_126530108.jpg"
+              src={detailTour.img_tour}
               alt=""
             />
           </div>
           <div className={cx("info-tour")}>
             <p>
-              Phú Quốc: VinWonders - Vinpearl Safari - Hòn Thơm Nature Park -
-              Cáp Treo Vượt Biển - Công Viên Nước Aquatopia
+              {detailTour.name_tour}
             </p>
           </div>
           <div>

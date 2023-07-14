@@ -20,6 +20,7 @@ import axios from "axios";
 const cx = classNames.bind(styles);
 
 function PayMothods() {
+  const [orderTime, setOrderTime] = useState(null);
   //Chuyển lên đầu trang
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -48,6 +49,16 @@ function PayMothods() {
       const data = await getDetailOrder(idBooking);
       setDetailOrder(data);
       setListCustomer(data.detail_order);
+      const apiOrderTime = data.order_time;
+
+      // Tạo đối tượng Date từ dữ liệu order_time
+      const orderDateTime = new Date(apiOrderTime);
+
+      // Cộng thêm 1 ngày
+      orderDateTime.setDate(orderDateTime.getDate() + 1);
+
+      // Cập nhật state với ngày giờ đã cộng thêm
+      setOrderTime(orderDateTime);
     }
     detailData();
   }, [idBooking]);
@@ -256,7 +267,7 @@ function PayMothods() {
                   </p>
                   <p>
                     <span style={{ color: "#fd5056", fontWeight: "800" }}>
-                      11/06/23 06:40:09
+                    {orderTime?.toLocaleString("vi-VN")}
                     </span>{" "}
                     (Theo giờ Việt Nam. Booking sẽ tự động hủy nếu quá thời hạn
                     thanh toán trên)

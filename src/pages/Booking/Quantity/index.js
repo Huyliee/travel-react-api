@@ -3,7 +3,7 @@ import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleMinus, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-import { TextField } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers";
@@ -19,9 +19,10 @@ function Quantity({ title, subtitle ,customerInfo,quantity,seat,totalQuantity}) 
       name_customer: "",
       gender: "",
       date:"",
+      CMND:"",
     },
   ]);
-
+console.log(customers);
   //lấy số lượng cho component cha xài
   useEffect(()=>{
     quantity(quantityAdult);
@@ -83,6 +84,7 @@ function Quantity({ title, subtitle ,customerInfo,quantity,seat,totalQuantity}) 
             <span>Họ và tên</span>
             <span>Giới tính</span>
             <span>Ngày sinh</span>
+            <span>Chứng minh thư</span>
         </div>
         {customers.map((customer, index) => (
           <div key={index} className={cx("customer-form")}>
@@ -96,16 +98,21 @@ function Quantity({ title, subtitle ,customerInfo,quantity,seat,totalQuantity}) 
               }
               className={cx("input-info")}
             />
-            <TextField
-              id="outlined-basic"
-              label="Giới tính"
-              variant="outlined"
-              value={customer.gender}
+            <FormControl style={{width:'150px'}}>
+            <InputLabel id="demo-simple-select-label">Giới tính</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={customer.sex}
               onChange={(e) =>
                 handleCustomerInfoChange(index, "gender", e.target.value)
               }
-              className={cx("input-info")}
-            />
+              label="Age"
+            >
+              <MenuItem value="Nam">Nam</MenuItem>
+              <MenuItem value="Nữ">Nữ</MenuItem>
+            </Select>
+          </FormControl>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                    <DatePicker
                       placeholder="dd/mm/yyyy"
@@ -122,6 +129,16 @@ function Quantity({ title, subtitle ,customerInfo,quantity,seat,totalQuantity}) 
                       )} // thêm đoạn này
                     />
             </LocalizationProvider>
+                        <TextField
+              id="outlined-basic"
+              label="CMND"
+              variant="outlined"
+              value={customer.CMND}
+              onChange={(e) =>
+                handleCustomerInfoChange(index, "CMND", e.target.value)
+              }
+              className={cx("input-info")}
+            />
           </div>
         ))}
       </div>

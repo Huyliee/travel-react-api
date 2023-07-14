@@ -18,11 +18,9 @@ import ProfileLayout from "~/component/Layout/ProfileLayout";
 import Order from "~/pages/Profile/Order";
 import OrderAdmin from "~/pages/OrderAdmin";
 import DetailNews from "~/pages/DetailNews";
-<<<<<<< HEAD
 import DetailOrderTour from "~/pages/Profile/Order/detail-tour-oder";
-=======
 import DetailTourAdmin from "~/pages/TourAdmin/DetailTourAdmin";
->>>>>>> 40e1eb478103bdba426b4679c9a535ac70be5d7d
+import ChangePassword from "~/pages/Profile/ChangePassword";
 // import { useState , useEffect } from "react";
 // import { getTour } from "~/GlobalFunction/Api";
 
@@ -51,6 +49,7 @@ const publicRoutes = [
     {path: '/booking/payment/success' , component:PaymentSuccess},
     {path: '/profile' , component:Profile , layout:ProfileLayout},
     {path: '/profile/order' , component:Order , layout:ProfileLayout},
+    {path: '/profile/changepass' , component:ChangePassword , layout:ProfileLayout},
     
 ]
 
