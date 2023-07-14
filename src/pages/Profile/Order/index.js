@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import CardOrder from "./CardOrder";
 import { useEffect, useState } from "react";
 import { getOrder } from "~/GlobalFunction/Api";
+import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 function Order() {
@@ -17,6 +18,7 @@ function Order() {
         }
         detailData();
       }, [order,idCustomer]);
+      
   return (
     <div>
       <Box>
@@ -29,7 +31,13 @@ function Order() {
           </div>
           <div>
             {Array.isArray(order) && order.map((data)=>(
-                <CardOrder id={data.order.id_order_tour} name={data.order.name} email={data.order.email} idTour={data.dataDate.id_tour}/>
+              <Link to={`/detai_order_tour/${data.order.id_order_tour}`}>
+
+                <CardOrder id={data.order.id_order_tour} name={data.order.name} email={data.order.email} idTour={data.dataDate.id_tour}
+                
+                
+                />
+                </Link>
             ))}
           </div>
         </div>

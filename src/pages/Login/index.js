@@ -259,25 +259,35 @@ function Login() {
             <LoginSocialFacebook
               appId="1504487773417163"
               onResolve={(response) => {
-                localStorage.setItem("name", response.data.name);
-                localStorage.setItem("email", response.data.email);
-                localStorage.setItem("picture", response.data.picture.data.url);
-                localStorage.setItem("ggtoken", response.data.access_token);
-
-                //  const customer_name = data.name;
-                //  const email = data.email;
-                //  const password = data.sub;
-                // registerApi(customer_name,email,password);
-                // console.log(password);
-                swal({
-                  title: "Thành công!",
-                  text: "Đăng nhập thành công!",
-                  icon: "success",
-                  timer: 1500,
-                  buttons: false,
-                }).then(() => {
-                  navigate("/");
-                });
+                
+                
+              
+              
+            
+                
+                  localStorage.setItem("name", response.data.name)
+                    localStorage.setItem("email", response.data.email)
+                    localStorage.setItem("picture", response.data.picture.data.url)
+                    localStorage.setItem("ggtoken", response.data.access_token)
+             
+                
+         
+            //  const customer_name = data.name;
+            //  const email = data.email;
+            //  const password = data.sub;
+            // registerApi(customer_name,email,password);
+            // console.log(password);
+            swal({
+              title: "Thành công!",
+              text: "Đăng nhập thành công!",
+              icon: "success",
+              timer: 1500,
+              buttons: false,
+            }).then(() => {
+           
+                navigate("/profile");
+              
+            });
               }}
               onReject={(err) => {
                 console.log(err);
@@ -318,26 +328,28 @@ function Login() {
                 console.log(data.phone_number);
                 console.log(data);
 
-                localStorage.setItem("name", data.name);
-                localStorage.setItem("email", data.email);
-                localStorage.setItem("picture", data.picture);
-                localStorage.setItem("ggtoken", data.access_token);
-                localStorage.setItem("idgg", data.sub);
-
-                const customer_name = data.name;
-                const email = data.email;
-                const password = data.sub;
-                registerApi(customer_name, email, password);
-
-                swal({
-                  title: "Thành công!",
-                  text: "Đăng nhập thành công!",
-                  icon: "success",
-                  timer: 1500,
-                  buttons: false,
-                }).then(() => {
-                  navigate("/");
-                });
+            localStorage.setItem("name",data.name);
+            localStorage.setItem("email", data.email);
+            localStorage.setItem("picture", data.picture);
+            localStorage.setItem("ggtoken", data.access_token);
+            localStorage.setItem("idgg",data.sub);
+         
+            const customer_name = data.name;
+            const email = data.email;
+            const password = data.sub;
+            registerApi(customer_name,email,password);
+   
+            swal({
+              title: "Thành công!",
+              text: "Đăng nhập thành công!",
+              icon: "success",
+              timer: 1500,
+              buttons: false,
+            }).then(() => {
+           
+                navigate("/");
+              
+            });
               }}
               onReject={(err) => {
                 console.log(err);
