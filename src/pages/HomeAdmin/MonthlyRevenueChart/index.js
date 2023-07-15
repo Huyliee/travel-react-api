@@ -24,7 +24,7 @@ function MonthlyRevenueChart() {
   useEffect(() => {
     const fetchRevenueData = async () => {
       try {
-        const response = await axios.get("https://travel2h.click/public_html/api/analytic/revenueData");
+        const response = await axios.get("http://127.0.0.1:8000/api/analytic/revenueData");
         setRevenueData(response.data);
         console.log(revenueData);
       } catch (error) {

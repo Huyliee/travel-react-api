@@ -113,7 +113,7 @@ function OrderAdmin() {
   // xử lý xóa 
   const handleDelete = (id)=>{
     axios
-    .delete(`https://travel2h.click/public_html/api/order/delete/${id}`)
+    .delete(`http://127.0.0.1:8000/api/order/delete/${id}`)
     .then(() => {
       // xóa thành công, cập nhật lại danh sách tour
 
@@ -129,7 +129,7 @@ function OrderAdmin() {
     // xử lý xác nhận
     const handleAccept = (id)=>{
       axios
-      .put(`https://travel2h.click/public_html/api/order/accept/${id}`)
+      .put(`http://127.0.0.1:8000/api/order/accept/${id}`)
       .then(() => {
         // xóa thành công, cập nhật lại danh sách tour
         toast.success("Đơn đặt tour đã được xác nhận");

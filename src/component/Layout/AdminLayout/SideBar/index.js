@@ -139,6 +139,14 @@ function SideBar() {
                 />
               </ListItemButton>
             </Link>
+            <Link to="/admin/datego" className={cx("router-manage")}>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText
+                  primary="Quản lý ngày đi"
+                  sx={{ ".MuiListItemText-primary": { fontSize: "14px" } }}
+                />
+              </ListItemButton>
+            </Link>
           </List>
         </Collapse>
       </div>

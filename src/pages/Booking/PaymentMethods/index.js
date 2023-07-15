@@ -83,10 +83,10 @@ function PayMothods() {
   //---------------------------//
   // Thanh toán online
   const handlePayment = ()=>{
-    axios.options('https://travel2h.click/public_html/api/create-payment')
+    axios.options('http://127.0.0.1:8000/api/create-payment')
     .then(
       res => {
-        axios.post('https://travel2h.click/public_html/api/create-payment',{amount: total})
+        axios.post('http://127.0.0.1:8000/api/create-payment',{amount: total})
         .then(res =>{
           const {vnpUrl} = res.data
           // setPaymentVN(prevState => ({...prevState,vnpUrl}));
@@ -102,7 +102,7 @@ function PayMothods() {
   }
   const handleMomo = async () => {
     try {
-      //const response = await axios.post("https://travel2h.click/public_html/api/momo-payment", {
+      //const response = await axios.post("http://127.0.0.1:8000/api/momo-payment", {
       const response = await axios.post('http://127.0.0.1:8000/api/momo-payment', {
           amount: total
         });

@@ -17,19 +17,19 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 
-const cx = classNames.bind(styles)
+const cx = classNames.bind(styles);
 const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    boxShadow: 24,
-    p: 4,
-    display: "flex",
-    flexDirection: "column",
-  };
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 4,
+  display: "flex",
+  flexDirection: "column",
+};
 
 function UserAdmin() {
   const [user, setUser] = useState({});
@@ -50,7 +50,7 @@ function UserAdmin() {
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
-  const resetFrom = () =>{
+  const resetFrom = () => {
     setCustomerName("");
     setEmail("");
     setPassword("");
@@ -60,17 +60,17 @@ function UserAdmin() {
     setGender("");
     setDateOfBirth("");
     setPermisson("");
-  }
+  };
 
   useEffect(() => {
-    axios.get("https://travel2h.click/public_html/api/user").then((res) => {
+    axios.get("http://127.0.0.1:8000/api/user").then((res) => {
       setUser(res.data.data);
     });
   }, []);
 
-  const handleAdd = () =>{
+  const handleAdd = () => {
     axios
-    .post("https://travel2h.click/public_html/api/user/store", {
+      .post("http://127.0.0.1:8000/api/user/store", {
         customer_name,
         email,
         password,
@@ -79,24 +79,24 @@ function UserAdmin() {
         img,
         gender,
         date_of_birth,
-        permission
-    })
-    .then((response) => {
-      console.log(response.data);
-      resetFrom();
-      toast.success("Khách hàng đã được lưu thành công.");
-      setTimeout(() => {
-        navigate('/admin/user');
-      }, 3000); // chuyển hướng sau 2 giây
-    })
-    .catch((error) => {
-      console.log(error);
-      toast.error("Mã khách hàng đã tồn tại trong hệ thống");
-    });
-  }
-  const handleDelete = (id)=>{
+        permission,
+      })
+      .then((response) => {
+        console.log(response.data);
+        resetFrom();
+        toast.success("Khách hàng đã được lưu thành công.");
+        setTimeout(() => {
+          navigate("/admin/user");
+        }, 3000); // chuyển hướng sau 2 giây
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Mã khách hàng đã tồn tại trong hệ thống");
+      });
+  };
+  const handleDelete = (id) => {
     axios
-      .delete(`https://travel2h.click/public_html/api/user/delete/${id}`)
+      .delete(`http://127.0.0.1:8000/api/user/delete/${id}`)
       .then(() => {
         // xóa thành công, cập nhật lại danh sách tour
         const updatedUser = user.filter((t) => t.id !== id);
@@ -107,13 +107,12 @@ function UserAdmin() {
         console.log(error);
         toast.error("Không thể xóa khách hàng.");
       });
-
   };
-  const handleUpdate = (id)=>{
+  const handleUpdate = (id) => {
     axios
-    .get(`https://travel2h.click/public_html/api/user/show/${id}`)
-    .then((response) => {
-        setId(response.data.id)
+      .get(`http://127.0.0.1:8000/api/user/show/${id}`)
+      .then((response) => {
+        setId(response.data.id);
         setCustomerName(response.data.customer_name);
         setEmail(response.data.email);
         setPassword(response.data.password);
@@ -122,15 +121,15 @@ function UserAdmin() {
         setImg(response.data.img);
         setGender(response.data.gender);
         setDateOfBirth(response.data.date_of_birth);
-        setPermisson(response.data.permission)
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+        setPermisson(response.data.permission);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
-  const handleUpdateSubmit = (id)=>{
+  const handleUpdateSubmit = (id) => {
     axios
-    .put(`https://travel2h.click/public_html/api/user/update/${id}`, {
+      .put(`http://127.0.0.1:8000/api/user/update/${id}`, {
         customer_name,
         email,
         password,
@@ -139,28 +138,28 @@ function UserAdmin() {
         img,
         gender,
         date_of_birth,
-        permission
-    })
-    .then((response) => {
-      console.log(response.data);
-      toast.success("Khách hàng đã được cập nhật thành công.");
-      setTimeout(() => {
-        navigate('/admin/user');
-      }, 3000); // chuyển hướng sau 2 giây
-    })
-    .catch((error) => {
-      console.log(error);
-      toast.error("Mã tour đã tồn tại trong hệ thống!");
-    });
-  }
-  const handleOpen = ()=>{
-        setOpen(true)
+        permission,
+      })
+      .then((response) => {
+        console.log(response.data);
+        toast.success("Khách hàng đã được cập nhật thành công.");
+        setTimeout(() => {
+          navigate("/admin/user");
+        }, 3000); // chuyển hướng sau 2 giây
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Mã tour đã tồn tại trong hệ thống!");
+      });
   };
-  const handleClose = ()=>{
-    setOpen(false)
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
     handleInputAdd();
     resetFrom();
-  }
+  };
 
   const columns = [
     {
@@ -237,17 +236,17 @@ function UserAdmin() {
         margin: "50px auto",
       }}
     >
-    <ToastContainer position="top-right" autoClose={3000} />
-    <div className={cx("heading-container")}>
+      <ToastContainer position="top-right" autoClose={3000} />
+      <div className={cx("heading-container")}>
         <h1 style={{ margin: "40px 0px 40px 20px" }}>Quản lý khách hàng</h1>
         <img src="https://i.imgur.com/BNBtVP9.png" alt="" />
       </div>
       <div>
         <Button
-            variant="contained"
-            sx={{ marginBottom: "10px" }}
-            onClick={handleOpen}
-          >
+          variant="contained"
+          sx={{ marginBottom: "10px" }}
+          onClick={handleOpen}
+        >
           Thêm khách hàng
         </Button>
         <Modal
@@ -287,7 +286,7 @@ function UserAdmin() {
                   <label>Email: </label>
                 </div>
                 <div className={cx("input-container")}>
-                <TextField
+                  <TextField
                     label="Email"
                     id="outlined-size-normal"
                     value={email}
@@ -366,7 +365,7 @@ function UserAdmin() {
                   <label>Ngày sinh: </label>
                 </div>
                 <div className={cx("input-container")}>
-                <LocalizationProvider dateAdapter={AdapterDayjs} locale="en">
+                  <LocalizationProvider dateAdapter={AdapterDayjs} locale="en">
                     <DatePicker
                       placeholder="dd/mm/yyyy"
                       sx={{
@@ -379,7 +378,7 @@ function UserAdmin() {
                       }}
                       renderInput={(params) => (
                         <TextField {...params} value={date_of_birth} />
-                      )} 
+                      )}
                     />
                   </LocalizationProvider>
                 </div>
@@ -433,11 +432,11 @@ function UserAdmin() {
           },
           "& .MuiInputBase-root": {
             fontSize: "14px",
-            padding:'8px',
-            border:'1px solid #d5d5d5',
-            borderRadius:'10px',
-            width:'300px',
-            margin:'5px 10px'
+            padding: "8px",
+            border: "1px solid #d5d5d5",
+            borderRadius: "10px",
+            width: "300px",
+            margin: "5px 10px",
           },
         }}
       />
