@@ -56,7 +56,7 @@ function InfoCustomer({ value, title, inputName,date }) {
 console.log(formData);
   const handleUpdateSubmit = () => {
     axios
-      .put(`https://travel2h.click/public_html/api/user/update/${idCustomer}`, formData)
+      .put(`http://127.0.0.1:8000/api/user/update/${idCustomer}`, formData)
       .then((response) => {
         console.log(response.data);
         window.location.reload(); 

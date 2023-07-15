@@ -21,6 +21,7 @@ import DetailNews from "~/pages/DetailNews";
 import DetailOrderTour from "~/pages/Profile/Order/detail-tour-oder";
 import DetailTourAdmin from "~/pages/TourAdmin/DetailTourAdmin";
 import ChangePassword from "~/pages/Profile/ChangePassword";
+import DateGoAdmin from "~/pages/DateGoAdmin";
 // import { useState , useEffect } from "react";
 // import { getTour } from "~/GlobalFunction/Api";
 
@@ -60,6 +61,7 @@ const privateRoutes =[
     {path: '/admin/user' , component:UserAdmin , layout:AdminLayout},
     {path: '/admin/news' , component:NewsAdmin , layout:AdminLayout},
     {path: '/admin/order' , component:OrderAdmin , layout:AdminLayout},
+    {path: '/admin/datego' , component:DateGoAdmin , layout:AdminLayout},
 ]
 
 export {publicRoutes,privateRoutes}

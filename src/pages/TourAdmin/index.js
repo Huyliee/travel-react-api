@@ -11,9 +11,6 @@ import { Switch, TextField } from "@mui/material";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
 import {  useNavigate } from "react-router-dom";
 import { getTour } from "~/GlobalFunction/Api";
 
@@ -98,7 +95,6 @@ function TourAdmin() {
     },
     { field: "id_tour", headerName: "ID", width: 150 },
     { field: "name_tour", headerName: "Tên tour", width: 150 },
-    { field: "date_back", headerName: "Ngày đi", width: 150 },
     { field: "content_tour", headerName: "Nội dung tour", width: 150 },
     { field: "place_go", headerName: "Nơi khởi hành", width: 150 },
     { field: "child_price", headerName: "Giá trẻ em", width: 150 },
@@ -129,7 +125,6 @@ function TourAdmin() {
   //thêm tour
   const [id_tour, setIdTour] = useState("");
   const [name_tour, setNameTour] = useState("");
-  const [date_back, setDateBack] = useState("");
   const [content_tour, setContentTour] = useState("");
   const [place_go, setPlaceGo] = useState("");
   const [child_price, setChildPrice] = useState("");
@@ -141,7 +136,6 @@ function TourAdmin() {
   const resetFrom = () => {
     setIdTour("");
     setNameTour("");
-    setDateBack("");
     setContentTour("");
     setPlaceGo("");
     setChildPrice("");
@@ -155,7 +149,6 @@ function TourAdmin() {
     const formData = new FormData();
     formData.append("id_tour", id_tour);
     formData.append("name_tour", name_tour);
-    formData.append("date_back", date_back);
     formData.append("content_tour", content_tour);
     formData.append("place_go", place_go);
     formData.append("child_price", child_price);
@@ -184,7 +177,7 @@ function TourAdmin() {
   };
   const handleDelete = (id) => {
     axios
-      .delete(`https://travel2h.click/public_html/api/tour/delete/${id}`)
+      .delete(`http://127.0.0.1:8000/api/tour/delete/${id}`)
       .then(() => {
         // xóa thành công, cập nhật lại danh sách tour
 
@@ -199,13 +192,12 @@ function TourAdmin() {
   };
   const handleUpdate = (id) => {
     axios
-      .get(`https://travel2h.click/public_html/api/tour/show/${id}`)
+      .get(`http://127.0.0.1:8000/api/tour/show/${id}`)
       .then((response) => {
         setShowTour(response.data);
         setIdTour(response.data.id_tour);
         setNameTour(response.data.name_tour);
         setContentTour(response.data.content_tour);
-        setDateBack(response.data.date_back);
         setPlaceGo(response.data.place_go);
         setChildPrice(response.data.child_price);
         setAdultPrice(response.data.adult_price);
@@ -224,7 +216,6 @@ function TourAdmin() {
     const formData = new FormData();
     formData.append("id_tour", id_tour);
     formData.append("name_tour", name_tour);
-    formData.append("date_back", date_back);
     formData.append("content_tour", content_tour);
     formData.append("place_go", place_go);
     formData.append("child_price", child_price);
@@ -233,9 +224,8 @@ function TourAdmin() {
     formData.append("best_seller", best_seller);
     formData.append("hot_tour", hot_tour);
     axios
-      .put(`https://travel2h.click/public_html/api/tour/update/${id}`, {
+      .put(`http://127.0.0.1:8000/api/tour/update/${id}`, {
         name_tour,
-        date_back,
         content_tour,
         place_go,
         child_price,
@@ -334,30 +324,6 @@ function TourAdmin() {
                     onChange={(e) => setNameTour(e.target.value)}
                     sx={{width:'215px'}}
                   />
-                </div>
-              </div>
-              <div className={cx("store-input")}>
-                <div className={cx("label-container")}>
-                  <label>Ngày đi: </label>
-                </div>
-                <div className={cx("input-container")}>
-                  {" "}
-                  <LocalizationProvider dateAdapter={AdapterDayjs} locale="en">
-                    <DatePicker
-                      placeholder="dd/mm/yyyy"
-                      sx={{
-                        width: 210,
-                        ".MuiInputBase-input": { height: 3, fontSize: 12 },
-                      }}
-                      onChange={(newValue) => {
-                        const dateString = dayjs(newValue).format("DD/MM/YYYY");
-                        setDateBack(dateString);
-                      }}
-                      renderInput={(params) => (
-                        <TextField {...params} value={date_back} />
-                      )} // thêm đoạn này
-                    />
-                  </LocalizationProvider>
                 </div>
               </div>
               <div className={cx("store-input")}>
