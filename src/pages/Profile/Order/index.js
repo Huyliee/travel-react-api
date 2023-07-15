@@ -31,7 +31,7 @@ function Order() {
           </div>
           <div>
             {Array.isArray(order) && order.map((data)=>(
-              <Link to={`/detai_order_tour/${data.order.id_order_tour}`}>
+              <Link to={`/detai_order_tour/${data.order.id_order_tour}`} style={{textDecoration:"none"}}>
 
                 <CardOrder id={data.order.id_order_tour} name={data.order.name} email={data.order.email} idTour={data.dataDate.id_tour}
                 

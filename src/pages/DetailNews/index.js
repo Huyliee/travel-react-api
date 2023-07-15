@@ -39,11 +39,11 @@ function DetailNews() {
                     {detailNew.title_news}
                 </Link>
             </Breadcrumbs>
-            <h1>   {detailNew.title_news}</h1>
-          <Link  to="/news" style={{ fontSize: "16px" , textDecoration:"none" }}> Tin tức du lịch </Link> <span  style={{ fontSize: "13px" , marginLeft: "10px", color:"#6c757d" }}>    {detailNew.date}</span>
+            <h1 style={{marginTop:"20px"}}>   {detailNew.title_news}</h1>
+          <Link to="/news" style={{ fontSize: "16px" , textDecoration:"none",margin:"10px" }}> Tin tức du lịch </Link> <span  style={{ fontSize: "13px" , marginLeft: "10px", color:"#6c757d" }}>    {detailNew.date}</span>
          
           <div>
-          <img src={detailNew.img_news} alt="hinhanh"/> 
+          <img src={detailNew.img_news} alt="hinhanh" style={{width:"100%"}}/> 
             <div className={cx("content-news")}>
             {htmlContent}
             </div>

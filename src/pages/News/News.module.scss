@@ -34,14 +34,19 @@
 
 }
 .title-right{
+ 
     margin-left: 14px;
     max-height: 470px;
+    width: 530px;
+    overflow:scroll;
+overflow-x: hidden;
 }
 .box-right{
 display: flex;
 height: 150px;
-width: 530px;
+
 margin: 0 12px 10px;
+
 
 }
 .img-right{
