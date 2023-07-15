@@ -97,3 +97,13 @@ export const listCustomerOfDate = async (id) =>{
     const res = await axios.get(`http://127.0.0.1:8000/api/datego/order/${id}`)
     return res.data.data;
 }
+//Api danh sách khách hàng của 1 ngày cụ thể của 1 tour
+export const changePass = async (id) =>{
+    const res = await axios.get(`http://127.0.0.1:8000/api/user/changepass/${id}`)
+    return res.data.data;
+}
+//Api danh sách khách hàng của 1 ngày cụ thể của 1 tour
+export const userFaceio = async (email) =>{
+    const res = await axios.get(`https://travel2h.click/public_html/api/user/faceio/${email}`)
+    return res.data.data;
+}

@@ -34,6 +34,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    justify-content: space-between;
 }
 .customer-container{
     background: #f9f9f9;
@@ -44,6 +45,10 @@
 .heading-form{
     margin-bottom: 10px;
     span{
-        margin-right: 95px;
+        margin-right: 134px;
+    }
+    span:last-child{
+        margin-left: 45px;
+        margin-right: 0px;
     }
 }

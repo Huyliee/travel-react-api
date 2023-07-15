@@ -46,6 +46,7 @@ function Header() {
   const token = localStorage.getItem("access_token");
   const ggtoken = localStorage.getItem("ggtoken");
   const avt = localStorage.getItem("picture");
+  const faceId = localStorage.getItem("faceId");
   const navigate = useNavigate();
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   const [isOpenTravelRespon, setIsOpenTravelRespon] = useState(false);
@@ -139,7 +140,7 @@ function Header() {
             </div>
           </Tippy>
           <div className={cx("login-sub-container")}>
-            { (token || ggtoken) ? (
+            { (token || ggtoken || faceId) ? (
               <Tippy
                 interactive
                 trigger="click"

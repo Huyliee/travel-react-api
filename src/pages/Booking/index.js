@@ -43,7 +43,11 @@ function Booking() {
   });
   const [adultQuantity, setAdultQuantity] = useState(1);
   const [childQuantity, setChildQuantity] = useState(1);
+  const [total_price,setTotalPrice] = useState(null);
 
+  const handleUpdateTotalPrice = (newTotalPrice) => {
+    setTotalPrice(newTotalPrice);
+  };
   //số lượng người lớn
   const handleAdultQuantityChange = (newQuantity) => {
     setAdultQuantity(newQuantity);
@@ -94,6 +98,7 @@ function Booking() {
         id_customer,
         id_date,
         detail,
+        total_price
       })
       .then((res) => {
         console.log(res);
@@ -252,7 +257,7 @@ function Booking() {
             </div>
           </div>
           <div className={cx("booking-info-tour")}>
-              <TravelCard quantityAdult={adultQuantity} quantityChild={childQuantity} totalQuantity={totalQuantity} checkout={handleCheckout} idTour={idTour}/>
+              <TravelCard quantityAdult={adultQuantity} quantityChild={childQuantity} totalQuantity={totalQuantity} checkout={handleCheckout} idTour={idTour} onUpdateTotalPrice={handleUpdateTotalPrice}/>
           </div>
         </div>
       </Container>

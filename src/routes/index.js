@@ -20,6 +20,10 @@ import OrderAdmin from "~/pages/OrderAdmin";
 import DetailNews from "~/pages/DetailNews";
 import DetailOrderTour from "~/pages/Profile/Order/detail-tour-oder";
 import DetailTourAdmin from "~/pages/TourAdmin/DetailTourAdmin";
+<<<<<<< HEAD
+=======
+import ChangePassword from "~/pages/Profile/ChangePassword";
+>>>>>>> 7d677402128cb767ef89aa56dbff22a9d73891f8
 // import { useState , useEffect } from "react";
 // import { getTour } from "~/GlobalFunction/Api";
 
@@ -48,6 +52,7 @@ const publicRoutes = [
     {path: '/booking/payment/success' , component:PaymentSuccess},
     {path: '/profile' , component:Profile , layout:ProfileLayout},
     {path: '/profile/order' , component:Order , layout:ProfileLayout},
+    {path: '/profile/changepass' , component:ChangePassword , layout:ProfileLayout},
     
 ]
 

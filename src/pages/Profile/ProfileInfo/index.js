@@ -30,10 +30,15 @@ function ProfileInfo() {
         <Box>
         <div className={cx("profile-info-container")}>
           <div className={cx("profile-name-container")}>
-            <img
+            {avt ? <img
               src={avt}
               alt=""
-            />
+            /> : <img
+            src="https://cdn-icons-png.flaticon.com/512/146/146037.png?w=740&t=st=1689340738~exp=1689341338~hmac=249f34566cf05d7895f780c522dbb4ce00ebb604a09748b205889d74a9f99632"
+            alt=""
+            style={{width:'96px',height:'96px'}}
+          />}
+ 
             <div className={cx("profile-name-box")}>
               <h5>{name}</h5>
               <span>{email}</span>
@@ -63,6 +68,7 @@ function ProfileInfo() {
               </ListItemButton>
               <Collapse in={open} timeout="auto" unmountOnExit>
                 <List>
+                  <Link to="/profile" style={{textDecoration:"none"}}>
                   <ListItemButton sx={{ pl: 4 }}>
                     <ListItemIcon>
                       <FontAwesomeIcon icon={faCircleInfo} />
@@ -71,9 +77,12 @@ function ProfileInfo() {
                     ".MuiListItemText-primary": {
                       fontSize: "14px",
                       fontWeight: "400",
+                      color:'#757575'
                     },
                   }}/>
                   </ListItemButton>
+                  </Link>
+                  <Link to="/profile/changepass" style={{textDecoration:"none"}}>
                   <ListItemButton sx={{ pl: 4 }}>
                     <ListItemIcon>
                       <Password />
@@ -82,9 +91,11 @@ function ProfileInfo() {
                     ".MuiListItemText-primary": {
                       fontSize: "14px",
                       fontWeight: "400",
+                      color:'#757575'
                     },
                   }}/>
                   </ListItemButton>
+                  </Link>
                 </List>
               </Collapse>
             </List>

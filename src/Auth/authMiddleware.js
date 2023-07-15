@@ -1,6 +1,6 @@
 class Authentication {
     isAuthentication(){
-        const token = localStorage.getItem('access_token')
+        const token = localStorage.getItem('permission')
         return token
     }
 }
