@@ -19,6 +19,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const cx = classNames.bind(styles);
 const style = {
@@ -167,9 +168,11 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
         id_customer,
         id_date,
         detail,
+        total_price
       })
       .then((res) => {
         console.log(res);
+        toast.success("Thêm đơn đặt tour thành công")
       })
       .catch((error) => {
         console.log(error);
@@ -304,8 +307,16 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
     }
     return childForms;
   };
+  let total_price = 0;
+  if (valueTour && valueTour.adult_price && valueTour.child_price) {
+    const adultPrice = parseFloat(valueTour.adult_price);
+    const childPrice = parseFloat(valueTour.child_price);
+  
+    total_price = adultFormCount * adultPrice + childFormCount * childPrice;
+  }
   return (
     <Container>
+      <ToastContainer position="top-right" autoClose={3000} />
       <Modal
         open={open}
         onClose={handleClose}
@@ -402,6 +413,9 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
               </Box>
               <form onSubmit={handleCheckout} encType="multipart/form-data" style={{display:'flex',justifyContent:'space-between'}}>
               <Button type="submit">Thêm</Button>
+                {valueDate === "" ? "" : <h3>Giá người lớn: {valueTour?.adult_price}</h3>}
+                {valueDate === "" ? "" : <h3>Giá trẻ em: {valueTour?.child_price}</h3>}
+                {valueDate === "" ? "" : <h3>Tổng tiền: {total_price}</h3>}
                 {valueDate === "" ? "" : <h3>Số chỗ còn: {valueDate?.seats}</h3>}
               </form>
             </Box>

@@ -42,6 +42,7 @@ function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showRegister, setShowRegister] = useState(true);
+  const [faceCustomer,setFaceCustomer] = useState({});
 
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
@@ -93,7 +94,7 @@ function Login() {
 
   console.log(faceIO);
   if (faceIO && !faceioInstance) {
-    faceioInstance = new faceIO("fioab4c8");
+    faceioInstance = new faceIO("fioa3fb5");
   }
 
   console.log(faceioInstance);
@@ -138,7 +139,7 @@ function Login() {
       localStorage.setItem("payload",userData.payload.email)
       localStorage.setItem("name",userData.payload.username)
       localStorage.setItem("email",userData.payload.email)
-      navigate("/");
+      navigate("/profile");
     } catch (errorCode) {
       console.log(errorCode);
       handleError(errorCode);
