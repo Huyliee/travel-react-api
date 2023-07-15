@@ -55,7 +55,7 @@ function DetailOrderTour() {
             <TableBody>
               <TableRow>
                 <TableCell className={cx('bodyCell')}> {tour.name_tour} </TableCell>
-                <TableCell className={cx('bodyCell')}><img style={{ width: "300px" }} src={tour.img_tour}></img></TableCell>
+                <TableCell className={cx('bodyCell')}><img style={{ width: "300px" }} src={tour.img_tour} alt="mota"> </img></TableCell>
                 <TableCell className={cx('bodyCell')}> {tour.place_go}</TableCell>
               </TableRow>
 

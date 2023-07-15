@@ -70,6 +70,7 @@ console.log(formData);
     handleUpdateSubmit();
     hideUpdateRow();
   };
+  console.log(isDate);
   return (
     <div>
       <div className={cx("profile-change-info")}>
@@ -87,7 +88,7 @@ console.log(formData);
         {isEdit && (
           <div className={cx("profile-update-row")}>
             <div style={{ width: "160px" }}></div>
-            {isDate ?  <TextField
+            {!isDate ?  <TextField
               id="outlined-basic"
               label={inputName}
               variant="outlined"
@@ -95,13 +96,16 @@ console.log(formData);
               value={formData[inputName]}
               onChange={handleChange}
               name={inputName}
-            />: ""}
+              
+            />
+            : ""}
            
-            <Button variant="contained" onClick={handleButton}>
+           <Button variant="contained" onClick={handleButton}>
               Xong
             </Button>
           </div>
         )}
+        
       </div>
     </div>
   );
