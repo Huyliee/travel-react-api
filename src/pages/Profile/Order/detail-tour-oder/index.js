@@ -1,71 +1,180 @@
 import classNames from "classnames/bind";
 import styles from "~/pages/Profile/Profile.module.scss";
-import { Box } from "@mui/material";
+import { Container, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from "@mui/material";
 import { useEffect, useState } from "react";
 import { detailTourApi, detailTourOder } from "~/GlobalFunction/Api";
 import { useParams } from "react-router-dom";
-import CardOrder from "../CardOrder";
 
 const cx = classNames.bind(styles);
 function DetailOrderTour() {
 
-    const { id } = useParams();
-    const [detailOrder, setDetailOder] = useState({});
-    const [tour,setTour] = useState({});
-    useEffect(() => {
-        async function detailData() {
-          const data = await detailTourApi(detailOrder.detail_order[0]?.id_tour);
-          setTour(data);
-        }
-        detailData();
-      }, [detailOrder.detail_order]);
-      console.log(tour);
-      //Load api của chi tiết tin tức
-      useEffect(() => {
-          async function detailData() {
-            const data = await detailTourOder(id);
-            setDetailOder(data);
-          }
-          detailData();
-        }, [id]);
-    
+  const { id } = useParams();
+  const [detailOrder, setDetailOder] = useState({});
+  const [tour, setTour] = useState({});
+  useEffect(() => {
+    async function detailData() {
+      const data = await detailTourApi(detailOrder?.detail_order[0]?.id_tour);
+      setTour(data);
+    }
+    detailData();
+  }, [detailOrder.detail_order]);
+  console.log(tour);
+  useEffect(() => {
+    async function detailData() {
+      const data = await detailTourOder(id);
+      setDetailOder(data);
+    }
+    detailData();
+  }, [id]);
+  const detailCustommer = detailOrder?.detail_order;
+  console.log(detailCustommer);
+
   return (
-    <div>
 
-      <Box className={cx("container")}>
-        <div className={cx("profile-change-container")}>
-          <div className={cx("profile-change-heading")}>
-            <h5>Chi tiết đơn đặt tour</h5>
-            <span>
-              Quý khách của thể xem thông tin cơ bản và chi tiết các tour đã đặt
-            </span>
-          </div>
-          <div>
-            <h3>Thông tin người đặt Tour</h3>
-            <p>Tên: {detailOrder.name} </p>
-            <p>Email: {detailOrder.email}</p>
-            <p>Số điện thoại: {detailOrder.phone}</p>
-            <p>Địa chỉ: {detailOrder.address}</p>
-            <p>Ngày đặt tour: {detailOrder.order_time}</p>
-            <h3>Thông tin hành khách Tour: </h3>
-          </div>
+
+    <Container>
+      <div className={cx("profile-change-container")}>
+        <div className={cx("profile-change-heading")}>
+          <h2 style={{margin:"20px"}}>Thông tin Tour</h2>
+
+          <TableContainer component={Paper}
+            variant="outlined">
+            <TableHead >
+              <TableRow>
+                <TableCell className={cx('headCell')}>
+                  Tên Tour
+                </TableCell >
+                <TableCell className={cx('headCell')}>
+                  Hình ảnh
+                </TableCell>
+                <TableCell className={cx('headCell')}>
+                  Nơi khởi hành
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell className={cx('bodyCell')}> {tour.name_tour} </TableCell>
+                <TableCell className={cx('bodyCell')}><img style={{ width: "300px" }} src={tour.img_tour}></img></TableCell>
+                <TableCell className={cx('bodyCell')}> {tour.place_go}</TableCell>
+              </TableRow>
+
+            </TableBody>
+          </TableContainer>
+          <h2 style={{margin:"20px"}}>Thông tin người đặt Tour</h2>
+          <TableContainer component={Paper}
+            variant="outlined">
+            <TableHead >
+              <TableRow>
+                <TableCell className={cx('headCell')}>
+                  Tên
+                </TableCell >
+                <TableCell className={cx('headCell')}>
+                  Email
+                </TableCell>
+                <TableCell className={cx('headCell')}>
+                  Số điện thoại
+                </TableCell>
+                <TableCell className={cx('headCell')}>
+                  Địa chỉ
+                </TableCell>
+                <TableCell className={cx('headCell')}>
+                  Ngày đặt tour
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell className={cx('bodyCell')}> {detailOrder.name} </TableCell>
+                <TableCell className={cx('bodyCell')}> {detailOrder.email}</TableCell>
+                <TableCell className={cx('bodyCell')}> {detailOrder.phone}</TableCell>
+                <TableCell className={cx('bodyCell')}> {detailOrder.address}</TableCell>
+                <TableCell className={cx('bodyCell')}> {detailOrder.order_time}</TableCell>
+              </TableRow>
+
+            </TableBody>
+          </TableContainer>
+
+
+          <h2 style={{margin:"20px"}}>Thông tin khách hàng tham gia Tour</h2>
+
+
+          <TableContainer
+            component={Paper}
+            variant="outlined">
+            <Table>
+              <TableHead >
+                <TableRow  >
+                  <TableCell className={cx('headCell')}>
+                    Tên
+                  </TableCell >
+                  <TableCell className={cx('headCell')}>
+                    Giới tính
+                  </TableCell>
+                  <TableCell className={cx('headCell')}>
+                    CMND
+                  </TableCell>
+                  <TableCell className={cx('headCell')}>
+                    Ngày sinh
+                  </TableCell>
+                  <TableCell className={cx('headCell')}>
+                    Loại khách
+                  </TableCell>
+                  <TableCell className={cx('headCell')}>
+                    Giá vé
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody >
+                {detailOrder.detail_order && detailOrder.detail_order.map((item) => (
+
+
+
+                  <TableRow>
+
+                    <TableCell className={cx('bodyCell')} key={item.id}>{item.name_customer}</TableCell>
+                    <TableCell className={cx('bodyCell')}>{item.sex}</TableCell>
+                    <TableCell className={cx('bodyCell')}>{item.CMND}</TableCell>
+                    <TableCell className={cx('bodyCell')}>{item.birth}</TableCell>
+                    <TableCell className={cx('bodyCell')}>{item.age}</TableCell>
+                    <TableCell className={cx('bodyCell')}>
+                      {item.age === 'Người lớn' ? (tour.adult_price ?? '').toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : (tour.child_price ?? '').toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                    </TableCell>
+                  </TableRow>
+                  
+
+
+                ))}
+
+              </TableBody>
+              <TableFooter >
+                <TableRow>
+                  <TableCell  className={cx('footCell')}>
+                    Tổng giá tiền
+                  </TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell  className={cx('footCell')}>{(tour.total_price ?? '').toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</TableCell>
+                </TableRow>
+              </TableFooter>
+            </Table>
+          </TableContainer>
         </div>
-        
-            
-             <div className={ cx("left-detail-tour")}>
-             Tên Tour: {tour.name_tour} <br/>
-             <img src={tour.img_tour} style={{width:"200px"}}></img>
-             </div>
+      </div>
 
-              
-                
-                
-                
-                
-        
-          
-      </Box>
-    </div>
+
+
+
+
+
+
+
+
+
+    </Container>
+
   );
 }
 
