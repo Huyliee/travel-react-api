@@ -275,10 +275,10 @@ function Login() {
              
                 
          
-            //  const customer_name = data.name;
-            //  const email = data.email;
-            //  const password = data.sub;
-            // registerApi(customer_name,email,password);
+              const customer_name = response.data.name;
+             const email = response.data.email;
+              const password = response.data.access_token;
+             registerApi(customer_name,email,password);
             // console.log(password);
             swal({
               title: "Thành công!",

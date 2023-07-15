@@ -32,9 +32,9 @@ function Booking() {
   ////////////////////////
   const id_customer = localStorage.getItem("id_customer");
   const nameSocial = localStorage.getItem("name");
-  const emailocial      = localStorage.getItem("email");
-  const [email, setEmail] = useState(nameSocial);
-  const [name, setName] = useState(emailocial);
+  const emailSocial      = localStorage.getItem("email");
+  const [email, setEmail] = useState(emailSocial);
+  const [name, setName] = useState(nameSocial);
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [detail, setDetail] = useState({

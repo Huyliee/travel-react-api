@@ -54,46 +54,49 @@ function Profile() {
           <InfoCustomer
             title="Họ và tên"
             value={
-              ggtoken
+              ggtoken || faceId
                 ? detailSocial[0]?.customer_name
-                : detailCustomer[0]?.customer_name
+                : detailCustomer?.customer_name
             }
             inputName="customer_name"
-            date="true"
+            date={false}
           />
           <InfoCustomer title="Số tour đã đi" value="Chưa có thông tin" />
           <InfoCustomer
             title="Email"
-            value={ggtoken ? detailSocial[0]?.email : detailCustomer[0]?.email}
-            inputName="email"
+            value={ggtoken || faceId ? detailSocial[0]?.email : detailCustomer?.email}
+            inputName="email"  date={true}
           />
           <InfoCustomer
             title="Số điện thoại"
-            value={ggtoken ? detailSocial[0]?.phone : detailCustomer[0]?.phone}
-            inputName="phone"
+            value={ggtoken || faceId  ? detailSocial[0]?.phone : detailCustomer?.phone}
+            inputName="phone"  date={false}
           />
           <InfoCustomer
             title="Ngày sinh"
             value={
-              ggtoken
+              ggtoken || faceId
                 ? detailSocial[0]?.date_of_birth
-                : detailCustomer[0]?.date_of_birth
+                : detailCustomer?.date_of_birth
             }
             inputName="date_of_birth"
-            date="false"
+            date={false}
           />
           <InfoCustomer
             title="Giới tính"
-            value={ggtoken ? detailSocial[0]?.gender : detailCustomer[0]?.gender}
+            value={ggtoken || faceId ? detailSocial[0]?.gender : detailCustomer?.gender}
             inputName="gender"
+            date={false}
           />
-          <InfoCustomer title="Quốc tịch" value="Chưa có thông tin" />
+          <InfoCustomer title="Quốc tịch" value="Chưa có thông tin"   date={false} />
           <InfoCustomer
             title="Địa chỉ"
-            value={ggtoken ? detailSocial[0]?.address : detailCustomer[0]?.address}
+            value={ggtoken || faceId ? detailSocial[0]?.address : detailCustomer?.address}
             inputName="address"
+            date={false}
           />
-          <InfoCustomer title="CMND" value="Chưa có thông tin" />
+          <InfoCustomer title="CMND" value="Chưa có thông tin" 
+            date={true}/>
         </div>
       </Box>
     </div>
