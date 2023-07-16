@@ -12,13 +12,16 @@ function DetailOrderTour() {
   const [detailOrder, setDetailOder] = useState({});
   const [tour, setTour] = useState({});
   useEffect(() => {
-    async function detailData() {
-      const data = await detailTourApi(detailOrder?.detail_order[0]?.id_tour);
-      setTour(data);
+    if (detailOrder?.detail_order && detailOrder?.detail_order[0]?.id_tour) {
+      async function detailData() {
+        const data = await detailTourApi(detailOrder?.detail_order[0].id_tour);
+        setTour(data);
+      }
+      detailData();
     }
-    detailData();
   }, [detailOrder.detail_order]);
   console.log(tour);
+  console.log(detailOrder);
   useEffect(() => {
     async function detailData() {
       const data = await detailTourOder(id);
@@ -54,9 +57,9 @@ function DetailOrderTour() {
             </TableHead>
             <TableBody>
               <TableRow>
-                <TableCell className={cx('bodyCell')}> {tour.name_tour} </TableCell>
-                <TableCell className={cx('bodyCell')}><img style={{ width: "300px" }} src={tour.img_tour} alt="mota"> </img></TableCell>
-                <TableCell className={cx('bodyCell')}> {tour.place_go}</TableCell>
+                <TableCell className={cx('bodyCell')}> {tour?.name_tour} </TableCell>
+                <TableCell className={cx('bodyCell')}><img style={{ width: "300px" }} src={tour?.img_tour} alt="mota" /></TableCell>
+                <TableCell className={cx('bodyCell')}> {tour?.place_go}</TableCell>
               </TableRow>
 
             </TableBody>
@@ -156,7 +159,27 @@ function DetailOrderTour() {
                   <TableCell></TableCell>
                   <TableCell></TableCell>
                   <TableCell></TableCell>
-                  <TableCell  className={cx('footCell')}>{(tour.total_price ?? '').toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</TableCell>
+                  <TableCell  className={cx('footCell')}> {(detailOrder?.total_price ?? '').toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell  className={cx('footCell')}>
+                    Số tiền đã thanh toán
+                  </TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell  className={cx('footCell')}>{(detailOrder?.payment[0]?.amount_paid ?? '').toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell  className={cx('footCell')}>
+                    Số tiền chưa thanh toán
+                  </TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell  className={cx('footCell')}>{(detailOrder?.payment[0]?.amount_unpaid ?? '').toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</TableCell>
                 </TableRow>
               </TableFooter>
             </Table>

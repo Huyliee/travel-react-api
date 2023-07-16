@@ -1,9 +1,26 @@
 import { Container, Box } from "@mui/material";
 import styles from "./PaymentSuccess.module.scss";
 import classNames from "classnames/bind";
+import { useEffect } from "react";
+import { paymentMoMoStore } from "~/GlobalFunction/Api";
+import { useLocation } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 function PaymentSuccess() {
+  const id_customer = localStorage.getItem('id_customer');
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+
+  // Lấy giá trị từ queryParams
+  const id_order = searchParams.get('orderId');
+  const amount_paid = searchParams.get('amount');
+  const payment_methods = "MOMO"
+  // console.log(id_customer,id_order,amount_paid,payment_methods);
+  useEffect(()=>{
+    const data = paymentMoMoStore(id_customer,id_order,amount_paid,payment_methods);
+    console.log(data);
+  },[id_customer,id_order,amount_paid,payment_methods])
+
   return (
     <div>
       <Container

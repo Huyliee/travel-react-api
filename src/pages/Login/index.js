@@ -94,7 +94,7 @@ function Login() {
 
   console.log(faceIO);
   if (faceIO && !faceioInstance) {
-    faceioInstance = new faceIO("fioa3fb5");
+    faceioInstance = new faceIO("fioa1ce0");
   }
 
   console.log(faceioInstance);

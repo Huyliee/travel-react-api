@@ -29,6 +29,31 @@ function TablePrice({ id, month }) {
   if (date === null) {
     return <div>Loading...</div>;
   }
+  function isUpcomingDate(date) {
+    // Tạo đối tượng Date cho ngày hiện tại
+    const currentDate = new Date();
+
+    // Tạo đối tượng Date cho ngày khởi hành
+    const departureDate = new Date(date);
+
+    // Tính toán khoảng cách giữa hai ngày (số mili giây)
+    const timeDiff = departureDate.getTime() - currentDate.getTime();
+
+    // Chuyển khoảng cách từ mili giây sang số ngày
+    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+    if (daysDiff <= 7 && daysDiff >= 0) {
+      return true; // Ngày khởi hành là ngày gần tới (trong khoảng 7 ngày)
+    } else {
+      return false; // Ngày khởi hành không phải là ngày gần tới
+    }
+  }
+  function isPastDate(date) {
+    const currentDate = new Date();
+    const departureDate = new Date(date);
+
+    return departureDate < currentDate;
+  }
   return (
     <div>
       <TableContainer component={Paper}>
@@ -62,35 +87,58 @@ function TablePrice({ id, month }) {
                     style={{ fontSize: "16px" }}
                   >
                     {row.date}
+                    {isUpcomingDate(row.date) ? (
+                      <span style={{ fontSize: "16px", color: "red" }}>
+                        {" "}
+                        (Sắp khởi hành)
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                    {isPastDate(row.date) ? <span style={{ fontSize: "16px", color: "red" }}>
+                        {" "}
+                        (Đã qua)
+                      </span> : ""}
                   </TableCell>
                   <TableCell style={{ fontSize: "16px" }} align="right">
                     Tour trọn gói
                   </TableCell>
                   <TableCell style={{ fontSize: "16px" }} align="right">
-                    {row.seats === 0 ? <p style={{color:"#ff0000",paddingRight:'50px'}}>Hết chỗ</p> : <p style={{paddingRight:'50px'}}>{row.seats} Chỗ</p>}
+                    {row.seats === 0 ? (
+                      <p style={{ color: "#ff0000", paddingRight: "50px" }}>
+                        Hết chỗ
+                      </p>
+                    ) : (
+                      <p style={{ paddingRight: "50px" }}>{row.seats} Chỗ</p>
+                    )}
                   </TableCell>
                   <TableCell
-                    style={{ fontSize: "16px", color: "red"}}
+                    style={{ fontSize: "16px", color: "red" }}
                     align="right"
                   >
                     7.000.000đ
-                    {(access_login || ggtoken || faceId) ? (
+                    {access_login || ggtoken || faceId ? (
                       <Link
                         to={`/booking/tourId/${id}?state=${encodeURIComponent(
                           id
-                        )}&date=${encodeURIComponent(row.id)}&seat=${encodeURIComponent(row.seats)}`}
-                        style={row.seats === 0 ? { pointerEvents: 'none' } : {}}
+                        )}&date=${encodeURIComponent(
+                          row.id
+                        )}&seat=${encodeURIComponent(row.seats)}`}
+                        style={(row.seats === 0  || isPastDate(row.date)) ? { pointerEvents: "none" } : {}}
                       >
                         <Button
                           variant="contained"
                           style={{ marginLeft: "10px" }}
-                          disabled={row.seats === 0}
+                          disabled={(row.seats === 0  || isPastDate(row.date))}
                         >
                           Chọn ngày
                         </Button>
                       </Link>
                     ) : (
-                      <Link to="/login" style={row.seats === 0 ? { pointerEvents: 'none' } : {}}>
+                      <Link
+                        to="/login"
+                        style={row.seats === 0 ? { pointerEvents: "none" } : {}}
+                      >
                         {" "}
                         <Button
                           variant="contained"

@@ -14,6 +14,7 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import TravelCard from "./TravelCard";
 import { ToastContainer, toast } from "react-toastify";
+import { HashLoader } from "react-spinners";
 const cx = classNames.bind(styles);
 
 function Booking() {
@@ -32,10 +33,11 @@ function Booking() {
   ////////////////////////
   const id_customer = localStorage.getItem("id_customer");
   const nameSocial = localStorage.getItem("name");
-  const emailSocial      = localStorage.getItem("email");
+  const emailSocial = localStorage.getItem("email");
   const [email, setEmail] = useState(emailSocial);
   const [name, setName] = useState(nameSocial);
   const [phone, setPhone] = useState("");
+  const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState("");
   const [detail, setDetail] = useState({
     adultInfo: [],
@@ -43,7 +45,7 @@ function Booking() {
   });
   const [adultQuantity, setAdultQuantity] = useState(1);
   const [childQuantity, setChildQuantity] = useState(1);
-  const [total_price,setTotalPrice] = useState(null);
+  const [total_price, setTotalPrice] = useState(null);
 
   const handleUpdateTotalPrice = (newTotalPrice) => {
     setTotalPrice(newTotalPrice);
@@ -65,7 +67,7 @@ function Booking() {
   const handleAdultCustomerInfoChange = (info) => {
     const updatedInfo = info.map((customer) => ({
       ...customer,
-      age: 'Người lớn',
+      age: "Người lớn",
     }));
     setDetail((prevInfo) => ({
       ...prevInfo,
@@ -78,7 +80,7 @@ function Booking() {
   const handleChildCustomerInfoChange = (info) => {
     const updatedInfo = info.map((customer) => ({
       ...customer,
-      age: 'Trẻ em',
+      age: "Trẻ em",
     }));
     setDetail((prevInfo) => ({
       ...prevInfo,
@@ -89,25 +91,29 @@ function Booking() {
   //Xử lý đặt tour
   const handleCheckout = async (e) => {
     e.preventDefault();
-    await axios
-      .post(`http://127.0.0.1:8000/api/tour/checkout/${idTour}`, {
-        email,
-        name,
-        phone,
-        address,
-        id_customer,
-        id_date,
-        detail,
-        total_price
-      })
-      .then((res) => {
-        console.log(res);
-        const { id_order_tour } = res.data.order;
-        navigate(`/booking/payment/${id_order_tour}/idTour/${idTour}`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    setLoading(true);
+    setTimeout(async ()=> {
+      await axios
+        .post(`http://127.0.0.1:8000/api/tour/checkout/${idTour}`, {
+          email,
+          name,
+          phone,
+          address,
+          id_customer,
+          id_date,
+          detail,
+          total_price,
+        })
+        .then((res) => {
+          console.log(res);
+          const { id_order_tour } = res.data.order;
+          setLoading(false);
+          navigate(`/booking/payment/${id_order_tour}/idTour/${idTour}`);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },1500)
   };
   const steps = ["Nhập thông tin", "Thanh toán"];
   // CSS base Stepper MUI
@@ -124,24 +130,24 @@ function Booking() {
     justifyContent: "flex-start",
   };
   //Thông báo quá số lượng chỗ
-  if(totalQuantity >= seats){
+  if (totalQuantity > seats) {
     toast.error("Quá số lượng chỗ");
   }
   //   useEffect(() => {
   //   async function detailData() {
   //     if (ggtoken) {
-      
+
   //       const data = await detailCustomerSocial(email);
   //       setDetailSocial(data);
-  //     } 
+  //     }
   //   }
   //   detailData();
- 
+
   // }, [email,ggtoken]);
   return (
     <>
       <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
-      {/* <ToastContainer position="top-right" autoClose={3000} /> */}
+        {/* <ToastContainer position="top-right" autoClose={3000} /> */}
         <Box sx={{ width: "100%", marginBottom: "20px" }}>
           <Stepper alternativeLabel sx={customStyles}>
             {steps.map((label) => (
@@ -169,14 +175,17 @@ function Booking() {
                     <p style={{ color: "red" }}> *</p>
                   </div>
                   <TextField
-                    id="outlined-basic"
-                    label="Outlined"
+                    required
+                    id="outlined-required"
+                    label="Họ và tên"
                     variant="outlined"
                     value={name}
                     sx={{ width: "385px", marginTop: "10px" }}
                     onChange={(e) => {
                       setName(e.target.value);
                     }}
+                    helperText={!name ? "Họ tên là bắt buộc" : ""}
+                    error={!name}
                   />
                 </div>
                 <div>
@@ -185,14 +194,17 @@ function Booking() {
                     <p style={{ color: "red" }}> *</p>
                   </div>
                   <TextField
-                    id="outlined-basic"
-                    label="Outlined"
+                    required
+                    id="outlined-required"
+                    label="Email"
                     variant="outlined"
                     value={email}
                     sx={{ width: "385px", marginTop: "10px" }}
                     onChange={(e) => {
                       setEmail(e.target.value);
                     }}
+                    error={!email}
+                    helperText={!email ? "Email là bắt buộc" : ""}
                   />
                 </div>
                 <div style={{ marginTop: "20px" }}>
@@ -201,14 +213,17 @@ function Booking() {
                     <p style={{ color: "red" }}> *</p>
                   </div>
                   <TextField
-                    id="outlined-basic"
-                    label="Outlined"
+                    required
+                    id="outlined-required"
+                    label="Số điện thoại"
                     variant="outlined"
                     value={phone}
                     sx={{ width: "385px", marginTop: "10px" }}
                     onChange={(e) => {
                       setPhone(e.target.value);
                     }}
+                    error={!phone}
+                    helperText={!phone ? "Số điện thoại là bắt buộc" : ""}
                   />
                 </div>
                 <div style={{ marginTop: "20px" }}>
@@ -217,14 +232,17 @@ function Booking() {
                     <p style={{ color: "red" }}> *</p>
                   </div>
                   <TextField
-                    id="outlined-basic"
-                    label="Outlined"
+                    required
+                    id="outlined-required"
+                    label="Địa chỉ"
                     variant="outlined"
                     value={address}
                     sx={{ width: "385px", marginTop: "10px" }}
                     onChange={(e) => {
                       setAddress(e.target.value);
                     }}
+                    error={!address}
+                    helperText={!address ? "Địa chỉ là bắt buộc" : ""}
                   />
                 </div>
               </div>
@@ -257,7 +275,15 @@ function Booking() {
             </div>
           </div>
           <div className={cx("booking-info-tour")}>
-              <TravelCard quantityAdult={adultQuantity} quantityChild={childQuantity} totalQuantity={totalQuantity} checkout={handleCheckout} idTour={idTour} onUpdateTotalPrice={handleUpdateTotalPrice}/>
+            <TravelCard
+              quantityAdult={adultQuantity}
+              quantityChild={childQuantity}
+              totalQuantity={totalQuantity}
+              checkout={handleCheckout}
+              idTour={idTour}
+              onUpdateTotalPrice={handleUpdateTotalPrice}
+              loading={loading}
+            />
           </div>
         </div>
       </Container>

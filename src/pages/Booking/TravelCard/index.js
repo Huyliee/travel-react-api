@@ -25,6 +25,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBus, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { detailTourApi } from "~/GlobalFunction/Api";
+import { HashLoader } from "react-spinners";
 
 const cx = classNames.bind(styles);
 
@@ -34,7 +35,8 @@ function TravelCard({
   totalQuantity,
   checkout,
   idTour,
-  onUpdateTotalPrice 
+  onUpdateTotalPrice,
+  loading,
 }) {
   const style = {
     fontSize: "16px",
@@ -54,8 +56,8 @@ function TravelCard({
   if (detailTour && detailTour.adult_price && detailTour.child_price) {
     const adultPrice = parseFloat(detailTour.adult_price);
     const childPrice = parseFloat(detailTour.child_price);
-  
-    totalPrice =quantityAdult * adultPrice + quantityChild * childPrice;
+
+    totalPrice = quantityAdult * adultPrice + quantityChild * childPrice;
   }
   onUpdateTotalPrice(totalPrice);
   return (
@@ -67,15 +69,10 @@ function TravelCard({
           </div>
           <div className={cx("image")}>
             <p>Tour trọn gói : {idTour}</p>
-            <img
-              src={detailTour.img_tour}
-              alt=""
-            />
+            <img src={detailTour.img_tour} alt="" />
           </div>
           <div className={cx("info-tour")}>
-            <p>
-              {detailTour.name_tour}
-            </p>
+            <p>{detailTour.name_tour}</p>
           </div>
           <div>
             <Timeline position="alternate">
@@ -194,13 +191,19 @@ function TravelCard({
           </div>
           <div>
             <form onSubmit={checkout} encType="multipart/form-data">
-              <Button
-                variant="contained"
-                sx={{ width: "100%", height: "50px", marginTop: "10px" }}
-                type="submit"
-              >
-                Đặt tour
-              </Button>
+              {loading ? (
+                <div className={cx("sweet-loading")}>
+                  <HashLoader size={80} color={"#4f46e5"} />{" "}
+                </div>
+              ) : (
+                <Button
+                  variant="contained"
+                  sx={{ width: "100%", height: "50px", marginTop: "10px" }}
+                  type="submit"
+                >
+                  Đặt tour
+                </Button>
+              )}
             </form>
           </div>
         </Box>

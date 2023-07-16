@@ -11,7 +11,7 @@ import {
   Stepper,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { getDetailOrder ,detailTourApi} from "~/GlobalFunction/Api";
+import { getDetailOrder, detailTourApi } from "~/GlobalFunction/Api";
 import DetailCustomerTable from "./DetailCustomerTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoneyBill, faQrcode } from "@fortawesome/free-solid-svg-icons";
@@ -40,7 +40,7 @@ function PayMothods() {
     justifyContent: "flex-start",
   };
   /// Lấy dữ liệu url
-  const { idBooking,idTour } = useParams();
+  const { idBooking, idTour } = useParams();
   //Load api của chi tiết tour
   const [detailOrder, setDetailOrder] = useState({});
   const [listCustomer, setListCustomer] = useState([]);
@@ -66,8 +66,14 @@ function PayMothods() {
   // const orderTime = detailOrder.order_time;
   // const formatDate = format(new Date(orderTime),'dd/MM/yyyy HH:mm:ss')
   const [selectRadio, setSelectRadio] = useState("tm");
+  const [selectRadioPrice, setSelectRadioPrice] = useState("50");
+  const idCustomer = localStorage.getItem('id_customer');
+
   const handleRadio = (e) => {
     setSelectRadio(e.target.value);
+  };
+  const handleRadioPrice = (e) => {
+    setSelectRadioPrice(e.target.value);
   };
   console.log(selectRadio);
   ////////////////
@@ -82,67 +88,79 @@ function PayMothods() {
   console.log(detailTour);
   //---------------------------//
   // Thanh toán online
-  const handlePayment = ()=>{
-    axios.options('http://127.0.0.1:8000/api/create-payment')
-    .then(
-      res => {
-        axios.post('http://127.0.0.1:8000/api/create-payment',{amount: total})
-        .then(res =>{
-          const {vnpUrl} = res.data
-          // setPaymentVN(prevState => ({...prevState,vnpUrl}));
-          window.location.href = vnpUrl;
-        })
-        .catch(error => {
-          console.error('Error creating payment:', error);
-        });
-      }
-    ).catch(error => {
-      console.error('Error creating payment:', error);
-    });
-  }
+  const handlePayment = () => {
+    axios
+      .options("http://127.0.0.1:8000/api/create-payment")
+      .then((res) => {
+        axios
+          .post("http://127.0.0.1:8000/api/create-payment", { amount: total })
+          .then((res) => {
+            const { vnpUrl } = res.data;
+            // setPaymentVN(prevState => ({...prevState,vnpUrl}));
+            window.location.href = vnpUrl;
+          })
+          .catch((error) => {
+            console.error("Error creating payment:", error);
+          });
+      })
+      .catch((error) => {
+        console.error("Error creating payment:", error);
+      });
+  };
   const handleMomo = async () => {
     try {
       //const response = await axios.post("http://127.0.0.1:8000/api/momo-payment", {
-      const response = await axios.post('http://127.0.0.1:8000/api/momo-payment', {
-          amount: total
-        });
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/momo-payment",
+        {
+          amount: selectRadioPrice === "100" ? total : total/2,
+          orderId: idBooking,
+          idCustomer: idCustomer,
+        }
+      );
       console.log(response);
       const { payUrl } = response.data;
-    window.location.href = payUrl;
+      window.location.href = payUrl;
 
-     // console.log(payUrl); // Chuyển hướng người dùng đến URL thanh toán Momo
+      // console.log(payUrl); // Chuyển hướng người dùng đến URL thanh toán Momo
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       // Xử lý lỗi
     }
   };
   // Xử lý khi chọn các phương thức thanh toán
-  const selectPayment = ()=>{
-    if(selectRadio === "momo")
-    {
-        handleMomo();
-    }else{
-        handlePayment();
+  const selectPayment = () => {
+    if (selectRadio === "momo") {
+      handleMomo();
+    } else {
+      handlePayment();
     }
-  }
+  };
   //-------------------------//
   /////Tính tổng tiền//////
   const [total, setTotal] = useState("");
   const handleTotalPrice = (listCustomer, detailTour) => {
     let totalPrice = 0;
     listCustomer.forEach((row) => {
-      const adultPrice = detailTour?.adult_price ? detailTour?.adult_price : "0";
-      const childPrice = detailTour?.child_price ? detailTour?.child_price : "0";
-      const price = row.age === "Người lớn" ? parseFloat(adultPrice) : parseFloat(childPrice);
+      const adultPrice = detailTour?.adult_price
+        ? detailTour?.adult_price
+        : "0";
+      const childPrice = detailTour?.child_price
+        ? detailTour?.child_price
+        : "0";
+      const price =
+        row.age === "Người lớn"
+          ? parseFloat(adultPrice)
+          : parseFloat(childPrice);
       totalPrice += price;
     });
     return totalPrice;
   };
   console.log(total);
-  const totalTest = handleTotalPrice(listCustomer,detailTour);
-  useEffect(()=>{
-    setTotal(totalTest)
-  },[totalTest])
+  const totalTest = handleTotalPrice(listCustomer, detailTour);
+  useEffect(() => {
+    setTotal(totalTest);
+  }, [totalTest]);
   ///---------------------///
   return (
     <div>
@@ -267,7 +285,7 @@ function PayMothods() {
                   </p>
                   <p>
                     <span style={{ color: "#fd5056", fontWeight: "800" }}>
-                    {orderTime?.toLocaleString("vi-VN")}
+                      {orderTime?.toLocaleString("vi-VN")}
                     </span>{" "}
                     (Theo giờ Việt Nam. Booking sẽ tự động hủy nếu quá thời hạn
                     thanh toán trên)
@@ -281,9 +299,7 @@ function PayMothods() {
               <h5>Phiếu xác nhận booking</h5>
             </div>
             <div className={cx("product")}>
-              <p style={{ marginTop: "10px" }}>
-                {detailTour.name_tour}
-              </p>
+              <p style={{ marginTop: "10px" }}>{detailTour.name_tour}</p>
               <span>
                 Số booking:{" "}
                 <span style={{ color: "#fd5056", fontWeight: "800" }}>
@@ -351,6 +367,32 @@ function PayMothods() {
                 Reader,..
               </span>
             </div>
+            <div style={{ display: "flex" ,margin:'10px 0px'}}>
+              <div className={cx("payment-box")}>
+                <div className={cx("payment-text")}>
+                  <p>Trả trước 50%</p>
+                </div>
+                <Radio
+                  checked={selectRadioPrice === "50"}
+                  onChange={handleRadioPrice}
+                  value="50"
+                  name="radio-buttons"
+
+                />
+              </div>
+              <div className={cx("payment-box")}>
+                <div className={cx("payment-text")}>
+                  <p>Trả toàn bộ</p>
+                </div>
+                <Radio
+                  checked={selectRadioPrice === "100"}
+                  onChange={handleRadioPrice}
+                  value="100"
+                  name="radio-buttons"
+
+                />
+              </div>
+            </div>
             <Button
               style={{
                 color: "#ffffff",
@@ -376,7 +418,11 @@ function PayMothods() {
             <h5>Thông tin khách hàng</h5>
           </div>
           <div className={cx("body-info-customer")}>
-            <DetailCustomerTable listCustomer={listCustomer} dataTour={detailTour} totalPrice={total}  />
+            <DetailCustomerTable
+              listCustomer={listCustomer}
+              dataTour={detailTour}
+              totalPrice={total}
+            />
           </div>
         </div>
       </Container>

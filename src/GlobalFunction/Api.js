@@ -127,3 +127,13 @@ export const addDateGo = async (id_tour, date , id_guide , seats)=>{
     })
     return res.data;
 }
+// Api lưu thông tin thanh toán
+export const paymentMoMoStore = async (id_customer, id_order , amount_paid , payment_methods)=>{
+    const res = await axios.post('http://127.0.0.1:8000/api/momo-payment/store',{
+        id_customer: id_customer,
+        id_order: id_order,
+        amount_paid: amount_paid,
+        payment_methods: payment_methods
+    })
+    return res.data;
+}
