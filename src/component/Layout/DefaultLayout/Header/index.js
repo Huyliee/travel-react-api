@@ -110,6 +110,9 @@ function Header() {
             <li>
               <Link to="/contact">Liên hệ</Link>
             </li>
+            <li>
+              <Link to="/contact">Chính sách</Link>
+            </li>
           </ul>
         </div>
         <div className={cx("search-respon-container")}>

@@ -174,7 +174,13 @@ function DetailTour() {
           </div>
           <div className={cx("detail-infomation-col-2")}>
             <div className={cx("detail-col-pirce")}>
-              <span>{detailTour?.adult_price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}đ</span> / khách
+              <span>
+                {detailTour?.adult_price
+                  ?.toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                đ
+              </span>{" "}
+              / khách
             </div>
             <div className={cx("detail-col-pirce")}>
               <Button
@@ -260,9 +266,15 @@ function DetailTour() {
             <Box>
               <div className={cx("detail-transport-box")}>
                 <h3>Thông tin di chuyển</h3>
-                <div style={{display:'flex',borderBottom:'1px solid #bdbdbd',height:'208px'}}>
+                <div
+                  style={{
+                    display: "flex",
+                    borderBottom: "1px solid #bdbdbd",
+                    height: "208px",
+                  }}
+                >
                   <div className={cx("detail-transport-info")}>
-                    <p style={{marginTop:'10px'}}>
+                    <p style={{ marginTop: "10px" }}>
                       Ngày đi - <span>22/06/2023</span>
                     </p>
                     <div className={cx("detail-transport-location-container")}>
@@ -282,7 +294,7 @@ function DetailTour() {
                           display: "flex",
                           flexDirection: "row",
                           alignItems: "center",
-                          padding:'0px'
+                          padding: "0px",
                         }}
                       >
                         <TimelineItem sx={{ transform: "rotate(-90deg)" }}>
@@ -310,7 +322,7 @@ function DetailTour() {
                             sx={{
                               height: "273px",
                               width: "49px",
-                              marginLeft: "179px"
+                              marginLeft: "179px",
                             }}
                           >
                             <TimelineDot />
@@ -329,8 +341,8 @@ function DetailTour() {
                     </div>
                   </div>
                   <div className={cx("detail-transport-info")}>
-                    <p style={{marginTop:'10px'}}>
-                    Ngày về -  <span>25/06/2023</span>
+                    <p style={{ marginTop: "10px" }}>
+                      Ngày về - <span>25/06/2023</span>
                     </p>
                     <div className={cx("detail-transport-location-container")}>
                       <div className={cx("detail-transport-location")}>
@@ -349,7 +361,7 @@ function DetailTour() {
                           display: "flex",
                           flexDirection: "row",
                           alignItems: "center",
-                          padding:'0px'
+                          padding: "0px",
                         }}
                       >
                         <TimelineItem sx={{ transform: "rotate(-90deg)" }}>
@@ -377,7 +389,7 @@ function DetailTour() {
                             sx={{
                               height: "273px",
                               width: "49px",
-                              marginLeft: "179px"
+                              marginLeft: "179px",
                             }}
                           >
                             <TimelineDot />
@@ -396,6 +408,20 @@ function DetailTour() {
                     </div>
                   </div>
                 </div>
+              <div style={{marginTop:'10px'}}>
+                {" "}
+                <h3>Thông tin tập trung</h3>
+                <div style={{display:'flex',justifyContent:'space-between'}}>
+                  <div style={{fontSize:'15px',margin:'10px 0px'}}>
+                    <p>Ngày giờ tập trung</p>
+                    <p>Nơi tập trung</p>
+                  </div>
+                  <div style={{fontSize:'15px'}}>
+                    <p>05:00 - 18/07/2023</p>
+                    <p>Tập trung tại công ty lữ hành Travel2H</p>
+                  </div>
+                </div>
+              </div>
               </div>
             </Box>
           </div>
@@ -407,8 +433,16 @@ function DetailTour() {
               <Box>
                 <div className={cx("detail-hotel-box")}>
                   <h3>Thông tin khách sạn</h3>
-                  <div></div>
-                  <div></div>
+                  <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                  <div style={{fontSize:'15px',margin:'10px 0px'}}>
+                    <p>Tên khách sạn:</p>
+                    <p>Địa chỉ:</p>
+                  </div>
+                  <div style={{fontSize:'15px'}}>
+                    <p>Terracotta Hotel & Resort Đà Lạt</p>
+                    <p>Phân khu chức năng 7.9, KDL hồ Tuyền Lâm, Phường 3, Đà Lạt</p>
+                  </div>
+                  </div>
                 </div>
               </Box>
             </div>
@@ -434,13 +468,14 @@ function DetailTour() {
           </div>
         </div>
         <div>
-       
-         
-          <FacebookComment url={`https://travel-react-api.netlify.app/detail/${id}`} width={1000} numPosts={5} />
+          <FacebookComment
+            url={`https://travel-react-api.netlify.app/detail/${id}`}
+            width={1000}
+            numPosts={5}
+          />
         </div>
       </Container>
     </div>
-    
   );
 }
 

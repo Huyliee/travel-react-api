@@ -17,10 +17,12 @@ function TablePrice({ id, month }) {
   const access_login = localStorage.getItem("access_token");
   const ggtoken = localStorage.getItem("ggtoken");
   const faceId = localStorage.getItem("faceId");
+  const [price,setPrice] = useState(null);
   useEffect(() => {
     async function detailData() {
       const data = await detailTourApi(id);
       const filteredData = data.date_go.filter((item) => item.month === month);
+      setPrice(data.adult_price)
       setDate(filteredData);
     }
     detailData();
@@ -42,7 +44,7 @@ function TablePrice({ id, month }) {
     // Chuyển khoảng cách từ mili giây sang số ngày
     const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-    if (daysDiff <= 7 && daysDiff >= 0) {
+    if (daysDiff <= 7 && daysDiff > 1) {
       return true; // Ngày khởi hành là ngày gần tới (trong khoảng 7 ngày)
     } else {
       return false; // Ngày khởi hành không phải là ngày gần tới
@@ -52,7 +54,8 @@ function TablePrice({ id, month }) {
     const currentDate = new Date();
     const departureDate = new Date(date);
 
-    return departureDate < currentDate;
+
+    return departureDate <= currentDate;
   }
   return (
     <div>
@@ -116,7 +119,7 @@ function TablePrice({ id, month }) {
                     style={{ fontSize: "16px", color: "red" }}
                     align="right"
                   >
-                    7.000.000đ
+                    {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}đ
                     {access_login || ggtoken || faceId ? (
                       <Link
                         to={`/booking/tourId/${id}?state=${encodeURIComponent(

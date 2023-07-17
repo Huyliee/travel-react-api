@@ -42,7 +42,7 @@ function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showRegister, setShowRegister] = useState(true);
-  const [faceCustomer,setFaceCustomer] = useState({});
+  // const [faceCustomer,setFaceCustomer] = useState({});
 
   const navigate = useNavigate();
   const handleSubmit = async (e) => {

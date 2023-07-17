@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
+import firebase from "~/pages/Booking/filebase.config";
 import {
   Box,
+  Button,
   Container,
+  Modal,
   Step,
   StepLabel,
   Stepper,
@@ -13,8 +16,14 @@ import Quantity from "./Quantity";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import TravelCard from "./TravelCard";
-import { ToastContainer, toast } from "react-toastify";
-import { HashLoader } from "react-spinners";
+import {  toast } from "react-toastify";
+// import { HashLoader } from "react-spinners";
+// import { signInWithPhoneNumber } from "firebase/auth";
+// import { auth } from "~/pages/Booking/filebase.config";
+import OtpInput from "otp-input-react";
+// import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+
 const cx = classNames.bind(styles);
 
 function Booking() {
@@ -23,6 +32,18 @@ function Booking() {
     window.scrollTo(0, 0);
   }, []);
   /////////////////////////
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+  //////////////////////////
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const idTour = queryParams.get("state");
@@ -46,7 +67,7 @@ function Booking() {
   const [adultQuantity, setAdultQuantity] = useState(1);
   const [childQuantity, setChildQuantity] = useState(1);
   const [total_price, setTotalPrice] = useState(null);
-
+  const [confirmationResult, setConfirmationResult] = useState(null);
   const handleUpdateTotalPrice = (newTotalPrice) => {
     setTotalPrice(newTotalPrice);
   };
@@ -89,32 +110,32 @@ function Booking() {
   };
 
   //Xử lý đặt tour
-  const handleCheckout = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setTimeout(async ()=> {
-      await axios
-        .post(`http://127.0.0.1:8000/api/tour/checkout/${idTour}`, {
-          email,
-          name,
-          phone,
-          address,
-          id_customer,
-          id_date,
-          detail,
-          total_price,
-        })
-        .then((res) => {
-          console.log(res);
-          const { id_order_tour } = res.data.order;
-          setLoading(false);
-          navigate(`/booking/payment/${id_order_tour}/idTour/${idTour}`);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },1500)
-  };
+  // const handleCheckout = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   setTimeout(async () => {
+  //     await axios
+  //       .post(`http://127.0.0.1:8000/api/tour/checkout/${idTour}`, {
+  //         email,
+  //         name,
+  //         phone,
+  //         address,
+  //         id_customer,
+  //         id_date,
+  //         detail,
+  //         total_price,
+  //       })
+  //       .then((res) => {
+  //         console.log(res);
+  //         const { id_order_tour } = res.data.order;
+  //         setLoading(false);
+  //         navigate(`/booking/payment/${id_order_tour}/idTour/${idTour}`);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }, 1500);
+  // };
   const steps = ["Nhập thông tin", "Thanh toán"];
   // CSS base Stepper MUI
   const customStyles = {
@@ -144,10 +165,91 @@ function Booking() {
   //   detailData();
 
   // }, [email,ggtoken]);
+  const handleSendCode = () => {
+    const recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+      "recaptcha-container",
+      {
+        size: "invisible",
+      }
+    );
+    const phoneNumber = "+84" + phone;
+    console.log(phoneNumber);
+    firebase
+      .auth()
+      .signInWithPhoneNumber(phoneNumber, recaptchaVerifier)
+      .then((confirmationResult) => {
+        setConfirmationResult(confirmationResult);
+      })
+      .catch((error) => {
+        console.error("Error sending verification code:", error);
+      });
+  };
+  const [open, setOpen] = useState(false);
+  const [otp, setOtp] = useState("");
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const submit = () => {
+    handleOpen();
+    handleSendCode();
+  };
+  const onCheckout = () => {
+    confirmationResult
+      .confirm(otp)
+      .then((result) => {
+        // Phone number successfully verified
+        setLoading(true);
+        setTimeout(async () => {
+          await axios
+            .post(`http://127.0.0.1:8000/api/tour/checkout/${idTour}`, {
+              email,
+              name,
+              phone,
+              address,
+              id_customer,
+              id_date,
+              detail,
+              total_price,
+            })
+            .then((res) => {
+              console.log(res);
+              const { id_order_tour } = res.data.order;
+              setLoading(false);
+              navigate(`/booking/payment/${id_order_tour}/idTour/${idTour}`);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }, 1500);
+      })
+      .catch((error) => {
+        console.error('Error verifying code:', error);
+      });
+  };
   return (
     <>
       <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
         {/* <ToastContainer position="top-right" autoClose={3000} /> */}
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <OtpInput
+              value={otp}
+              onChange={setOtp}
+              OTPLength={6}
+              otpType="number"
+              disabled={false}
+              autoFocus
+              className="opt-container "
+            ></OtpInput>
+            <Button onClick={onCheckout}>Xác thực OTP</Button>
+          </Box>
+        </Modal>
+        <div id="recaptcha-container"></div>
+        <Button onClick={handleSendCode}>ZA</Button>
         <Box sx={{ width: "100%", marginBottom: "20px" }}>
           <Stepper alternativeLabel sx={customStyles}>
             {steps.map((label) => (
@@ -279,7 +381,7 @@ function Booking() {
               quantityAdult={adultQuantity}
               quantityChild={childQuantity}
               totalQuantity={totalQuantity}
-              checkout={handleCheckout}
+              checkout={submit}
               idTour={idTour}
               onUpdateTotalPrice={handleUpdateTotalPrice}
               loading={loading}

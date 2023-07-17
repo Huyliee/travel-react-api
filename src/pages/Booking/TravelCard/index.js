@@ -190,7 +190,7 @@ function TravelCard({
             </Paper>
           </div>
           <div>
-            <form onSubmit={checkout} encType="multipart/form-data">
+            {/* <form onSubmit={checkout} encType="multipart/form-data"> */}
               {loading ? (
                 <div className={cx("sweet-loading")}>
                   <HashLoader size={80} color={"#4f46e5"} />{" "}
@@ -200,11 +200,12 @@ function TravelCard({
                   variant="contained"
                   sx={{ width: "100%", height: "50px", marginTop: "10px" }}
                   type="submit"
+                  onClick={checkout}
                 >
                   Đặt tour
                 </Button>
               )}
-            </form>
+            {/* </form> */}
           </div>
         </Box>
       </Container>
