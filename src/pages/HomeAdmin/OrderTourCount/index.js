@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Bar } from "react-chartjs-2";
 import axios from "axios";
+import { Button } from "@mui/material";
 
 function OrderTourCount() {
   const [chartData, setChartData] = useState(null);
@@ -8,9 +9,28 @@ function OrderTourCount() {
   const [tourOrders, setTourOrders] = useState(null);
   const [data, setData] = useState(null);
 
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        "https://travel2h.click/public_html/api/analytic/getOrderTour"
+      ); // Thay đổi đường dẫn API tương ứng
+
+      if (response.status === 200) {
+        const data = response.data;
+        const chartData = processChartData(data);
+        setChartData(chartData);
+        setData(data);
+      } else {
+        console.error("Error:", response.status);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }, []);
+
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   const processChartData = (data) => {
     const labels = [];
@@ -40,62 +60,57 @@ function OrderTourCount() {
     };
   };
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        "http://127.0.0.1:8000/api/analytic/getOrderTour"
-      ); // Thay đổi đường dẫn API tương ứng
+  const handleTourClick = (event, elements) => {
+    if (elements.length > 0) {
+      const tourIndex = elements[0].index;
+      const selectedTour = data[tourIndex];
+      setSelectedTour(selectedTour);
 
-      if (response.status === 200) {
-        const data = response.data;
-        const chartData = processChartData(data);
-        setChartData(chartData);
-        setData(data);
-      } else {
-        console.error("Error:", response.status);
-      }
-    } catch (error) {
-      console.error("Error:", error);
+      const orderCounts = selectedTour.order_count_by_date.map(
+        (item) => item.order_count
+      );
+
+      const selectedTourChartData = {
+        labels: selectedTour.order_count_by_date.map((item) => item.date_go),
+        datasets: [
+          {
+            label: "Total Orders",
+            data: orderCounts,
+            backgroundColor: "rgba(75, 192, 192, 0.6)",
+          },
+        ],
+      };
+
+      setTourOrders(selectedTourChartData);
     }
   };
 
-  const handleTourClick = (tourIndex) => {
-    const selectedTour = data[tourIndex];
-    setSelectedTour(selectedTour);
-    setTourOrders(selectedTour.order_count_by_date);
+  const handleGoBack = () => {
+    setSelectedTour(null);
+    setTourOrders(null);
   };
 
   return (
     <div>
       {chartData ? (
         <>
-          <Bar
-            data={chartData}
-            options={{
-              responsive: true,
-              onClick: (e) => {
-                const element = e[0];
-                if (element) {
-                  const tourIndex = element._index;
-                  handleTourClick(tourIndex);
-                }
-              },
-            }}
-          />
           {selectedTour && tourOrders ? (
             <>
               <h2>Selected Tour: {selectedTour.tour_name}</h2>
-              <h3>Order Counts by Month:</h3>
-              <ul>
-                {tourOrders.map((order) => (
-                  <li key={order.date_go}>
-                    {order.date_go}: {order.order_count}
-                  </li>
-                ))}
-              </ul>
+              <Button variant="contained" onClick={handleGoBack}>Go Back</Button>
+              <Bar data={tourOrders} options={{ responsive: true }} />
             </>
           ) : (
-            <p>No tour selected.</p>
+            <>
+              <h2>Total Order Counts by Tour</h2>
+              <Bar
+                data={chartData}
+                options={{
+                  responsive: true,
+                  onClick: handleTourClick,
+                }}
+              />
+            </>
           )}
         </>
       ) : (

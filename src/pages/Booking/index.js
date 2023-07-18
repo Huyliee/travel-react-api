@@ -24,7 +24,7 @@ import OtpInput from "otp-input-react";
 // import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShield, faShieldHalved } from "@fortawesome/free-solid-svg-icons";
+import { faShieldHalved } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -122,7 +122,7 @@ function Booking() {
   //   setLoading(true);
   //   setTimeout(async () => {
   //     await axios
-  //       .post(`http://127.0.0.1:8000/api/tour/checkout/${idTour}`, {
+  //       .post(`https://travel2h.click/public_html/api/tour/checkout/${idTour}`, {
   //         email,
   //         name,
   //         phone,
@@ -207,7 +207,7 @@ function Booking() {
         setLoading(true);
         setTimeout(async () => {
           await axios
-            .post(`http://127.0.0.1:8000/api/tour/checkout/${idTour}`, {
+            .post(`https://travel2h.click/public_html/api/tour/checkout/${idTour}`, {
               email,
               name,
               phone,
