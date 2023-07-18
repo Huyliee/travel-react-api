@@ -35,6 +35,7 @@ function SideBar() {
         </div>
       </div>
       <div className={cx("Sidebar-dashboard")}>
+        <Link to="/admin" style={{textDecoration:'none'}}>
         {/* Thống kê */}
         <ListItemButton
           onClick={handleOpen}
@@ -62,22 +63,7 @@ function SideBar() {
             )}
           </div>
         </ListItemButton>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4, fontSize: "16px" }}>
-              <ListItemText
-                primary="Thống kê doanh thu"
-                sx={{ ".MuiListItemText-primary": { fontSize: "14px" } }}
-              />
-            </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }}>
-              <ListItemText
-                primary="Thống kê khách hàng"
-                sx={{ ".MuiListItemText-primary": { fontSize: "14px" } }}
-              />
-            </ListItemButton>
-          </List>
-        </Collapse>
+        </Link>
         {/* Quản lý */}
         <ListItemButton
           onClick={handleOpenManage}
