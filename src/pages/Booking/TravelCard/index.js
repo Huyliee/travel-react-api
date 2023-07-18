@@ -24,7 +24,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBus, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-import { detailTourApi } from "~/GlobalFunction/Api";
+import { applyDiscount, detailTourApi } from "~/GlobalFunction/Api";
 import { HashLoader } from "react-spinners";
 
 const cx = classNames.bind(styles);
@@ -52,14 +52,31 @@ function TravelCard({
     }
     detailData();
   }, [idTour]);
-  let totalPrice = 0;
-  if (detailTour && detailTour.adult_price && detailTour.child_price) {
-    const adultPrice = parseFloat(detailTour.adult_price);
-    const childPrice = parseFloat(detailTour.child_price);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [originalPrice, setOriginalPrice] = useState(0);
+  useEffect(() => {
+    if (detailTour && detailTour.adult_price && detailTour.child_price) {
+      const adultPrice = parseFloat(detailTour.adult_price);
+      const childPrice = parseFloat(detailTour.child_price);
+      const newTotalPrice =
+        quantityAdult * adultPrice + quantityChild * childPrice;
+      setTotalPrice(newTotalPrice);
+      setOriginalPrice(newTotalPrice);
+    }
+  }, [quantityAdult, quantityChild, detailTour]);
 
-    totalPrice = quantityAdult * adultPrice + quantityChild * childPrice;
-  }
+  const [discount, setDiscount] = useState("");
+  const handleDiscount = async () => {
+    // const lastTotal = totalPrice;
+    if (discount !== "") {
+      const data = await applyDiscount(totalPrice, discount);
+      setTotalPrice(data.discounted_total_amount);
+    } else {
+      setTotalPrice(originalPrice);
+    }
+  };
   onUpdateTotalPrice(totalPrice);
+  console.log(totalPrice);
   return (
     <div>
       <Container>
@@ -162,8 +179,13 @@ function TravelCard({
                           label="Thêm mã"
                           variant="outlined"
                           sx={{ marginRight: "8px", width: "110px" }}
+                          onChange={(e) => setDiscount(e.target.value)}
                         />{" "}
-                        <Button variant="contained" sx={{ height: "46px" }}>
+                        <Button
+                          variant="contained"
+                          sx={{ height: "46px" }}
+                          onClick={handleDiscount}
+                        >
                           Áp dụng
                         </Button>
                       </TableCell>
@@ -191,20 +213,20 @@ function TravelCard({
           </div>
           <div>
             {/* <form onSubmit={checkout} encType="multipart/form-data"> */}
-              {loading ? (
-                <div className={cx("sweet-loading")}>
-                  <HashLoader size={80} color={"#4f46e5"} />{" "}
-                </div>
-              ) : (
-                <Button
-                  variant="contained"
-                  sx={{ width: "100%", height: "50px", marginTop: "10px" }}
-                  type="submit"
-                  onClick={checkout}
-                >
-                  Đặt tour
-                </Button>
-              )}
+            {loading ? (
+              <div className={cx("sweet-loading")}>
+                <HashLoader size={80} color={"#4f46e5"} />{" "}
+              </div>
+            ) : (
+              <Button
+                variant="contained"
+                sx={{ width: "100%", height: "50px", marginTop: "10px" }}
+                type="submit"
+                onClick={checkout}
+              >
+                Đặt tour
+              </Button>
+            )}
             {/* </form> */}
           </div>
         </Box>

@@ -4,6 +4,7 @@ import BoxCountup from './BoxCountup';
 import styles from "./HomeAdmin.module.scss";
 import classNames from "classnames/bind";
 import MonthlyRevenueChart from './MonthlyRevenueChart';
+import OrderTourCount from './OrderTourCount';
 
 const cx = classNames.bind(styles);
 
@@ -21,6 +22,9 @@ function HomeAdmin() {
           </div>
           <div className={cx("chart-container")}>
             <MonthlyRevenueChart />
+          </div>
+          <div>
+            <OrderTourCount />
           </div>
         </div>
       );

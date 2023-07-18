@@ -44,11 +44,13 @@ function PayMothods() {
   //Load api của chi tiết tour
   const [detailOrder, setDetailOrder] = useState({});
   const [listCustomer, setListCustomer] = useState([]);
+  const [total, setTotal] = useState("");
   useEffect(() => {
     async function detailData() {
       const data = await getDetailOrder(idBooking);
       setDetailOrder(data);
       setListCustomer(data.detail_order);
+      setTotal(data.total_price)
       const apiOrderTime = data.order_time;
 
       // Tạo đối tượng Date từ dữ liệu order_time
@@ -138,29 +140,29 @@ function PayMothods() {
   };
   //-------------------------//
   /////Tính tổng tiền//////
-  const [total, setTotal] = useState("");
-  const handleTotalPrice = (listCustomer, detailTour) => {
-    let totalPrice = 0;
-    listCustomer.forEach((row) => {
-      const adultPrice = detailTour?.adult_price
-        ? detailTour?.adult_price
-        : "0";
-      const childPrice = detailTour?.child_price
-        ? detailTour?.child_price
-        : "0";
-      const price =
-        row.age === "Người lớn"
-          ? parseFloat(adultPrice)
-          : parseFloat(childPrice);
-      totalPrice += price;
-    });
-    return totalPrice;
-  };
-  console.log(total);
-  const totalTest = handleTotalPrice(listCustomer, detailTour);
-  useEffect(() => {
-    setTotal(totalTest);
-  }, [totalTest]);
+
+  // const handleTotalPrice = (listCustomer, detailTour) => {
+  //   let totalPrice = 0;
+  //   listCustomer.forEach((row) => {
+  //     const adultPrice = detailTour?.adult_price
+  //       ? detailTour?.adult_price
+  //       : "0";
+  //     const childPrice = detailTour?.child_price
+  //       ? detailTour?.child_price
+  //       : "0";
+  //     const price =
+  //       row.age === "Người lớn"
+  //         ? parseFloat(adultPrice)
+  //         : parseFloat(childPrice);
+  //     totalPrice += price;
+  //   });
+  //   return totalPrice;
+  // };
+  // console.log(total);
+  // const totalTest = handleTotalPrice(listCustomer, detailTour);
+  // useEffect(() => {
+  //   setTotal(totalTest);
+  // }, [totalTest]);
   ///---------------------///
   return (
     <div>

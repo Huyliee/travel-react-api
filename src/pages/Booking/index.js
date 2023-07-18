@@ -23,6 +23,8 @@ import {  toast } from "react-toastify";
 import OtpInput from "otp-input-react";
 // import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShield, faShieldHalved } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -37,11 +39,16 @@ function Booking() {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400,
+    width: 600,
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
     p: 4,
+    display:'flex',
+    flexDirection:'column',
+    justifyContent:'space-between',
+    alignItems:'center',
+    alignContent:'space-between'
   };
   //////////////////////////
   const location = useLocation();
@@ -225,6 +232,7 @@ function Booking() {
         console.error('Error verifying code:', error);
       });
   };
+  console.log(total_price);
   return (
     <>
       <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
@@ -236,6 +244,10 @@ function Booking() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
+            <h3>Xác thực OTP</h3>
+            <FontAwesomeIcon icon={faShieldHalved} style={{fontSize:'80px',color:'#1972d2',margin:'10px 0px'}}/>
+            <p>Mã xác thực đã được gửi về số điện thoại của bạn đã đăng ký</p>
+            <p>Vui lòng nhập mã OTP và xác nhận</p>
             <OtpInput
               value={otp}
               onChange={setOtp}
@@ -245,7 +257,7 @@ function Booking() {
               autoFocus
               className="opt-container "
             ></OtpInput>
-            <Button onClick={onCheckout}>Xác thực OTP</Button>
+            <Button variant="contained" onClick={onCheckout} style={{margin:'16px 0px',width:'100%'}}>Xác thực OTP</Button>
           </Box>
         </Modal>
         <div id="recaptcha-container"></div>

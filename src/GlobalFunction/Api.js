@@ -137,3 +137,12 @@ export const paymentMoMoStore = async (id_customer, id_order , amount_paid , pay
     })
     return res.data;
 }
+// Api mã giảm giá
+export const applyDiscount = async (total,code)=>{
+    const res = await axios.post('http://127.0.0.1:8000/api/apply-discount',{
+            total: total,
+            discount_code:code
+    })
+    return res.data;
+}
+

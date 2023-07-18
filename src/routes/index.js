@@ -22,6 +22,7 @@ import DetailOrderTour from "~/pages/Profile/Order/detail-tour-oder";
 import DetailTourAdmin from "~/pages/TourAdmin/DetailTourAdmin";
 import ChangePassword from "~/pages/Profile/ChangePassword";
 import DateGoAdmin from "~/pages/DateGoAdmin";
+import Faq from "~/pages/FAQ";
 
 // import { useState , useEffect } from "react";
 // import { getTour } from "~/GlobalFunction/Api";
@@ -52,6 +53,7 @@ const publicRoutes = [
     {path: '/profile' , component:Profile , layout:ProfileLayout},
     {path: '/profile/order' , component:Order , layout:ProfileLayout},
     {path: '/profile/changepass' , component:ChangePassword , layout:ProfileLayout},
+    {path: '/faq' , component:Faq},
     
 ]
 

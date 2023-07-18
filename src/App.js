@@ -33,7 +33,7 @@ function App() {
                 element={
                   <Layout>
                   {authentication.isAuthentication() === 'admin' ? (
-                    <Page />
+                    <Page to="/admin"/>
                   ):(<Navigate to="/login"/>)}
                   </Layout>
                 }
