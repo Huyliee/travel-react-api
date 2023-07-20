@@ -8,3 +8,13 @@
     display: flex;
     justify-content: space-between;
 }
+.count-up-sub-container{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.count-up-img-container{
+    img{
+        border-radius: 10px;
+    }
+}

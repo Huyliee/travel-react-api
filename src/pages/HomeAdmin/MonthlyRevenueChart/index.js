@@ -43,8 +43,8 @@ function MonthlyRevenueChart() {
       {
         label: "Số lượng người dùng đăng ký hàng tháng",
         data: dataset,
-        backgroundColor: "rgba(75, 192, 192, 0.6)",
-        borderColor: "rgba(75, 192, 192, 1)",
+        backgroundColor: "rgba(18, 105, 219, 0.6)",
+        borderColor: "rgba(18, 105, 219, 1)",
         borderWidth: 1,
       },
     ],

@@ -54,7 +54,7 @@ function OrderTourCount() {
         {
           label: "Total Orders",
           data: orderCounts,
-          backgroundColor: "rgba(75, 192, 192, 0.6)",
+          backgroundColor: "rgba(18, 105, 219, 0.6)",
         },
       ],
     };
@@ -76,7 +76,7 @@ function OrderTourCount() {
           {
             label: "Total Orders",
             data: orderCounts,
-            backgroundColor: "rgba(75, 192, 192, 0.6)",
+            backgroundColor: "rgba(18, 105, 219, 0.6)",
           },
         ],
       };
