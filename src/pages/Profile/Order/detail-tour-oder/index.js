@@ -41,8 +41,8 @@ function DetailOrderTour() {
   const detailCustommer = detailOrder?.detail_order;
   console.log(detailCustommer);
   return (
-    <Container>
-      <div className={cx("profile-change-container")}>
+    <Container style={{margin:'20px auto',width:'100%'}}>
+      <div className={cx("profile-change-container")} style={{margin:'0 auto'}}>
         <div className={cx("profile-change-heading")}>
           <h2 style={{ margin: "20px" }}>Thông tin Tour</h2>
 

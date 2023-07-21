@@ -144,7 +144,7 @@ function NewsAdmin() {
     formData.append("content_news", content_news);
     formData.append("img_news", img_news);
     axios
-      .post("https://travel2h.click/public_html/api/news/store", formData)
+      .post("http://127.0.0.1:8000/api/news/store", formData)
       .then((response) => {
         console.log(response.data);
         resetFrom();

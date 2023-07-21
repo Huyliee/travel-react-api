@@ -122,7 +122,7 @@ function Booking() {
   //   setLoading(true);
   //   setTimeout(async () => {
   //     await axios
-  //       .post(`https://travel2h.click/public_html/api/tour/checkout/${idTour}`, {
+  //       .post(`http://127.0.0.1:8000/api/tour/checkout/${idTour}`, {
   //         email,
   //         name,
   //         phone,
@@ -207,7 +207,7 @@ function Booking() {
         setLoading(true);
         setTimeout(async () => {
           await axios
-            .post(`https://travel2h.click/public_html/api/tour/checkout/${idTour}`, {
+            .post(`http://127.0.0.1:8000/api/tour/checkout/${idTour}`, {
               email,
               name,
               phone,

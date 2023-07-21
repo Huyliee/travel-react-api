@@ -12,7 +12,7 @@ function OrderTourCount() {
   const fetchData = useCallback(async () => {
     try {
       const response = await axios.get(
-        "https://travel2h.click/public_html/api/analytic/getOrderTour"
+        "http://127.0.0.1:8000/api/analytic/getOrderTour"
       ); // Thay đổi đường dẫn API tương ứng
 
       if (response.status === 200) {

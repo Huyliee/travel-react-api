@@ -1,6 +1,6 @@
 import styles from "./Home.module.scss";
 import classNames from "classnames/bind";
-import { Button, FormControl, MenuItem, Select } from "@mui/material";
+import { Autocomplete, Button, FormControl, MenuItem, Select, TextField } from "@mui/material";
 import images from "~/component/assets/images";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -33,6 +33,7 @@ import News from "./News";
 import Banner from "./Banner";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
+import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 function HomePage() {
@@ -234,8 +235,21 @@ function HomePage() {
                 <FontAwesomeIcon icon={faLocationDot} />
               </div>
               <div className={cx("input-location")}>
-                <input placeholder="Location" />
-                <span style={{ marginTop: 2 }}>Where are you going?</span>
+
+                <Autocomplete
+                    disablePortal
+                    id="combo-box-demo"
+                    options={products}
+                    sx={{ width: 300 ,marginBottom:'20px'}}
+                    // onChange={handleOnchangeTour}
+                    // value={valueTour}
+                    getOptionLabel={(option) => option.name_tour || ""}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Bạn muốn đi đâu?" variant="standard" InputLabelProps={{
+                        style: { fontSize: '18px',fontWeight:600 /* other label styles */ }
+                      }}  />
+                    )}
+                  />
               </div>
             </div>
             <div
@@ -482,9 +496,11 @@ function HomePage() {
               </ul>
             </div>
             <div className={cx("btn-location-product-all-container")}>
+              <Link to="/tour" style={{textDecoration:'none'}}>
               <button className={cx("btn-location-product-all")}>
                 View all <FontAwesomeIcon icon={faArrowRight} />
               </button>
+              </Link>
             </div>
           </div>
           <div className={cx("product-container")}>
@@ -568,9 +584,11 @@ function HomePage() {
               </ul>
             </div>
             <div className={cx("btn-location-product-all-container")}>
+            <Link to="/tour" style={{textDecoration:'none'}}>
               <button className={cx("btn-location-product-all")}>
                 View all <FontAwesomeIcon icon={faArrowRight} />
               </button>
+              </Link>
             </div>
           </div>
           <div className={cx("product-container")}>

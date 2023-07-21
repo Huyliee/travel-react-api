@@ -11,6 +11,8 @@ import MonthlyRevenueChart from "./MonthlyRevenueChart";
 import OrderTourCount from "./OrderTourCount";
 import TourChart from "./PriceOfTour";
 
+
+
 const cx = classNames.bind(styles);
 
 function HomeAdmin() {
@@ -40,6 +42,9 @@ function HomeAdmin() {
       <div>
         <TourChart />
       </div>
+      {/* <div>
+        <MapAlynatic />
+      </div> */}
     </div>
   );
 }
