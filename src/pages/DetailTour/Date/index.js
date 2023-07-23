@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import TablePrice from "./Table";
 import { detailTourApi } from "~/GlobalFunction/Api";
 
-function Date({ id }) {
+function Date({ id , date }) {
   const [months, setMonths] = useState({});
   const [value, setValue] = useState("");
   const handleChange = (e, newValue) => {
@@ -45,7 +45,7 @@ function Date({ id }) {
           {months.length > 0 ? (
             months.map((data) => (
               <TabPanel value={data.toString()}>
-                <TablePrice id={id} month={data} />
+                <TablePrice id={id} month={data} dateParent={date}/>
               </TabPanel>
             ))
           ) : (

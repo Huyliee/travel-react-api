@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { detailTourApi } from "~/GlobalFunction/Api";
 
-function TablePrice({ id, month }) {
+function TablePrice({ id, month , dateParent }) {
   const [date, setDate] = useState([]);
   const access_login = localStorage.getItem("access_token");
   const ggtoken = localStorage.getItem("ggtoken");
@@ -22,12 +22,15 @@ function TablePrice({ id, month }) {
     async function detailData() {
       const data = await detailTourApi(id);
       const filteredData = data.date_go.filter((item) => item.month === month);
+      filteredData.sort((a, b) => new Date(b.date) - new Date(a.date));
+      data.date_go.sort((a, b) => new Date(b.date) - new Date(a.date));
+      const latestDate = data.date_go.length > 0 ? data.date_go[0] : null;
       setPrice(data.adult_price)
       setDate(filteredData);
+      dateParent(latestDate)
     }
     detailData();
-  }, [id, month]);
-  console.log(date);
+  }, [id, month , dateParent]);
   if (date === null) {
     return <div>Loading...</div>;
   }

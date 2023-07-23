@@ -36,10 +36,10 @@ const cx = classNames.bind(styles);
 
 function DetailTour() {
   const { id } = useParams();
+  const [date,setDate] = useState([]);
   const [detailTour, setDetailTour] = useState({});
   const [weather, setWeather] = useState({});
   const API_KEY_WEATHER = "cd80aaec45724113a6c125437230106";
-  console.log(id);
   //Api thời tiết
   useEffect(() => {
     async function getWeather() {
@@ -256,7 +256,7 @@ function DetailTour() {
       {/* Ngày đi */}
       <Container maxWidth="xl" style={{ padding: "20px 68px" }} ref={dateRef}>
         <h2 className={cx("content-tour-heading")}>Bảng giá</h2>
-        <Date id={detailTour?.id_tour} />
+        <Date id={detailTour?.id_tour} date={setDate}/>
       </Container>
       {/* Thông tin di chuyển */}
       <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
@@ -275,7 +275,7 @@ function DetailTour() {
                 >
                   <div className={cx("detail-transport-info")}>
                     <p style={{ marginTop: "10px" }}>
-                      Ngày đi - <span>22/06/2023</span>
+                      Ngày đi - <span>{date?.date}</span>
                     </p>
                     <div className={cx("detail-transport-location-container")}>
                       <div className={cx("detail-transport-location")}>
@@ -342,7 +342,7 @@ function DetailTour() {
                   </div>
                   <div className={cx("detail-transport-info")}>
                     <p style={{ marginTop: "10px" }}>
-                      Ngày về - <span>25/06/2023</span>
+                      Ngày về - <span>{date?.return_date}</span>
                     </p>
                     <div className={cx("detail-transport-location-container")}>
                       <div className={cx("detail-transport-location")}>
@@ -411,7 +411,7 @@ function DetailTour() {
               <div style={{marginTop:'10px'}}>
                 {" "}
                 <h3>Thông tin tập trung</h3>
-                <div style={{display:'flex',justifyContent:'space-between'}}>
+                <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                   <div style={{fontSize:'15px',margin:'10px 0px'}}>
                     <p>Ngày giờ tập trung</p>
                     <p>Nơi tập trung</p>

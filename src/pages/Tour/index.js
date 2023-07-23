@@ -12,17 +12,22 @@ const cx = classNames.bind(styles);
 
 function Tour() {
   // const [products, setProduct] = useState([]);
-  const [nameTour, setNameTour] = useState("");
+  const [name_tour, setNameTour] = useState("");
   const [shouldSearch, setShouldSearch] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const [priceValue, setPriceValue] = useState("");
+  const [selectedValue, setSelectedValue] = useState("");
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const id_location = queryParams.get("nameTour");
-  console.log(id_location);
+  const idLocation = queryParams.get("nameTour");
 
   const handleInput = (e) => {
     setNameTour(e.target.value);
@@ -39,38 +44,52 @@ function Tour() {
   };
   const [tours, setTours] = useState([]);
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await paginationApi(currentPage);
-      setTours(result.data);
-      setTotalPages(result.last_page);
-      
-    };
-    fetchData();
-  }, [currentPage]);
-  console.log(tours);
-  const handleSearch = useEffect(() => {
-    async function Search() {
-      const res = await searchApi(nameTour,priceValue,id_location);
-      setTours(res.tours);
+    // Chỉ gọi fetchData khi isLoaded là true (tức là đã tải xong dữ liệu)
+    if (isLoaded) {
+      const fetchData = async () => {
+        const result = await paginationApi(currentPage);
+        setTours(result.data);
+        setTotalPages(result.last_page);
+        setLoading(true); // Bạn cũng có thể set loading thành true tại đây để ẩn loading indicator
+      };
+      fetchData();
     }
-    Search();
-  }, [shouldSearch, nameTour , priceValue,id_location]);
+  }, [isLoaded, currentPage]);
   useEffect(() => {
     setTimeout(() => {
-      setLoading(true);
+      setIsLoaded(true);
+      setLoading(true); // Sau khi 3 giây, set isLoaded thành true để cho phép gọi useEffect lấy dữ liệu
     }, 3000);
   }, []);
+  console.log(tours);
+  useEffect(() => {
+    async function Search() {
+      const id_location = selectedValue || idLocation;
+      const res = await searchApi(name_tour, priceValue, id_location);
+      setTotalPages(res?.tours.last_page)
+      setTours(res?.tours.data);
+    }
+    Search();
+  }, [shouldSearch, name_tour, priceValue, idLocation, selectedValue]);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setLoading(true);
+  //   }, 3000);
+  // }, []);
+  console.log(totalPages);
   return (
     <div className={cx("tour-container")}>
       <form className={cx("tour-main")}>
         <div className={cx("filter-container")}>
           <Filter
             handleInput={handleInput}
-            nameTour={nameTour}
-            handleSearch={handleSearch}
+            nameTour={name_tour}
             handleKeyPress={handleKeyPress}
             priceTour={priceValue}
             handleSliderChange={handleSliderChange}
+            handleSelect={handleChange}
+            selectValue={selectedValue}
+            setNameTour={setNameTour}
           />
         </div>
         <div className={cx("product-container")}>
@@ -87,28 +106,32 @@ function Tour() {
                   img={product.img_tour}
                   name={product.name_tour}
                   location="Phú quốc"
-                  price={product.adult_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                  price={product.adult_price
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   des={product.content_tour}
                   id={product.id_tour}
                 />
               ))}
             {!loading && tours.map(() => <ProductLoading />)}
-            <Pagination
-              count={totalPages}
-              currentPage={currentPage}
-              setCurrentPage={setCurrentPage}
-              color="primary"
-              onChange={(e, page) => {
-                setCurrentPage(page);
-                window.scrollTo(0, 0);
-              }}
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-                marginTop: "20px",
-              }}
-            />
+            {totalPages > 1 && loading && (
+              <Pagination
+                count={totalPages}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                color="primary"
+                onChange={(e, page) => {
+                  setCurrentPage(page);
+                  window.scrollTo(0, 0);
+                }}
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  marginTop: "20px",
+                }}
+              />
+            )}
           </div>
         </div>
       </form>
