@@ -18,7 +18,6 @@ const images ={
     'quynhon.jpg': require('./image/quynhon.jpg'),
     'condao.jpg': require('./image/condao.jpg'),
     'danang.jpg': require('./image/danang.jpg'),
-    'sapa.jpg': require('./image/sapa.jpg'),
     'halong.jpg': require('./image/halong.jpg'),
     'cantho.jpg': require('./image/cantho.jpg'),
 }

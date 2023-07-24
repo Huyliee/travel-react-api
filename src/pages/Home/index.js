@@ -214,7 +214,7 @@ function HomePage() {
             </div>
             <div className={cx("slide-img-right")}>
               <img
-                src="https://i.imgur.com/igEP5Gj.jpg"
+                src="https://images.unsplash.com/photo-1541410965313-d53b3c16ef17?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDh8fHRyYXZlbHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
                 alt="img-left"
                 className={cx("img-right")}
               />
@@ -345,17 +345,17 @@ function HomePage() {
 
             <Slider {...settingsSlider}>
             <CartLocation
-              img={images.cartLocation1}
+              img="https://media.travel.com.vn/destination/tf_230203050956_597235.jpg"
               heading="Phú Quốc"
               decription="112 properties"
             />
             <CartLocation
-              img={images.cartLocation5}
+              img="https://media.travel.com.vn/destination/tf_230209110612_090667.jpg"
               heading="Đà Nẵng"
               decription="112 properties"
             />
             <CartLocation
-              img={images.cartLocation4}
+              img='https://media.travel.com.vn/destination/tf_220704050248_747884.jpg'
               heading="Hội An"
               decription="112 properties"
             />
@@ -365,22 +365,22 @@ function HomePage() {
               decription="112 properties"
             />
             <CartLocation
-              img={images.cartLocation2}
+              img="https://media.travel.com.vn/destination/tf_230222042713_821125.JPG"
               heading="Đà Lạt"
               decription="112 properties"
             />
                         <CartLocation
-              img={images.cartLocation2}
+              img="https://media.travel.com.vn/destination/tf_230222042713_821125.JPG"
               heading="Đà Lạt"
               decription="112 properties"
             />
                         <CartLocation
-              img={images.cartLocation2}
+              img="https://media.travel.com.vn/destination/tf_230222042713_821125.JPG"
               heading="Đà Lạt"
               decription="112 properties"
             />
                         <CartLocation
-              img={images.cartLocation2}
+              img="https://media.travel.com.vn/destination/tf_230222042713_821125.JPG"
               heading="Đà Lạt"
               decription="112 properties"
             />
