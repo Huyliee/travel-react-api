@@ -66,7 +66,7 @@ function Tour() {
     async function Search() {
       const id_location = selectedValue || idLocation;
       const res = await searchApi(name_tour, priceValue, id_location);
-      setTotalPages(res?.tours.last_page)
+      setTotalPages(res?.tours.last_page);
       setTours(res?.tours.data);
     }
     Search();
@@ -76,7 +76,6 @@ function Tour() {
   //     setLoading(true);
   //   }, 3000);
   // }, []);
-  console.log(totalPages);
   return (
     <div className={cx("tour-container")}>
       <form className={cx("tour-main")}>
@@ -99,20 +98,30 @@ function Tour() {
             </span>
           </div>
           <div className={cx("list-tour-container")}>
-            {loading &&
-              tours.map((product, index) => (
-                <ProductList
-                  key={index}
-                  img={product.img_tour}
-                  name={product.name_tour}
-                  location="Phú quốc"
-                  price={product.adult_price
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                  des={product.content_tour}
-                  id={product.id_tour}
-                />
-              ))}
+            {loading ? (
+              tours.length > 0 ? (
+                tours.map((product, index) => (
+                  <ProductList
+                    key={index}
+                    img={product.img_tour}
+                    name={product.name_tour}
+                    location="Phú Quốc"
+                    price={product.adult_price
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    des={product.content_tour}
+                    id={product.id_tour}
+                  />
+                ))
+              ) : (
+                <div style={{display:'flex',flexDirection:'column' , alignItems:'center'}}>
+                    <img src="https://i.imgur.com/atULSw2.jpg" alt="Anh" style={{width:'500px',height:'480px'}}/>
+                    <h1 style={{color:'var(--text-color)'}}>Không tìm thấy kết quả</h1>
+                </div>
+              )
+            ) : (
+              <p>Loading...</p>
+            )}
             {!loading && tours.map(() => <ProductLoading />)}
             {totalPages > 1 && loading && (
               <Pagination

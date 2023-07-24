@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   FormControl,
   FormControlLabel,
   InputLabel,
@@ -129,15 +128,18 @@ function Filter({
       <div className={cx("filter-main")}>
         <div className={cx("tour-filter")}>
           <span>Tìm theo tên</span>
+          <div style={{display:'flex',alignItems:'center'}}>
           <TextField
             id="outlined-basic"
             label="Nhập tên"
             variant="outlined"
-            sx={{ width: 290 }}
+            sx={{ width: 280 }}
             onKeyPress={handleKeyPress}
             value={nameTour}
             onChange={handleInput}
           />
+          <FontAwesomeIcon icon={faMicrophone} onClick={handleSpeechRecognition} cursor="pointer" style={{ fontSize: '24px', marginLeft: '10px', color: isListening ? 'red' : 'blue' }}/>
+          </div>
         </div>
         <div className={cx("tour-filter")}>
           <span>Loại hình du lịch</span>
@@ -228,10 +230,6 @@ function Filter({
           </FormControl>
         </div>
         <div>
-      {/* Hiển thị nút mic và giá trị nhận dạng */}
-      <Button onClick={handleSpeechRecognition} startIcon={<FontAwesomeIcon icon={faMicrophone} />}>
-        {isListening ? "Turn Off Mic" : "Turn On Mic"}
-      </Button>
 
       {/* Âm thanh khi bấm */}
       <audio ref={audioRef} />
