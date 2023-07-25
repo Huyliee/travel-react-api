@@ -145,4 +145,8 @@ export const applyDiscount = async (total,code)=>{
     })
     return res.data;
 }
-
+//Api chi tiết ngày đi
+export const detailDateGoApi = async (id) =>{
+    const res = await axios.get(`http://127.0.0.1:8000/api/datego/detail/${id}`)
+    return res.data.data;
+}

@@ -35,8 +35,8 @@ const style = {
   flexDirection: "column",
 };
 
-function ModalAdd({ open, handleClose , order , customer, button}) {
-  const id_customer = localStorage.getItem('id_customer');
+function ModalAdd({ open, handleClose, order, customer, button }) {
+  const id_customer = localStorage.getItem("id_customer");
   const [dataTour, setDataTour] = useState({});
   const [valueTour, setValueTour] = useState(null);
   const [date, setDate] = useState({});
@@ -46,17 +46,21 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
   const [childFormCount, setChildFormCount] = useState(1);
   const [adultFormData, setAdultFormData] = useState([]);
   const [childFormData, setChildFormData] = useState([]);
+  const [payment, setPayment] = useState("");
+
   const [detail, setDetail] = useState({
     adultInfo: [],
     childInfo: [],
   });
   const [formData, setFormData] = useState({
-    name:  '',
-    email:  '',
-    phone:  '',
-    address:  '',
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
   });
-
+  const handleChangePayment = (event) => {
+    setPayment(event.target.value);
+  };
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
@@ -64,30 +68,30 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
       [name]: value,
     }));
   };
-    //Thêm dữ liệu vào mảng adultInfo khi nhập từ input của người lớn
-    const handleAdultCustomerInfoChange = (info) => {
-      const updatedInfo = info.map((customer) => ({
-        ...customer,
-        age: 'Người lớn',
-      }));
-      setDetail((prevInfo) => ({
-        ...prevInfo,
-        adultInfo: updatedInfo,
-      }));
-    };
-  
-    //Thêm dữ liệu vào mảng childInfo khi nhập từ input của trẻ em
-    const handleChildCustomerInfoChange = (info) => {
-      const updatedInfo = info.map((customer) => ({
-        ...customer,
-        age: 'Trẻ em',
-      }));
-      setDetail((prevInfo) => ({
-        ...prevInfo,
-        childInfo: updatedInfo,
-      }));
-    };
-  
+  //Thêm dữ liệu vào mảng adultInfo khi nhập từ input của người lớn
+  const handleAdultCustomerInfoChange = (info) => {
+    const updatedInfo = info.map((customer) => ({
+      ...customer,
+      age: "Người lớn",
+    }));
+    setDetail((prevInfo) => ({
+      ...prevInfo,
+      adultInfo: updatedInfo,
+    }));
+  };
+
+  //Thêm dữ liệu vào mảng childInfo khi nhập từ input của trẻ em
+  const handleChildCustomerInfoChange = (info) => {
+    const updatedInfo = info.map((customer) => ({
+      ...customer,
+      age: "Trẻ em",
+    }));
+    setDetail((prevInfo) => ({
+      ...prevInfo,
+      childInfo: updatedInfo,
+    }));
+  };
+
   //Load dữ liệu tất cả tour
   useEffect(() => {
     async function loadTour() {
@@ -117,14 +121,14 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
       if (valueTour) {
         const data = await detailTourApi(valueTour.id_tour);
         const filteredData = data.date_go.filter((item) => item.seats !== 0);
-      setDate(filteredData);
+        setDate(filteredData);
       }
     }
     detailData();
   }, [valueTour]);
   ///Xử lý tăng giảm số lượng form trẻ em và người lớn
   const handleIncreaseAdult = () => {
-    setAdultFormCount(adultFormCount + 1);  
+    setAdultFormCount(adultFormCount + 1);
   };
   const handleDecreaseAdult = () => {
     if (adultFormCount > 0) {
@@ -144,14 +148,14 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
     const updatedData = [...adultFormData];
     updatedData[index] = { ...updatedData[index], [field]: value };
     setAdultFormData(updatedData);
-    handleAdultCustomerInfoChange(updatedData)
+    handleAdultCustomerInfoChange(updatedData);
   };
 
   const handleChildFormChange = (index, field, value) => {
     const updatedData = [...childFormData];
     updatedData[index] = { ...updatedData[index], [field]: value };
     setChildFormData(updatedData);
-    handleChildCustomerInfoChange(updatedData)
+    handleChildCustomerInfoChange(updatedData);
   };
   // Xử lý thêm đơn đặt tour
   const handleCheckout = async (e) => {
@@ -161,18 +165,19 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
     const { name, email, phone, address } = formData;
     await axios
       .post(`http://127.0.0.1:8000/api/tour/checkout/${idTour}`, {
-        name, 
+        name,
         email,
         phone,
         address,
         id_customer,
         id_date,
         detail,
-        total_price
+        total_price,
+        payment
       })
       .then((res) => {
         console.log(res);
-        toast.success("Thêm đơn đặt tour thành công")
+        toast.success("Thêm đơn đặt tour thành công");
       })
       .catch((error) => {
         console.log(error);
@@ -182,7 +187,10 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
   const [detailTour, setDetailTour] = useState({});
   const idChooseTour = detail.adultInfo[0]?.id_tour;
   const idChooseDate = order.id_date;
-  const dateUpdate = detailTour?.date_go?.find((dateItem) => dateItem.id === idChooseDate)
+  const dateUpdate = detailTour?.date_go?.find(
+    (dateItem) => dateItem.id === idChooseDate
+  );
+
   useEffect(() => {
     async function detailData() {
       const data = await detailTourApi(idChooseTour);
@@ -209,7 +217,11 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={button ? (adultFormData[i]?.gender || detail.adultInfo[i]?.sex) : ""}
+              value={
+                button
+                  ? adultFormData[i]?.gender || detail.adultInfo[i]?.sex
+                  : ""
+              }
               onChange={(event) =>
                 handleAdultFormChange(i, "gender", event.target.value)
               }
@@ -229,9 +241,11 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
               className={cx("field-customer")}
               onChange={(newValue) => {
                 const dateString = dayjs(newValue).format("YYYY-MM-DD");
-                handleAdultFormChange(i, "date", dateString)
+                handleAdultFormChange(i, "date", dateString);
               }}
-              renderInput={(params) => <TextField {...params} value={adultFormData[i]?.date || ""}/>} // thêm đoạn này
+              renderInput={(params) => (
+                <TextField {...params} value={adultFormData[i]?.date || ""} />
+              )} // thêm đoạn này
             />
           </LocalizationProvider>
           <TextField
@@ -268,7 +282,7 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={childFormData[i]?.gender || detail.childInfo[i]?.sex  || ""}
+              value={childFormData[i]?.gender || detail.childInfo[i]?.sex || ""}
               onChange={(event) =>
                 handleChildFormChange(i, "gender", event.target.value)
               }
@@ -288,9 +302,11 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
               className={cx("field-customer")}
               onChange={(newValue) => {
                 const dateString = dayjs(newValue).format("YYYY-MM-DD");
-                handleChildFormChange(i, "date", dateString)
+                handleChildFormChange(i, "date", dateString);
               }}
-              renderInput={(params) => <TextField {...params} value={childFormData[i]?.date || ""}/>}
+              renderInput={(params) => (
+                <TextField {...params} value={childFormData[i]?.date || ""} />
+              )}
             />
           </LocalizationProvider>
           <TextField
@@ -311,7 +327,7 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
   if (valueTour && valueTour.adult_price && valueTour.child_price) {
     const adultPrice = parseFloat(valueTour.adult_price);
     const childPrice = parseFloat(valueTour.child_price);
-  
+
     total_price = adultFormCount * adultPrice + childFormCount * childPrice;
   }
   return (
@@ -324,7 +340,16 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography style={{fontSize:'18px',fontWeight:'500',borderBottom:'1px solid #ddd',padding:'10px 0px'}}>Thêm đơn đặt tour</Typography>
+          <Typography
+            style={{
+              fontSize: "18px",
+              fontWeight: "500",
+              borderBottom: "1px solid #ddd",
+              padding: "10px 0px",
+            }}
+          >
+            Thêm đơn đặt tour
+          </Typography>
           <Box className={cx("modal-body")}>
             <Box className={cx("col-left")}>
               <h4 className={cx("heading")}>Thông tin liên hệ</h4>
@@ -381,7 +406,7 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
               <h4 className={cx("heading")}>Tour du lịch</h4>
               <Box className={cx("tour-container")}>
                 <Autocomplete
-                  value={button ? (valueTour || detailTour) : ""}
+                  value={button ? valueTour || detailTour : ""}
                   options={dataTour}
                   getOptionLabel={(option) => option.name_tour || ""}
                   onChange={handleOnChange}
@@ -409,15 +434,72 @@ function ModalAdd({ open, handleClose , order , customer, button}) {
                     />
                   )}
                 />
-                
               </Box>
-              <form onSubmit={handleCheckout} encType="multipart/form-data" style={{display:'flex',justifyContent:'space-between'}}>
-              <Button type="submit">Thêm</Button>
-                {valueDate === "" ? "" : <h3>Giá người lớn: {valueTour?.adult_price}</h3>}
-                {valueDate === "" ? "" : <h3>Giá trẻ em: {valueTour?.child_price}</h3>}
-                {valueDate === "" ? "" : <h3>Tổng tiền: {total_price}</h3>}
-                {valueDate === "" ? "" : <h3>Số chỗ còn: {valueDate?.seats}</h3>}
+              <Box sx={{display:'flex',margin:'20px 0px'}}>
+              <form onSubmit={handleCheckout} encType="multipart/form-data">
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    width: "480px",
+                    margin: "10px 0px",
+                  }}
+                >
+                  <Box>
+                    {" "}
+                    {valueDate === "" ? (
+                      ""
+                    ) : (
+                      <h3 style={{ fontSize: "16px" }}>
+                        Giá người lớn: {valueTour?.adult_price}
+                      </h3>
+                    )}
+                    {valueDate === "" ? (
+                      ""
+                    ) : (
+                      <h3 style={{ fontSize: "16px" }}>
+                        Giá trẻ em: {valueTour?.child_price}
+                      </h3>
+                    )}
+                  </Box>
+                  <Box>
+                    {valueDate === "" ? (
+                      ""
+                    ) : (
+                      <h3 style={{ fontSize: "16px" }}>
+                        Tổng tiền: {total_price}
+                      </h3>
+                    )}
+                    {valueDate === "" ? (
+                      ""
+                    ) : (
+                      <h3 style={{ fontSize: "16px" }}>
+                        Số chỗ còn: {valueDate?.seats}
+                      </h3>
+                    )}
+                  </Box>
+                </Box>
+                <Button type="submit">Thêm</Button>
               </form>
+              <Box sx={{width:'180px',marginLeft:'33px'}}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    Thanh toán
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={payment}
+                    label="Thanh toán"
+                    onChange={handleChangePayment}
+                  >
+                    <MenuItem value="Tiền mặt">Tiền mặt</MenuItem>
+                    <MenuItem value="MoMo">MoMo</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+              </Box>
             </Box>
             <Box className={cx("col-right")}>
               <h4 className={cx("heading")}>Thông tin từng khách hàng</h4>

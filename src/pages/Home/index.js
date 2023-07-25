@@ -360,7 +360,7 @@ function HomePage() {
               decription="112 properties"
             />
             <CartLocation
-              img={images.cartLocation3}
+              img='https://media.travel.com.vn/destination/tf_220616013254_229036.jpg'
               heading="Huế"
               decription="112 properties"
             />
@@ -509,7 +509,7 @@ function HomePage() {
                 key={index}
                 img={product.img_tour}
                 name={product.name_tour}
-                location="Phú quốc"
+                location={product.place_go}
                 price={product.adult_price}
                 id={product.id_tour}
                 onClick={() => handleIdTour(product.id_tour)}

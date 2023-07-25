@@ -5,13 +5,20 @@ import {
   Box,
   Button,
   Container,
+  FormControl,
+  FormControlLabel,
   Radio,
+  RadioGroup,
   Step,
   StepLabel,
   Stepper,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { getDetailOrder, detailTourApi } from "~/GlobalFunction/Api";
+import {
+  getDetailOrder,
+  detailTourApi,
+  detailDateGoApi,
+} from "~/GlobalFunction/Api";
 import DetailCustomerTable from "./DetailCustomerTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoneyBill, faQrcode } from "@fortawesome/free-solid-svg-icons";
@@ -40,17 +47,26 @@ function PayMothods() {
     justifyContent: "flex-start",
   };
   /// Lấy dữ liệu url
-  const { idBooking, idTour } = useParams();
+  const { idBooking, idTour, idDate } = useParams();
   //Load api của chi tiết tour
   const [detailOrder, setDetailOrder] = useState({});
+  const [dateGo, setDateGo] = useState({});
   const [listCustomer, setListCustomer] = useState([]);
   const [total, setTotal] = useState("");
+  useEffect(() => {
+    async function detailData() {
+      const data = await detailDateGoApi(idDate);
+      setDateGo(data);
+    }
+    detailData();
+  }, [idDate]);
+  console.log(dateGo);
   useEffect(() => {
     async function detailData() {
       const data = await getDetailOrder(idBooking);
       setDetailOrder(data);
       setListCustomer(data.detail_order);
-      setTotal(data.total_price)
+      setTotal(data.total_price);
       const apiOrderTime = data.order_time;
 
       // Tạo đối tượng Date từ dữ liệu order_time
@@ -68,16 +84,15 @@ function PayMothods() {
   // const orderTime = detailOrder.order_time;
   // const formatDate = format(new Date(orderTime),'dd/MM/yyyy HH:mm:ss')
   const [selectRadio, setSelectRadio] = useState("tm");
-  const [selectRadioPrice, setSelectRadioPrice] = useState("50");
-  const idCustomer = localStorage.getItem('id_customer');
-
+  const [selectRadioPrice, setSelectRadioPrice] = useState("100");
+  const idCustomer = localStorage.getItem("id_customer");
+  const [daysDifference, setDaysDifference] = useState(0);
   const handleRadio = (e) => {
     setSelectRadio(e.target.value);
   };
   const handleRadioPrice = (e) => {
     setSelectRadioPrice(e.target.value);
   };
-  console.log(selectRadio);
   ////////////////
   const [detailTour, setDetailTour] = useState({});
   useEffect(() => {
@@ -115,7 +130,7 @@ function PayMothods() {
       const response = await axios.post(
         "http://127.0.0.1:8000/api/momo-payment",
         {
-          amount: selectRadioPrice === "100" ? total : total/2,
+          amount: selectRadioPrice === "100" ? total : total / 2,
           orderId: idBooking,
           idCustomer: idCustomer,
         }
@@ -138,32 +153,23 @@ function PayMothods() {
       handlePayment();
     }
   };
-  //-------------------------//
-  /////Tính tổng tiền//////
+  useEffect(() => {
+    const currentDate = new Date();
+    const departureDate = new Date(dateGo?.date);
 
-  // const handleTotalPrice = (listCustomer, detailTour) => {
-  //   let totalPrice = 0;
-  //   listCustomer.forEach((row) => {
-  //     const adultPrice = detailTour?.adult_price
-  //       ? detailTour?.adult_price
-  //       : "0";
-  //     const childPrice = detailTour?.child_price
-  //       ? detailTour?.child_price
-  //       : "0";
-  //     const price =
-  //       row.age === "Người lớn"
-  //         ? parseFloat(adultPrice)
-  //         : parseFloat(childPrice);
-  //     totalPrice += price;
-  //   });
-  //   return totalPrice;
-  // };
-  // console.log(total);
-  // const totalTest = handleTotalPrice(listCustomer, detailTour);
-  // useEffect(() => {
-  //   setTotal(totalTest);
-  // }, [totalTest]);
-  ///---------------------///
+    // Truncate thời gian để tính số ngày chính xác
+    currentDate.setHours(0, 0, 0, 0);
+    departureDate.setHours(0, 0, 0, 0);
+
+    // Kiểm tra ngày khách hàng đặt tour và ngày khởi hành
+    const daysDifference = Math.ceil((departureDate - currentDate) / (1000 * 3600 * 24));
+    setDaysDifference(daysDifference);
+
+    // Nếu sát ngày đi 2 ngày hoặc ít hơn, tự động chuyển giá trị Radio sang "100%"
+    if (daysDifference <= 2) {
+      setSelectRadioPrice("100");
+    }
+  }, [dateGo?.date]);
   return (
     <div>
       <Container
@@ -369,31 +375,33 @@ function PayMothods() {
                 Reader,..
               </span>
             </div>
-            <div style={{ display: "flex" ,margin:'10px 0px'}}>
-              <div className={cx("payment-box")}>
-                <div className={cx("payment-text")}>
-                  <p>Trả trước 50%</p>
-                </div>
-                <Radio
-                  checked={selectRadioPrice === "50"}
-                  onChange={handleRadioPrice}
-                  value="50"
+            <div style={{ display: "flex", margin: "10px 0px",justifyContent:'center' }}>
+              <FormControl component="fieldset">
+                <RadioGroup
+                  aria-label="payment"
                   name="radio-buttons"
-
-                />
-              </div>
-              <div className={cx("payment-box")}>
-                <div className={cx("payment-text")}>
-                  <p>Trả toàn bộ</p>
-                </div>
-                <Radio
-                  checked={selectRadioPrice === "100"}
+                  value={selectRadioPrice}
                   onChange={handleRadioPrice}
-                  value="100"
-                  name="radio-buttons"
-
-                />
-              </div>
+                  
+                >
+                  <div style={{ display: "flex", margin: "10px 0px",justifyContent:'center' }}>
+                  <FormControlLabel
+                    value="50"
+                    control={<Radio disabled={daysDifference <= 2} className={cx("payment-text")}/>}
+                    label="Trả trước 50%"
+                    className={cx("payment-box")}
+                    sx={{".MuiFormControlLabel-label":{fontSize:'16px',fontWeight:500}}}
+                  />
+                  <FormControlLabel
+                    value="100"
+                    control={<Radio className={cx("payment-text")}/>}
+                    label="Trả toàn bộ"
+                    className={cx("payment-box")}
+                    sx={{".MuiFormControlLabel-label":{fontSize:'16px',fontWeight:500}}}
+                  />
+                  </div>
+                </RadioGroup>
+              </FormControl>
             </div>
             <Button
               style={{

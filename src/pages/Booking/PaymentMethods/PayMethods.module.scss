@@ -121,6 +121,7 @@ span{
     background: #f9f9f9;
     border-radius: 5px;
     margin-right: 10px;
+    font-size: 16px;
 }
 .payment-text{
     display: flex;
@@ -129,4 +130,7 @@ span{
         margin-left: 8px;
         margin-bottom: 0px!important;
     }
+}
+.MuiFormControlLabel-label{
+    font-size: 16px;
 }

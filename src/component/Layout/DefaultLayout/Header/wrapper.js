@@ -39,7 +39,7 @@ function Wrapper() {
     <div className={cx("tour-down-container")}>
       <div className={cx("tour-down-container-main")}>
         <div className={cx("list-tour-container")}>
-          <img src={images.nav1} alt="nav1" className={cx("nav-down-img")} />
+          <img src="https://images.pexels.com/photos/1591373/pexels-photo-1591373.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="nav1" className={cx("nav-down-img")} />
           <ul className={cx("list-nav")}>
             <li className={cx("header-list-nav")}>Miền bắc</li>
             {
@@ -50,7 +50,7 @@ function Wrapper() {
           </ul>
         </div>
         <div className={cx("list-tour-container")}>
-          <img src={images.nav2} alt="nav1" className={cx("nav-down-img")} />
+          <img src="https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="nav1" className={cx("nav-down-img")} />
           <ul className={cx("list-nav")}>
             <li className={cx("header-list-nav")}>Miền trung</li>
             {
@@ -61,7 +61,7 @@ function Wrapper() {
           </ul>
         </div>
         <div className={cx("list-tour-container")}>
-          <img src={images.nav3} alt="nav1" className={cx("nav-down-img")} />
+          <img src="https://images.pexels.com/photos/5059013/pexels-photo-5059013.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="nav1" className={cx("nav-down-img")} />
           <ul className={cx("list-nav")}>
             <li className={cx("header-list-nav")}>Miền tây nam bộ</li>
             {
@@ -72,7 +72,7 @@ function Wrapper() {
           </ul>
         </div>
         <div className={cx("list-tour-container")}>
-          <img src={images.nav4} alt="nav1" className={cx("nav-down-img")} />
+          <img src="https://images.pexels.com/photos/5159141/pexels-photo-5159141.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="nav1" className={cx("nav-down-img")} />
           <ul className={cx("list-nav")}>
             <li className={cx("header-list-nav")}>Miền đông nam bộ</li>
             {

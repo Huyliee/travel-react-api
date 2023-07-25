@@ -221,7 +221,7 @@ function Booking() {
               console.log(res);
               const { id_order_tour } = res.data.order;
               setLoading(false);
-              navigate(`/booking/payment/${id_order_tour}/idTour/${idTour}`);
+              navigate(`/booking/payment/${id_order_tour}/idTour/${idTour}/date/${id_date}`);
             })
             .catch((error) => {
               console.log(error);

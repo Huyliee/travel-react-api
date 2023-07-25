@@ -48,7 +48,7 @@ const publicRoutes = [
     {path: '/detailnews/:id' , component:DetailNews},
     {path: '/detail/:id' , component:DetailTour},
     {path: '/booking/tourId/:id' , component:Booking},
-    {path: '/booking/payment/:idBooking/idTour/:idTour' , component:PayMothods},
+    {path: '/booking/payment/:idBooking/idTour/:idTour/date/:idDate' , component:PayMothods},
     {path: '/booking/payment/success' , component:PaymentSuccess},
     {path: '/profile' , component:Profile , layout:ProfileLayout},
     {path: '/profile/order' , component:Order , layout:ProfileLayout},
