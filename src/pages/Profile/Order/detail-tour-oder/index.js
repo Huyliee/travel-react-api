@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 import styles from "~/pages/Profile/Profile.module.scss";
 import {
+  Button,
   Container,
   Paper,
   Table,
@@ -13,36 +14,52 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { detailTourApi, detailTourOder } from "~/GlobalFunction/Api";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 function DetailOrderTour() {
   const { id } = useParams();
   const [detailOrder, setDetailOder] = useState({});
   const [tour, setTour] = useState({});
+  const [idTour, setIdTour] = useState("");
+  const [date, setDate] = useState({});
+
   useEffect(() => {
-    if (detailOrder?.detail_order && detailOrder?.detail_order[0]?.id_tour) {
+    if (id) {
       async function detailData() {
-        const data = await detailTourApi(detailOrder?.detail_order[0].id_tour);
-        setTour(data);
+        const data = await detailTourOder(id);
+        setDate(data?.date_go);
+        setIdTour(data?.detail_order[0].id_tour);
+        setDetailOder(data);
       }
       detailData();
     }
-  }, [detailOrder.detail_order]);
-  console.log(tour);
+  }, [id]);
 
   useEffect(() => {
-    async function detailData() {
-      const data = await detailTourOder(id);
-      setDetailOder(data);
+    if (detailOrder?.detail_order && detailOrder?.detail_order[0]?.id_tour) {
+      async function detailDataTour() {
+        const data = await detailTourApi(detailOrder?.detail_order[0].id_tour);
+        setTour(data);
+      }
+      detailDataTour();
     }
-    detailData();
-  }, [id]);
-  const detailCustommer = detailOrder?.detail_order;
-  console.log(detailCustommer);
+  }, [detailOrder.detail_order]);
+  const lengthPayment = detailOrder?.payment?.length;
+
   return (
-    <Container style={{margin:'20px auto',width:'100%'}}>
-      <div className={cx("profile-change-container")} style={{margin:'0 auto'}}>
+    <Container style={{ margin: "20px auto", width: "100%" }}>
+      <div
+        // className={cx("profile-change-container")}
+        style={{
+          margin: "0 auto",
+          width: "950px!important",
+          minHeight: "473px",
+          padding: "24px",
+          border: "1px solid #d5d5d5",
+          borderRadius: "10px",
+        }}
+      >
         <div className={cx("profile-change-heading")}>
           <h2 style={{ margin: "20px" }}>Thông tin Tour</h2>
 
@@ -52,6 +69,7 @@ function DetailOrderTour() {
                 <TableCell className={cx("headCell")}>Tên Tour</TableCell>
                 <TableCell className={cx("headCell")}>Hình ảnh</TableCell>
                 <TableCell className={cx("headCell")}>Nơi khởi hành</TableCell>
+                <TableCell className={cx("headCell")}>Ngày khởi hành</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -71,6 +89,7 @@ function DetailOrderTour() {
                   {" "}
                   {tour?.place_go}
                 </TableCell>
+                <TableCell className={cx("bodyCell")}> {date?.date}</TableCell>
               </TableRow>
             </TableBody>
           </TableContainer>
@@ -83,6 +102,7 @@ function DetailOrderTour() {
                 <TableCell className={cx("headCell")}>Số điện thoại</TableCell>
                 <TableCell className={cx("headCell")}>Địa chỉ</TableCell>
                 <TableCell className={cx("headCell")}>Ngày đặt tour</TableCell>
+                <TableCell className={cx("headCell")}>Trạng thái</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -106,6 +126,16 @@ function DetailOrderTour() {
                 <TableCell className={cx("bodyCell")}>
                   {" "}
                   {detailOrder.order_time}
+                </TableCell>
+                <TableCell className={cx("bodyCell")}>
+                  {" "}
+                  {id &&
+                  (detailOrder?.payment?.length > 0 ||
+                    (detailOrder?.payment &&
+                      detailOrder.payment[0]?.amount_unpaid > 0 &&
+                      detailOrder?.total_price > 0))
+                    ? "Đã thanh toán"
+                    : "Chưa thanh toán đủ"}
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -186,12 +216,12 @@ function DetailOrderTour() {
                   <TableCell className={cx("footCell")}>
                     {detailOrder?.payment?.length > 0
                       ? (
-                          detailOrder.payment[0].amount_paid ?? ""
+                          detailOrder.payment[lengthPayment - 1].amount_paid ?? ""
                         ).toLocaleString("vi-VN", {
                           style: "currency",
                           currency: "VND",
                         })
-                      : ""}
+                      : "0 đ"}
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -205,17 +235,31 @@ function DetailOrderTour() {
                   <TableCell className={cx("footCell")}>
                     {detailOrder?.payment?.length > 0
                       ? (
-                          detailOrder.payment[0].amount_unpaid ?? ""
+                          detailOrder.payment[lengthPayment - 1].amount_unpaid ?? ""
                         ).toLocaleString("vi-VN", {
                           style: "currency",
                           currency: "VND",
                         })
-                      : ""}
+                      : (detailOrder?.total_price ?? "").toLocaleString(
+                          "vi-VN",
+                          {
+                            style: "currency",
+                            currency: "VND",
+                          }
+                        )}
                   </TableCell>
                 </TableRow>
               </TableFooter>
             </Table>
           </TableContainer>
+          <Link
+            to={`/booking/payment/${id}/idTour/${idTour}/date/${date?.id}`}
+            style={{ textDecoration: "none" }}
+          >
+            <Button variant="contained" style={{ margin: "10px 0px" }}>
+              Thanh toán ngay
+            </Button>
+          </Link>
         </div>
       </div>
     </Container>

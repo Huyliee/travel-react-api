@@ -86,6 +86,10 @@ function PayMothods() {
   const [selectRadio, setSelectRadio] = useState("tm");
   const [selectRadioPrice, setSelectRadioPrice] = useState("100");
   const idCustomer = localStorage.getItem("id_customer");
+  const lengthPayment = detailOrder?.payment?.length;
+  const paid = detailOrder?.payment?.length > 0 ? detailOrder?.payment[lengthPayment - 1].amount_paid : "0";
+  const unpaid = detailOrder?.payment?.length > 0 ? detailOrder?.payment[lengthPayment - 1].amount_unpaid : "0";
+  const totalPaid = paid === "0" ? total : unpaid;
   const [daysDifference, setDaysDifference] = useState(0);
   const handleRadio = (e) => {
     setSelectRadio(e.target.value);
@@ -126,12 +130,13 @@ function PayMothods() {
   };
   const handleMomo = async () => {
     try {
+      const orderId = `${idBooking}-${Date.now()}`;
       //const response = await axios.post("http://127.0.0.1:8000/api/momo-payment", {
       const response = await axios.post(
         "http://127.0.0.1:8000/api/momo-payment",
         {
-          amount: selectRadioPrice === "100" ? total : total / 2,
-          orderId: idBooking,
+          amount: selectRadioPrice === "100" ? totalPaid : totalPaid / 2,
+          orderId: orderId,
           idCustomer: idCustomer,
         }
       );
@@ -242,8 +247,8 @@ function PayMothods() {
                     giao dịch sau này)
                   </p>
                   <p>{total.toLocaleString()}đ</p>
-                  <p>0₫</p>
-                  <p>{total.toLocaleString()}đ</p>
+                  <p>{paid.toLocaleString()}đ</p>
+                  <p>{paid === "0" ? total.toLocaleString() : unpaid.toLocaleString()}đ</p>
                   <p>{detailOrder.order_time}</p>
                   <p>
                     <div className={cx("payment-methods")}>
@@ -387,14 +392,14 @@ function PayMothods() {
                   <div style={{ display: "flex", margin: "10px 0px",justifyContent:'center' }}>
                   <FormControlLabel
                     value="50"
-                    control={<Radio disabled={daysDifference <= 2} className={cx("payment-text")}/>}
+                    control={<Radio disabled={daysDifference <= 2 || paid > 0} className={cx("payment-text")}/>}
                     label="Trả trước 50%"
                     className={cx("payment-box")}
                     sx={{".MuiFormControlLabel-label":{fontSize:'16px',fontWeight:500}}}
                   />
                   <FormControlLabel
                     value="100"
-                    control={<Radio className={cx("payment-text")}/>}
+                    control={<Radio disabled={unpaid === 0} className={cx("payment-text")}/>}
                     label="Trả toàn bộ"
                     className={cx("payment-box")}
                     sx={{".MuiFormControlLabel-label":{fontSize:'16px',fontWeight:500}}}

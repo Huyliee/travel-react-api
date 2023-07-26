@@ -78,6 +78,7 @@ function Booking() {
   const handleUpdateTotalPrice = (newTotalPrice) => {
     setTotalPrice(newTotalPrice);
   };
+  const payment = "MoMo";
   //số lượng người lớn
   const handleAdultQuantityChange = (newQuantity) => {
     setAdultQuantity(newQuantity);
@@ -216,6 +217,7 @@ function Booking() {
               id_date,
               detail,
               total_price,
+              payment
             })
             .then((res) => {
               console.log(res);

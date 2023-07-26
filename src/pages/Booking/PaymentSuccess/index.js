@@ -12,7 +12,8 @@ function PaymentSuccess() {
   const searchParams = new URLSearchParams(location.search);
 
   // Lấy giá trị từ queryParams
-  const id_order = searchParams.get('orderId');
+  const id_order_tour = searchParams.get('orderId');
+  const id_order = id_order_tour.split("-")[0];
   const amount_paid = searchParams.get('amount');
   const payment_methods = "MOMO"
   // console.log(id_customer,id_order,amount_paid,payment_methods);
