@@ -8,17 +8,16 @@ import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 function Order() {
-    const [order,setOrder] = useState({});
-    const idCustomer = localStorage.getItem('id_customer');
-    useEffect(() => {
-        async function detailData() {
-          const data = await getOrder(idCustomer);
-          setOrder(data);
-          console.log(order);
-        }
-        detailData();
-      }, [order,idCustomer]);
-      
+  const [order, setOrder] = useState({});
+  const idCustomer = localStorage.getItem("id_customer");
+  useEffect(() => {
+    async function detailData() {
+      const data = await getOrder(idCustomer);
+      setOrder(data);
+    }
+    detailData();
+  }, [order, idCustomer]);
+
   return (
     <div>
       <Box>
@@ -29,16 +28,28 @@ function Order() {
               Quý khách của thể xem thông tin cơ bản và chi tiết các tour đã đặt
             </span>
           </div>
-          <div>
-            {Array.isArray(order) && order.map((data)=>(
-              <Link to={`/detai_order_tour/${data.order.id_order_tour}`} style={{textDecoration:"none"}}>
-
-                <CardOrder id={data.order.id_order_tour} name={data.order.name} email={data.order.email} idTour={data.dataDate.id_tour}
-                
-                
-                />
+          <div
+            style={{
+              overflow: "scroll",
+              maxHeight: "850px",
+              overflowX: "hidden",
+            }}
+          >
+            {Array.isArray(order) &&
+              order.map((data) => (
+                <Link
+                  to={`/detai_order_tour/${data.order.id_order_tour}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <CardOrder
+                    id={data.order.id_order_tour}
+                    name={data.order.name}
+                    email={data.order.email}
+                    idTour={data.dataDate.id_tour}
+                    idOrder={data.order.id_order_tour}
+                  />
                 </Link>
-            ))}
+              ))}
           </div>
         </div>
       </Box>

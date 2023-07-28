@@ -1,24 +1,16 @@
 import styles from "./Home.module.scss";
 import classNames from "classnames/bind";
-import { Autocomplete, Button, FormControl, MenuItem, Select, TextField } from "@mui/material";
-import images from "~/component/assets/images";
+import {  Button } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight,
-  faCalendar,
   faCreditCard,
   faHeadset,
-  faLocationDot,
-  faMagnifyingGlass,
   faMobile,
   faMoneyBill,
   faPlaneUp,
   faThumbsUp,
-  faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useEffect, useRef, useState } from "react";
 import CartLocation from "./CartLocation";
 import WhyChooseBox from "./WhyChoose";
@@ -63,14 +55,14 @@ function HomePage() {
         toggleActions: "play none none reverse",
       },})
   },[])
-  const [guest, setGuest] = useState("Guests");
-  const handleChange = (event) => {
-    setGuest(event.target.value);
-  };
-  const [activeButton, setActiveButton] = useState(0);
-  const handleActive = (btnIndex) => {
-    setActiveButton(btnIndex);
-  };
+  // const [guest, setGuest] = useState("Guests");
+  // const handleChange = (event) => {
+  //   setGuest(event.target.value);
+  // };
+  // const [activeButton, setActiveButton] = useState(0);
+  // const handleActive = (btnIndex) => {
+  //   setActiveButton(btnIndex);
+  // };
   //API Product
   const [products, setProduct] = useState([]);
   useEffect(() => {
@@ -178,6 +170,7 @@ function HomePage() {
               Mùa hè đang đến, và trên khắp thế giới, những festival mùa hè đang
               chờ đón du khách bằng những trải nghiệm tuyệt vời
             </p>
+            <Link to="/tour" style={{textDecoration:'none'}}>
             <Button
               variant="contained"
               sx={{
@@ -198,6 +191,7 @@ function HomePage() {
             >
               Start your search
             </Button>
+            </Link>
           </div>
           <div className={cx("slide-img")}>
             <div className={cx("slide-img-left")}>
@@ -222,105 +216,6 @@ function HomePage() {
           </div>
         </div>
         {/* Search container */}
-        <div className={cx("search-container")} ref={searchElement}>
-          <form className={cx("search-body")}>
-            <div
-              className={cx("input-container")}
-              style={{ borderRight: "2px solid #ddd", height: 110 }}
-            >
-              <div
-                className={cx("input-location-icon")}
-                style={{ marginRight: 10 }}
-              >
-                <FontAwesomeIcon icon={faLocationDot} />
-              </div>
-              <div className={cx("input-location")}>
-
-                <Autocomplete
-                    disablePortal
-                    id="combo-box-demo"
-                    options={products}
-                    sx={{ width: 300 ,marginBottom:'20px'}}
-                    // onChange={handleOnchangeTour}
-                    // value={valueTour}
-                    getOptionLabel={(option) => option.name_tour || ""}
-                    renderInput={(params) => (
-                      <TextField {...params} label="Bạn muốn đi đâu?" variant="standard" InputLabelProps={{
-                        style: { fontSize: '18px',fontWeight:600 /* other label styles */ }
-                      }}  />
-                    )}
-                  />
-              </div>
-            </div>
-            <div
-              className={cx("input-container")}
-              style={{ borderRight: "2px solid #ddd" }}
-            >
-              <div className={cx("input-location-icon")}>
-                <FontAwesomeIcon icon={faCalendar} />
-              </div>
-              <div className={cx("input-location")}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <MobileDatePicker
-                    placeholder="dd/mm/yyyy"
-                    sx={{
-                      width: 220,
-                      ".MuiInputBase-input": { height: 5, fontSize: 18 },
-                      "& .MuiOutlinedInput-notchedOutline": {
-                        border: "none",
-                      },
-                    }}
-                  />
-                </LocalizationProvider>
-                <span style={{ marginLeft: 14 }}>Date go</span>
-              </div>
-            </div>
-            <div className={cx("input-container")} style={{ marginBottom: 13 }}>
-              <div
-                className={cx("input-location-icon")}
-                style={{ marginTop: 17 }}
-              >
-                <FontAwesomeIcon icon={faUserPlus} />
-              </div>
-              <div className={cx("input-location")}>
-                <FormControl sx={{ height: 40, minWidth: 120 }}>
-                  <Select
-                    sx={{
-                      "& .MuiOutlinedInput-notchedOutline": {
-                        border: "none",
-                      },
-                      fontSize: 18,
-                      fontWeight: 600,
-                      color: "#9b9ea4",
-                    }}
-                    label="Guests"
-                    onChange={handleChange}
-                    value={guest}
-                  >
-                    <MenuItem value="Guests" disabled>
-                      Guests
-                    </MenuItem>
-                    <MenuItem value={1}>1</MenuItem>
-                    <MenuItem value={2}>2</MenuItem>
-                    <MenuItem value={3}>3</MenuItem>
-                    <MenuItem value={4}>4</MenuItem>
-                  </Select>
-                </FormControl>
-                <span style={{ marginLeft: 15, marginTop: 10 }}>
-                  Number Guest?
-                </span>
-              </div>
-            </div>
-            <div className={cx("circle-btn")}>
-              <button>
-                <FontAwesomeIcon
-                  icon={faMagnifyingGlass}
-                  className={cx("icon-circle-btn")}
-                />
-              </button>
-            </div>
-          </form>
-        </div>
         {/* Ưu đãi */}
         <div className={cx("location-container")} ref={bannerElement}>
           <div className={cx("location-heading-container")}>
@@ -447,7 +342,7 @@ function HomePage() {
             </span>
           </div>
           <div className={cx("btn-location-product-container")}>
-            <div className={cx("btn-location-product-list")}>
+            {/* <div className={cx("btn-location-product-list")}>
               <ul className={cx("ul-location-product")}>
                 <li className={cx("li-location-product")}>
                   <button
@@ -494,7 +389,7 @@ function HomePage() {
                   </button>
                 </li>
               </ul>
-            </div>
+            </div> */}
             <div className={cx("btn-location-product-all-container")}>
               <Link to="/tour" style={{textDecoration:'none'}}>
               <button className={cx("btn-location-product-all")}>
@@ -504,7 +399,7 @@ function HomePage() {
             </div>
           </div>
           <div className={cx("product-container")}>
-            {products.map((product, index) => (
+            {products.slice(0, 8).map((product, index) => (
               <Product
                 key={index}
                 img={product.img_tour}
@@ -535,7 +430,7 @@ function HomePage() {
             </span>
           </div>
           <div className={cx("btn-location-product-container")}>
-            <div className={cx("btn-location-product-list")}>
+            {/* <div className={cx("btn-location-product-list")}>
               <ul className={cx("ul-location-product")}>
                 <li className={cx("li-location-product")}>
                   <button
@@ -582,7 +477,7 @@ function HomePage() {
                   </button>
                 </li>
               </ul>
-            </div>
+            </div> */}
             <div className={cx("btn-location-product-all-container")}>
             <Link to="/tour" style={{textDecoration:'none'}}>
               <button className={cx("btn-location-product-all")}>
@@ -592,7 +487,7 @@ function HomePage() {
             </div>
           </div>
           <div className={cx("product-container")}>
-            {products.map((product, index) => (
+            {products.slice(0, 8).map((product, index) => (
               <ProductDisCount
                 key={index}
                 img={product.img_tour}

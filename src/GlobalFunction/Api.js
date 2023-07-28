@@ -104,7 +104,7 @@ export const dategoApi = async (id) =>{
 }
 //Api danh sách khách hàng của 1 ngày cụ thể của 1 tour
 export const changePass = async (id) =>{
-    const res = await axios.get(`http://127.0.0.1:8000/api/user/changepass/${id}`)
+    const res = await axios.put(`http://127.0.0.1:8000/api/user/changepass/${id}`)
     return res.data.data;
 }
 //Api danh sách khách hàng của 1 ngày cụ thể của 1 tour

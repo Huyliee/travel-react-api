@@ -32,8 +32,8 @@ function App() {
                 path={route.path}
                 element={
                   <Layout>
-                  {authentication.isAuthentication() === 'admin' ? (
-                    <Page to="/admin"/>
+                  {authentication.isAuthentication() ? (
+                    <Page/>
                   ):(<Navigate to="/login"/>)}
                   </Layout>
                 }

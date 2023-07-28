@@ -24,7 +24,7 @@ function Profile() {
         setDetailSocial(data);
       } else if (faceId) {
         const data = await userFaceio(payload);
-        setDetailCustomer(data);
+        setDetailSocial(data);
         localStorage.setItem("id_customer",data[0].id)
       } else {
         const data = await detailCustomerApi(idCustomer);
@@ -61,7 +61,6 @@ function Profile() {
             inputName="customer_name"
             date={false}
           />
-          <InfoCustomer title="Số tour đã đi" value="Chưa có thông tin" />
           <InfoCustomer
             title="Email"
             value={ggtoken || faceId ? detailSocial[0]?.email : detailCustomer?.email}

@@ -186,7 +186,7 @@ function Header() {
                   </div>
                 )}
               >
-                <Avatar sx={{ bgcolor: "#4f46e5" }} src={avt} > </Avatar>
+                <Avatar sx={{ bgcolor: "#4f46e5" }} src={avt || "https://cdn-icons-png.flaticon.com/512/146/146037.png?w=740&t=st=1689340738~exp=1689341338~hmac=249f34566cf05d7895f780c522dbb4ce00ebb604a09748b205889d74a9f99632"} > </Avatar>
               </Tippy>
             ) : (
               <Link to="/login" className={cx("login-btn-link")}>

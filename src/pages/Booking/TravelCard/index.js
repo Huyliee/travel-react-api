@@ -26,6 +26,7 @@ import { faBus, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { applyDiscount, detailTourApi } from "~/GlobalFunction/Api";
 import { HashLoader } from "react-spinners";
+import swal from "sweetalert";
 
 const cx = classNames.bind(styles);
 
@@ -69,8 +70,32 @@ function TravelCard({
   const handleDiscount = async () => {
     // const lastTotal = totalPrice;
     if (discount !== "") {
-      const data = await applyDiscount(totalPrice, discount);
-      setTotalPrice(data.discounted_total_amount);
+      try {
+        const data = await applyDiscount(totalPrice, discount);
+        swal({
+          title: "Thành công!",
+          text: "Áp dụng mã thành công",
+          icon: "success",
+          buttons: false,
+        })
+        setTotalPrice(data.discounted_total_amount);
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          const errorMessage = error.response.data.message;
+          if (errorMessage) {
+            // Hiển thị thông báo "Mã giảm giá đã hết hạn" bằng SweetAlert
+            swal({
+              title: "Thất bại!",
+              text: errorMessage,
+              icon: "error",
+              buttons: false,
+            })
+          } 
+        } else {
+          // Xử lý lỗi không liên quan đến lỗi 400
+          // ...
+        }
+      }
     } else {
       setTotalPrice(originalPrice);
     }

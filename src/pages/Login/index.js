@@ -51,10 +51,20 @@ function Login() {
     setTimeout(async () => {
       try {
         const res = await loginApi(email, password);
-        console.log(res.permission);
-        localStorage.setItem("access_token", res.access_token);
-        localStorage.setItem("id_customer", res.id);
-        localStorage.setItem("permission", res.permission);
+        console.log(res);
+        if(res.permission === "user"){
+          localStorage.setItem("access_token", res.access_token);
+          localStorage.setItem("id_customer", res.id);
+          localStorage.setItem("name", res.customer_name);
+          localStorage.setItem("email", res.email);
+          localStorage.setItem("phone", res.phone);
+          localStorage.setItem("address", res.address);
+          localStorage.setItem("id_customer", res.id);
+          localStorage.setItem("permission", res.permission);
+        }
+        else{
+          localStorage.setItem("permissionAdmin", res.permission);
+        }
         setLoading(false);
         swal({
           title: "Thành công!",
@@ -70,6 +80,13 @@ function Login() {
           }
         });
       } catch (error) {
+        swal({
+          title: "Thất bại!",
+          text: "Sai thông tin đăng nhập!",
+          icon: "error",
+          buttons: false,
+        })
+        setLoading(false);
         setError(error.res.message);
       }
     }, 1500);
@@ -92,9 +109,8 @@ function Login() {
     }, 1500);
   };
 
-  console.log(faceIO);
-  if (faceIO && !faceioInstance) {
-    faceioInstance = new faceIO("fioa1ce0");
+  console.log(faceIO);if (faceIO && !faceioInstance) {
+    faceioInstance = new faceIO("fioa7acc");
   }
 
   console.log(faceioInstance);
@@ -166,8 +182,7 @@ function Login() {
         console.log("Two or more faces were detected during the scan process");
         break;
       case fioErrCode.PAD_ATTACK:
-        console.log(
-          "Presentation (Spoof) Attack (PAD) detected during the scan process"
+        console.log("Presentation (Spoof) Attack (PAD) detected during the scan process"
         );
         break;
       case fioErrCode.FACE_MISMATCH:
@@ -256,8 +271,7 @@ function Login() {
     <div className={cx("Login-main")}>
       <div className={cx("Login-container")}>
         {error && <p>{error}</p>}
-        <h2 className={cx("Login-text")}>Login</h2>
-        <div className={cx("Login-container-body")}>
+        <h2 className={cx("Login-text")}>Login</h2><div className={cx("Login-container-body")}>
           <div className={cx("Login-social-container")}>
             <LoginSocialFacebook
               appId="1504487773417163"
@@ -337,8 +351,7 @@ function Login() {
             localStorage.setItem("ggtoken", data.access_token);
             localStorage.setItem("idgg",data.sub);
          
-            const customer_name = data.name;
-            const email = data.email;
+            const customer_name = data.name;const email = data.email;
             const password = data.sub;
             registerApi(customer_name,email,password);
    
@@ -430,8 +443,7 @@ function Login() {
                   borderRadius: "9999px",
                   "&:hover": {
                     backgroundColor: "#4338ca",
-                  },
-                  "& .MuiButton-label": {
+                  },"& .MuiButton-label": {
                     borderRadius: "9999px",
                   },
                   marginTop: "25px",
@@ -516,7 +528,7 @@ function Login() {
                   <label className={cx("label")}>
                     <span className={cx("label-input")}>Họ tên</span>
                     <TextField
-                      fullWidth
+                        fullWidth
                       label="Nhập họ tên"
                       id="fullWidth"
                       sx={{

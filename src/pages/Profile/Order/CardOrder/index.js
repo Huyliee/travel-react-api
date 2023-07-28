@@ -12,11 +12,12 @@ import { Chip } from "@mui/material";
 import classNames from "classnames/bind";
 import styles from "~/pages/Profile/Profile.module.scss";
 import { useEffect, useState } from "react";
-import { detailTourApi } from "~/GlobalFunction/Api";
+import { detailTourApi, detailTourOder } from "~/GlobalFunction/Api";
 const cx = classNames.bind(styles);
 
-function CardOrder({id,name,email,idTour}) {
+function CardOrder({id,name,email,idTour ,idOrder}) {
     const [detail,setDetailTour] = useState({});
+    const [detailOrder,setDetailOrder] = useState({});
     useEffect(() => {
         async function detailData() {
           const data = await detailTourApi(idTour);
@@ -24,7 +25,16 @@ function CardOrder({id,name,email,idTour}) {
         }
         detailData();
       }, [idTour]);
-      console.log(detail);
+
+      useEffect(() => {
+        if (idOrder) {
+          async function detailData() {
+            const data = await detailTourOder(idOrder);
+            setDetailOrder(data);
+          }
+          detailData();
+        }
+      }, [idOrder]);
   return (
     <div>
       <div className={cx("product-box")}>
@@ -66,7 +76,7 @@ function CardOrder({id,name,email,idTour}) {
                 icon={faCalendarDay}
                 className={cx("location-tour-icon")}
               />
-              <span className={cx("location-tour-text")}>{detail.date_back}</span>
+              <span className={cx("location-tour-text")}>{detailOrder?.date_go?.date}</span>
             </div>
           </div>
           <div className={cx("info-order")}>
@@ -84,12 +94,12 @@ function CardOrder({id,name,email,idTour}) {
             </div>
             <div>
                 <FontAwesomeIcon icon={faUsers} className={cx("location-tour-icon")} />
-                <span>3</span>
+                <span>{detailOrder?.detail_order?.length}</span>
             </div>
           </div>
           <div className={cx("line-product")}></div>
           <div className={cx("price-tour-container")}>
-            <span className={cx("price-tour-text")}>7,000,000đ /person</span>
+            <span className={cx("price-tour-text")}>{detail?.adult_price?.toLocaleString()}đ /person</span>
             <div className={cx("rating-container")}>
               <FontAwesomeIcon icon={faStar} className={cx("rating-star")} />
               <span className={cx("rating-text")}>4.8</span>

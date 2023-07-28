@@ -23,6 +23,7 @@ import DetailTourAdmin from "~/pages/TourAdmin/DetailTourAdmin";
 import ChangePassword from "~/pages/Profile/ChangePassword";
 import DateGoAdmin from "~/pages/DateGoAdmin";
 import Faq from "~/pages/FAQ";
+import DetailOrder from "~/pages/OrderAdmin/DetailOrder";
 
 // import { useState , useEffect } from "react";
 // import { getTour } from "~/GlobalFunction/Api";
@@ -64,6 +65,7 @@ const privateRoutes =[
     {path: '/admin/user' , component:UserAdmin , layout:AdminLayout},
     {path: '/admin/news' , component:NewsAdmin , layout:AdminLayout},
     {path: '/admin/order' , component:OrderAdmin , layout:AdminLayout},
+    {path: '/admin/order/:id' , component:DetailOrder , layout:AdminLayout},
     {path: '/admin/datego' , component:DateGoAdmin , layout:AdminLayout},
 ]
 

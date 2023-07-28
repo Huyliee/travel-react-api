@@ -143,13 +143,13 @@ function TablePrice({ id, month , dateParent }) {
                     ) : (
                       <Link
                         to="/login"
-                        style={row.seats === 0 ? { pointerEvents: "none" } : {}}
+                        style={row.seats === 0 || isPastDate(row.date) ? { pointerEvents: "none" } : {}}
                       >
                         {" "}
                         <Button
                           variant="contained"
                           style={{ marginLeft: "10px" }}
-                          disabled={row.seats === 0}
+                          disabled={row.seats === 0 || isPastDate(row.date)}
                         >
                           Chọn ngày
                         </Button>

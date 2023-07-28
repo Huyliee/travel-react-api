@@ -173,7 +173,7 @@ function ModalAdd({ open, handleClose, order, customer, button }) {
         id_date,
         detail,
         total_price,
-        payment
+        payment,
       })
       .then((res) => {
         console.log(res);
@@ -198,6 +198,7 @@ function ModalAdd({ open, handleClose, order, customer, button }) {
     }
     detailData();
   }, [idChooseTour]);
+  console.log(detailTour);
   const renderAdultForms = () => {
     const adultForms = [];
     for (let i = 0; i < adultFormCount; i++) {
@@ -207,7 +208,10 @@ function ModalAdd({ open, handleClose, order, customer, button }) {
             label={`Họ tên người lớn ${i + 1}`}
             variant="outlined"
             className={cx("field-customer")}
-            value={button ? detail.adultInfo[i]?.name_customer : ""}
+            value={
+              detail.adultInfo[i]?.name_customer ||
+              listCustomerAdult[i]?.name_customer
+            }
             onChange={(event) =>
               handleAdultFormChange(i, "name_customer", event.target.value)
             }
@@ -218,15 +222,16 @@ function ModalAdd({ open, handleClose, order, customer, button }) {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={
-                button
-                  ? adultFormData[i]?.gender || detail.adultInfo[i]?.sex
-                  : ""
+                adultFormData[i]?.gender ||
+                detail.adultInfo[i]?.sex ||
+                listCustomerAdult[i]?.sex
               }
               onChange={(event) =>
                 handleAdultFormChange(i, "gender", event.target.value)
               }
               label="Age"
             >
+              <MenuItem value="">None</MenuItem>
               <MenuItem value="Nam">Nam</MenuItem>
               <MenuItem value="Nữ">Nữ</MenuItem>
             </Select>
@@ -252,7 +257,9 @@ function ModalAdd({ open, handleClose, order, customer, button }) {
             label={`CMND người lớn ${i + 1}`}
             variant="outlined"
             className={cx("field-customer")}
-            value={button ? detail.adultInfo[i]?.CMND : ""}
+            value={
+            detail.adultInfo[i]?.CMND || listCustomerAdult[i]?.CMND
+            }
             onChange={(event) =>
               handleAdultFormChange(i, "CMND", event.target.value)
             }
@@ -272,7 +279,10 @@ function ModalAdd({ open, handleClose, order, customer, button }) {
             label={`Thông tin trẻ em ${i + 1}`}
             variant="outlined"
             className={cx("field-customer")}
-            value={detail.childInfo[i]?.name_customer || ""}
+            value={
+              detail.childInfo[i]?.name_customer ||
+              listCustomerChild[i]?.name_customer
+            }
             onChange={(event) =>
               handleChildFormChange(i, "name_customer", event.target.value)
             }
@@ -282,7 +292,11 @@ function ModalAdd({ open, handleClose, order, customer, button }) {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={childFormData[i]?.gender || detail.childInfo[i]?.sex || ""}
+              value={
+                childFormData[i]?.gender ||
+                detail.childInfo[i]?.sex ||
+                listCustomerChild[i]?.sex
+              }
               onChange={(event) =>
                 handleChildFormChange(i, "gender", event.target.value)
               }
@@ -313,7 +327,7 @@ function ModalAdd({ open, handleClose, order, customer, button }) {
             label={`Thông tin trẻ em ${i + 1}`}
             variant="outlined"
             className={cx("field-customer")}
-            value={detail.childInfo[i]?.CMND || ""}
+            value={detail.childInfo[i]?.CMND || listCustomerChild[i]?.CMND}
             onChange={(event) =>
               handleChildFormChange(i, "CMND", event.target.value)
             }
@@ -330,6 +344,26 @@ function ModalAdd({ open, handleClose, order, customer, button }) {
 
     total_price = adultFormCount * adultPrice + childFormCount * childPrice;
   }
+
+  const [listCustomerAdult, setListCustomerAdult] = useState({});
+  const [listCustomerChild, setListCustomerChild] = useState({});
+  useEffect(() => {
+    if (customer) {
+      const adultsCount = customer.filter(
+        (item) => item.age === "Người lớn"
+      ).length;
+      const adultsData = customer.filter((item) => item.age === "Người lớn");
+      const childCount = customer.filter(
+        (item) => item.age === "Trẻ em"
+      ).length;
+      const childData = customer.filter((item) => item.age === "Trẻ em");
+      setListCustomerAdult(adultsData);
+      setAdultFormCount(adultsCount);
+      setListCustomerChild(childData);
+      setChildFormCount(childCount);
+    }
+  }, [customer]);
+
   return (
     <Container>
       <ToastContainer position="top-right" autoClose={3000} />
@@ -362,7 +396,7 @@ function ModalAdd({ open, handleClose, order, customer, button }) {
                     variant="outlined"
                     className={cx("field-text")}
                     name="name"
-                    value={formData.name}
+                    value={formData.name || order?.name}
                     onChange={handleChange}
                   />
                 </div>
@@ -374,7 +408,7 @@ function ModalAdd({ open, handleClose, order, customer, button }) {
                     variant="outlined"
                     className={cx("field-text")}
                     name="email"
-                    value={formData.email}
+                    value={formData.email || order?.email}
                     onChange={handleChange}
                   />
                 </div>
@@ -386,7 +420,7 @@ function ModalAdd({ open, handleClose, order, customer, button }) {
                     variant="outlined"
                     className={cx("field-text")}
                     name="phone"
-                    value={formData.phone}
+                    value={formData.phone || order?.phone}
                     onChange={handleChange}
                   />
                 </div>
@@ -398,7 +432,7 @@ function ModalAdd({ open, handleClose, order, customer, button }) {
                     variant="outlined"
                     className={cx("field-text")}
                     name="address"
-                    value={formData.address}
+                    value={formData.address || order?.address}
                     onChange={handleChange}
                   />
                 </div>
@@ -406,7 +440,7 @@ function ModalAdd({ open, handleClose, order, customer, button }) {
               <h4 className={cx("heading")}>Tour du lịch</h4>
               <Box className={cx("tour-container")}>
                 <Autocomplete
-                  value={button ? valueTour || detailTour : ""}
+                  value={button ? valueTour || detailTour : null}
                   options={dataTour}
                   getOptionLabel={(option) => option.name_tour || ""}
                   onChange={handleOnChange}
@@ -435,70 +469,70 @@ function ModalAdd({ open, handleClose, order, customer, button }) {
                   )}
                 />
               </Box>
-              <Box sx={{display:'flex',margin:'20px 0px'}}>
-              <form onSubmit={handleCheckout} encType="multipart/form-data">
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    width: "480px",
-                    margin: "10px 0px",
-                  }}
-                >
-                  <Box>
-                    {" "}
-                    {valueDate === "" ? (
-                      ""
-                    ) : (
-                      <h3 style={{ fontSize: "16px" }}>
-                        Giá người lớn: {valueTour?.adult_price}
-                      </h3>
-                    )}
-                    {valueDate === "" ? (
-                      ""
-                    ) : (
-                      <h3 style={{ fontSize: "16px" }}>
-                        Giá trẻ em: {valueTour?.child_price}
-                      </h3>
-                    )}
-                  </Box>
-                  <Box>
-                    {valueDate === "" ? (
-                      ""
-                    ) : (
-                      <h3 style={{ fontSize: "16px" }}>
-                        Tổng tiền: {total_price}
-                      </h3>
-                    )}
-                    {valueDate === "" ? (
-                      ""
-                    ) : (
-                      <h3 style={{ fontSize: "16px" }}>
-                        Số chỗ còn: {valueDate?.seats}
-                      </h3>
-                    )}
-                  </Box>
-                </Box>
-                <Button type="submit">Thêm</Button>
-              </form>
-              <Box sx={{width:'180px',marginLeft:'33px'}}>
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">
-                    Thanh toán
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={payment}
-                    label="Thanh toán"
-                    onChange={handleChangePayment}
+              <Box sx={{ display: "flex", margin: "20px 0px" }}>
+                <form onSubmit={handleCheckout} encType="multipart/form-data">
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      width: "480px",
+                      margin: "10px 0px",
+                    }}
                   >
-                    <MenuItem value="Tiền mặt">Tiền mặt</MenuItem>
-                    <MenuItem value="MoMo">MoMo</MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
+                    <Box>
+                      {" "}
+                      {valueDate === "" ? (
+                        ""
+                      ) : (
+                        <h3 style={{ fontSize: "16px" }}>
+                          Giá người lớn: {valueTour?.adult_price}
+                        </h3>
+                      )}
+                      {valueDate === "" ? (
+                        ""
+                      ) : (
+                        <h3 style={{ fontSize: "16px" }}>
+                          Giá trẻ em: {valueTour?.child_price}
+                        </h3>
+                      )}
+                    </Box>
+                    <Box>
+                      {valueDate === "" ? (
+                        ""
+                      ) : (
+                        <h3 style={{ fontSize: "16px" }}>
+                          Tổng tiền: {total_price}
+                        </h3>
+                      )}
+                      {valueDate === "" ? (
+                        ""
+                      ) : (
+                        <h3 style={{ fontSize: "16px" }}>
+                          Số chỗ còn: {valueDate?.seats}
+                        </h3>
+                      )}
+                    </Box>
+                  </Box>
+                  <Button type="submit">Thêm</Button>
+                </form>
+                <Box sx={{ width: "180px", marginLeft: "33px" }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">
+                      Thanh toán
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={payment}
+                      label="Thanh toán"
+                      onChange={handleChangePayment}
+                    >
+                      <MenuItem value="Tiền mặt">Tiền mặt</MenuItem>
+                      <MenuItem value="MoMo">MoMo</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Box>
               </Box>
             </Box>
             <Box className={cx("col-right")}>

@@ -62,11 +62,13 @@ function Booking() {
   const id_customer = localStorage.getItem("id_customer");
   const nameSocial = localStorage.getItem("name");
   const emailSocial = localStorage.getItem("email");
+  const phoneSocial = localStorage.getItem("phone");
+  const addressSocial = localStorage.getItem("address");
   const [email, setEmail] = useState(emailSocial);
   const [name, setName] = useState(nameSocial);
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState(phoneSocial);
   const [loading, setLoading] = useState(false);
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState(addressSocial);
   const [detail, setDetail] = useState({
     adultInfo: [],
     childInfo: [],
@@ -180,8 +182,8 @@ function Booking() {
         size: "invisible",
       }
     );
+  
     const phoneNumber = "+84" + phone;
-    console.log(phoneNumber);
     firebase
       .auth()
       .signInWithPhoneNumber(phoneNumber, recaptchaVerifier)
@@ -192,6 +194,14 @@ function Booking() {
         console.error("Error sending verification code:", error);
       });
   };
+  
+  // const handleResendOTP = () => {
+  //   handleSendCode();
+  // };
+  
+  
+  
+  
   const [open, setOpen] = useState(false);
   const [otp, setOtp] = useState("");
   const handleOpen = () => setOpen(true);
@@ -234,7 +244,6 @@ function Booking() {
         console.error('Error verifying code:', error);
       });
   };
-  console.log(total_price);
   return (
     <>
       <Container maxWidth="xl" style={{ padding: "20px 68px" }}>
@@ -259,6 +268,13 @@ function Booking() {
               autoFocus
               className="opt-container "
             ></OtpInput>
+                    {/* <Button
+          variant="outlined"
+          onClick={handleResendOTP}
+          style={{ width: "100%" }}
+        >
+          Gửi lại OTP
+        </Button> */}
             <Button variant="contained" onClick={onCheckout} style={{margin:'16px 0px',width:'100%'}}>Xác thực OTP</Button>
           </Box>
         </Modal>

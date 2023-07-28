@@ -1,18 +1,14 @@
 import {
   Box,
   FormControl,
-  FormControlLabel,
   InputLabel,
   MenuItem,
   Select,
   Slider,
-  Switch,
   TextField,
   Typography,
 } from "@mui/material";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import {  useRef, useState } from "react";
+import { useRef, useState } from "react";
 import styles from "./Filter.module.scss";
 import classNames from "classnames/bind";
 import Annyang from "annyang";
@@ -40,58 +36,55 @@ function Filter({
       Annyang.abort();
       Annyang.removeCallback("result", resultCallback);
       setIsListening(false);
-  
+
       // Kiểm tra nếu audio đang phát, thì dừng nó trước khi chơi âm thanh khi thu xong
       if (!audioRef.current.paused) {
         audioRef.current.pause();
         audioRef.current.currentTime = 0; // Đặt thời gian trở về 0 để chuẩn bị cho lần phát tiếp theo
       }
-  
+
       // Chơi âm thanh khi thu xong
       audioRef.current.src = beepSound;
       audioRef.current.play();
     } else {
       Annyang.setLanguage("vi-VN"); // Thiết lập ngôn ngữ tiếng Việt
-  
+
       // Đăng ký callback cho sự kiện result
       Annyang.addCallback("result", resultCallback);
-  
+
       // Chơi âm thanh khi bắt đầu thu
       audioRef.current.src = beepSound;
       audioRef.current.play();
-  
+
       // Bắt đầu nhận dạng giọng nói
       Annyang.start({ autoRestart: false, continuous: false });
-  
+
       setIsListening(true);
     }
   };
-  
+
   const resultCallback = (phrases) => {
     let searchQuery = phrases[0].trim(); // Loại bỏ khoảng trắng dư thừa
-    if (searchQuery.endsWith('.')) {
+    if (searchQuery.endsWith(".")) {
       searchQuery = searchQuery.slice(0, -1); // Loại bỏ dấu chấm cuối cùng
     }
     setNameTour(searchQuery);
-  
+
     // Dừng nhận dạng giọng nói và xóa callback khi kết thúc
     Annyang.abort();
     Annyang.removeCallback("result", resultCallback);
     setIsListening(false);
-  
+
     // Kiểm tra nếu audio đang phát, thì dừng nó trước khi chơi âm thanh khi thu xong
     if (!audioRef.current.paused) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0; // Đặt thời gian trở về 0 để chuẩn bị cho lần phát tiếp theo
     }
-  
+
     // Chơi âm thanh khi thu xong
     audioRef.current.src = beepSound;
     audioRef.current.play();
-
   };
-  
-
 
   const marks = [
     {
@@ -128,31 +121,27 @@ function Filter({
       <div className={cx("filter-main")}>
         <div className={cx("tour-filter")}>
           <span>Tìm theo tên</span>
-          <div style={{display:'flex',alignItems:'center'}}>
-          <TextField
-            id="outlined-basic"
-            label="Nhập tên"
-            variant="outlined"
-            sx={{ width: 280 }}
-            onKeyPress={handleKeyPress}
-            value={nameTour}
-            onChange={handleInput}
-          />
-          <FontAwesomeIcon icon={faMicrophone} onClick={handleSpeechRecognition} cursor="pointer" style={{ fontSize: '24px', marginLeft: '10px', color: isListening ? 'red' : 'blue' }}/>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <TextField
+              id="outlined-basic"
+              label="Nhập tên"
+              variant="outlined"
+              sx={{ width: 280 }}
+              onKeyPress={handleKeyPress}
+              value={nameTour}
+              onChange={handleInput}
+            />
+            <FontAwesomeIcon
+              icon={faMicrophone}
+              onClick={handleSpeechRecognition}
+              cursor="pointer"
+              style={{
+                fontSize: "24px",
+                marginLeft: "10px",
+                color: isListening ? "red" : "blue",
+              }}
+            />
           </div>
-        </div>
-        <div className={cx("tour-filter")}>
-          <span>Loại hình du lịch</span>
-          <FormControl sx={{ minWidth: 290 }}>
-            <InputLabel id="demo-simple-select-helper-label">
-              Loại hình
-            </InputLabel>
-            <Select labelId="demo-simple-select-helper-label" label="Loại hình">
-              <MenuItem value="Tất cả">Tất cả</MenuItem>
-              <MenuItem value="1">Tour giảm giá</MenuItem>
-              <MenuItem value="1">Tour hot</MenuItem>
-            </Select>
-          </FormControl>
         </div>
 
         <div className={cx("tour-filter")}>
@@ -161,27 +150,20 @@ function Filter({
             <InputLabel id="demo-simple-select-helper-label">
               Địa điểm
             </InputLabel>
-            <Select labelId="demo-simple-select-helper-label" label="Loại hình" onChange={handleSelect} value={selectValue}>
+            <Select
+              labelId="demo-simple-select-helper-label"
+              label="Loại hình"
+              onChange={handleSelect}
+              value={selectValue}
+            >
               <MenuItem value="">Tất cả</MenuItem>
               <MenuItem value="bg">Hồ Chí Minh</MenuItem>
-              <MenuItem value="Hà Nội">Hà Nội</MenuItem>
-              <MenuItem value="Phú Quốc">Phú Quốc</MenuItem>
-              <MenuItem value="Đà Lạt">Đà Lạt</MenuItem>
-              <MenuItem value="Vũng Tàu">Vũng Tàu</MenuItem>
+              <MenuItem value="hn">Hà Nội</MenuItem>
+              <MenuItem value="pq">Phú Quốc</MenuItem>
+              <MenuItem value="dl">Đà Lạt</MenuItem>
+              <MenuItem value="vt">Vũng Tàu</MenuItem>
             </Select>
           </FormControl>
-        </div>
-        <div className={cx("tour-filter")}>
-          <span>Ngày đi</span>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              placeholder="dd/mm/yyyy"
-              sx={{
-                width: 290,
-                ".MuiInputBase-input": { height: 3, fontSize: 12 },
-              }}
-            />
-          </LocalizationProvider>
         </div>
         <div className={cx("tour-filter")}>
           <span>Ngân sách của quý khách</span>
@@ -210,30 +192,25 @@ function Filter({
               }}
               //  getAriaValueText={valuetext}
             />
-            <Typography gutterBottom sx={{ border: "1px" , fontSize:'16px',marginTop:'20px',color:'#fd5056',fontWeight:500 }}>
+            <Typography
+              gutterBottom
+              sx={{
+                border: "1px",
+                fontSize: "16px",
+                marginTop: "20px",
+                color: "#fd5056",
+                fontWeight: 500,
+              }}
+            >
               Price:{" "}
               {priceTour.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} VND
             </Typography>
           </Box>
         </div>
-        <div className={cx("tour-filter")}>
-          <span>Hiển thị những chuyến đi có</span>
-          <FormControl sx={{ width: 290 }}>
-            <FormControlLabel
-              control={<Switch defaultChecked />}
-              label="Khuyến mãi"
-            />
-            <FormControlLabel
-              control={<Switch defaultChecked />}
-              label="Tour hot"
-            />
-          </FormControl>
-        </div>
         <div>
-
-      {/* Âm thanh khi bấm */}
-      <audio ref={audioRef} />
-    </div>
+          {/* Âm thanh khi bấm */}
+          <audio ref={audioRef} />
+        </div>
       </div>
     </div>
   );

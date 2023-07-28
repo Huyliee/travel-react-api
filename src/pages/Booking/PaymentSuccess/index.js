@@ -36,59 +36,11 @@ function PaymentSuccess() {
             <h5>Đặt tour thành công!! 🎉</h5>
           </div>
           <div className={cx("body")}>
-            <div className={cx("heading")} style={{ borderBottom: "none" }}>
-              <h5 style={{ fontSize: "24px" }}>Đơn đặt tour của bạn!!</h5>
+            <div className={cx("tour-container")}>
+            <p style={{ fontSize: "16px" , padding:'10px' }}>Chúng tôi xin chân thành cảm ơn bạn vì đã chọn chúng tôi để tổ chức hành trình đáng nhớ của bạn. Sự tin tưởng và lựa chọn của bạn đối với chúng tôi là một động lực vô cùng lớn để chúng tôi tiếp tục nỗ lực mang đến những trải nghiệm tuyệt vời nhất cho quý khách.</p>
+            <p style={{ fontSize: "16px" , padding:'10px' }}>Để biết chi tiết về các thông tin đã đặt bạn có thể vào trang cá nhân hoặc là email bạn dùng để đăng ký tour</p>
             </div>
-            <div className={cx("tour-container")}></div>
-            <div className={cx("body-info-contact")}>
-              <div className={cx("body-info-text")}>
-                <span>Họ và tên</span>
-                <p>Nguyễn Trọng Hiếu</p>
-              </div>
-              <div className={cx("body-info-text")}>
-                <span>Email</span>
-                <p>hieu745233@gmail.com</p>
-              </div>
-              <div className={cx("body-info-text")}>
-                <span>Địa chỉ</span>
-                <p>Nhà Bè , HCM</p>
-              </div>
-              <div className={cx("body-info-text")}>
-                <span>Điện thoại</span>
-                <p>0909090909</p>
-              </div>
-              <div className={cx("body-info-text")}>
-                <span>Ghi chú</span>
-                <p>Booking từ travel-react-api.netlify.app</p>
-              </div>
-            </div>
-            <div className={cx("heading")} style={{ borderBottom: "none" }}>
-              <h5 style={{ fontSize: "24px" }}>Chi tiết đơn đặt tour!!</h5>
-            </div>
-            <div className={cx("body-detail-booking")}>
-                <div className={cx("label-detail-booking")}>
-                  <p>Số booking</p>
-                  <p>Số tiền đã thanh toán</p>
-                  <p>Ngày đăng ký</p>
-                  <p>Hình thức thanh toán</p>
-                  <p>Tình trạng</p>
-                </div>
-                <div className={cx("text-detail-booking")}>
-                  <p>
-                    <span style={{ color: "#fd5056", fontWeight: "800" }}>
-                      11908263713
-                    </span>{" "}
-                    (Quý khách vui lòng nhớ số booking để thuận tiện cho các
-                    giao dịch sau này)
-                  </p>
-                  <p>8,500,000đ</p>
-                  <p>11/06/23 06:40:09</p>
-                  <p>Thanh toán qua Momo</p>
-                  <p>
-                    Booking của quý khách đã được chúng tôi xác nhận thành công
-                  </p>
-                </div>
-              </div>
+           
           </div>
         </Box>
       </Container>

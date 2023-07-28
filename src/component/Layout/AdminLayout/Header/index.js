@@ -9,7 +9,8 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import LayersIcon from "@mui/icons-material/Layers";
 import Avatar from "@mui/material/Avatar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const cx = classNames.bind(styles);
 
@@ -60,6 +61,14 @@ function Header() {
       },
     },
   }));
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("id_customer");
+    localStorage.removeItem("permission");
+    
+    navigate("/login");
+  };
 
   return (
     <div className={cx("Main-nav")}>
@@ -88,6 +97,7 @@ function Header() {
           </Badge>
           <LayersIcon style={{ fontSize: 24, fill: "#ffffff" }} />
           <Avatar>H</Avatar>
+          <Button onClick={handleLogout} variant="contained">Đăng xuất</Button>
         </div>
       </div>
     </div>

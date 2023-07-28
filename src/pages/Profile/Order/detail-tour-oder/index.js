@@ -25,6 +25,10 @@ function DetailOrderTour() {
   const [date, setDate] = useState({});
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (id) {
       async function detailData() {
         const data = await detailTourOder(id);
@@ -46,7 +50,6 @@ function DetailOrderTour() {
     }
   }, [detailOrder.detail_order]);
   const lengthPayment = detailOrder?.payment?.length;
-
   return (
     <Container style={{ margin: "20px auto", width: "100%" }}>
       <div
@@ -130,12 +133,11 @@ function DetailOrderTour() {
                 <TableCell className={cx("bodyCell")}>
                   {" "}
                   {id &&
-                  (detailOrder?.payment?.length > 0 ||
-                    (detailOrder?.payment &&
-                      detailOrder.payment[0]?.amount_unpaid > 0 &&
-                      detailOrder?.total_price > 0))
-                    ? "Đã thanh toán"
-                    : "Chưa thanh toán đủ"}
+                 ((detailOrder?.payment?.length > 0 &&
+                  (detailOrder.payment[lengthPayment - 1]?.amount_unpaid > 0 && detailOrder?.total_price > 0)) || detailOrder?.payment?.length === 0)
+                  ? "Chưa thanh toán đủ"
+                  : "Đã thanh toán đủ"
+                 }                
                 </TableCell>
               </TableRow>
             </TableBody>

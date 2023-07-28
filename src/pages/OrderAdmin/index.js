@@ -58,11 +58,11 @@ function OrderAdmin() {
       field: "delete",
       headerName: "Xóa",
       width: 80,
-      renderCell: (params) => (
+      renderCell: (params,event) => (
         <Button
           variant="contained"
           onClick={() => {
-            handleDelete(params.row.id_order_tour);
+            handleCellClick(params, event)
           }}
         >
           <FontAwesomeIcon icon={faXmark}/>
@@ -73,13 +73,11 @@ function OrderAdmin() {
       field: "update",
       headerName: "Sửa",
       width: 80,
-      renderCell: (params) => (
+      renderCell: (params,event) => (
         <Button
           variant="contained"
           onClick={() => {
-            handleUpdate(params.row.id_order_tour);
-            handleOpen();
-            handleButtonUpdate();
+            handleCellClick(params, event)
           }}
         >
           <FontAwesomeIcon icon={faPenToSquare} />
@@ -139,6 +137,23 @@ function OrderAdmin() {
         toast.error("Không thể xác nhận đơn đặt tour");
       });
     }
+
+    const handleCellClick = (params, event) => {
+      const { field } = params;
+      
+      if (field === "delete") {
+        handleDelete(params.row.id_order_tour);
+      } else if (field === "update") {
+        handleUpdate(params.row.id_order_tour);
+        handleOpen();
+        handleButtonUpdate();
+      } else {
+        // const stateParam = encodeURIComponent(JSON.stringify(params.row));
+        const url = `/admin/order/${params.row.id_order_tour}`;
+        window.location.href = url;
+      }
+    };
+    console.log(detailOrder);
   return (
     <div
       style={{
@@ -174,11 +189,11 @@ function OrderAdmin() {
         columns={columns}
         getRowId={(row) => row.id_order_tour}
         autoHeight
-        
-        onRowClick={(params, event) => {
-          // Xử lý sự kiện onclick ở đây
-          console.log('Dòng được click:', params.row);
-        }}
+        onCellClick={handleCellClick}
+        // onRowClick={(params, event) => {
+        //   // Xử lý sự kiện onclick ở đây
+        //   console.log('Dòng được click:', params.row);
+        // }}
         rowHeight={150}
         slots={{ toolbar: GridToolbar ,csvOptions: {
           fileName: 'customerDataBase',
